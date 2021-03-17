@@ -10,6 +10,9 @@ environment:
 
 dependency_overrides:
   path_provider: ^2.0.1
+  intl_phone_field:
+    git:
+      url: https://github.com/4mitabh/intl_phone_field
 
 dependencies:
   flutter:

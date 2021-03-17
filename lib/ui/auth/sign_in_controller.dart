@@ -40,7 +40,7 @@ class SignInController extends GetxController {
     phoneNumber = phone;
     GetLogger.to.v('Sending OTP to $phone ');
     final labels = AppLocalizations.of(context);
-    showLoadingIndicator();
+    if (GetPlatform.isAndroid) showLoadingIndicator();
     if (!kIsWeb)
       try {
         await _auth.verifyPhoneNumber(
