@@ -108,24 +108,6 @@ class SignInUI extends StatelessWidget {
                       }),
                 FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value &&
-                    ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb))
-                  LinkButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(MdiIcons.google),
-                          Text(' ' + labels.auth.googleSignIn,
-                              style: Theme.of(context).textTheme.button?.copyWith(fontSize: 18, color: Theme.of(context).accentColor)),
-                        ],
-                      ),
-                      onPressed: () async {
-                        try {
-                          await _signInController.signInWithGoogle();
-                        } catch (e) {
-                          showSnackBar('Error', e.toString());
-                        }
-                      }),
-                if (!_signInController.waitingForOTP.value &&
                     ((FireStarter.settings['auth']?['appleSignIn'] == true) || GetPlatform.isMacOS || GetPlatform.isIOS))
                   LinkButton(
                       child: Row(
@@ -140,6 +122,24 @@ class SignInUI extends StatelessWidget {
                         try {
                           await _signInController.signInWithApple();
                           // Get.toNamed('home');
+                        } catch (e) {
+                          showSnackBar('Error', e.toString());
+                        }
+                      }),
+                if (!_signInController.waitingForOTP.value &&
+                    ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb))
+                  LinkButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(MdiIcons.google),
+                          Text(' ' + labels.auth.googleSignIn,
+                              style: Theme.of(context).textTheme.button?.copyWith(fontSize: 18, color: Theme.of(context).accentColor)),
+                        ],
+                      ),
+                      onPressed: () async {
+                        try {
+                          await _signInController.signInWithGoogle();
                         } catch (e) {
                           showSnackBar('Error', e.toString());
                         }

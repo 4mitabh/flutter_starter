@@ -110,19 +110,22 @@ class SignInController extends GetxController {
   }
 
   Future<User?> signInWithApple() async {
-    final appleIdCredential = await SignInWithApple.getAppleIDCredential(
-      scopes: [
-        AppleIDAuthorizationScopes.email,
-        AppleIDAuthorizationScopes.fullName,
-      ],
-    );
-    final oAuthProvider = OAuthProvider('apple.com');
-    final credential = oAuthProvider.credential(
-      idToken: appleIdCredential.identityToken,
-      accessToken: appleIdCredential.authorizationCode,
-    );
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
-    return userCredential.user;
+    if (kIsWeb) {
+      GetLogger.to.d('Web Signin');
+      final oAuthProvider = OAuthProvider('apple.com')..addScope('email')..addScope('name');
+      GetLogger.to.d(oAuthProvider.toString());
+
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithPopup(oAuthProvider);
+      return userCredential.user;
+    } else {
+      final appleIdCredential =
+          await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName]);
+
+      final oAuthProvider = OAuthProvider('apple.com');
+      final credential = oAuthProvider.credential(idToken: appleIdCredential.identityToken, accessToken: appleIdCredential.authorizationCode);
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+      return userCredential.user;
+    }
   }
 
   Future<User?> signInWithGoogle() async {
