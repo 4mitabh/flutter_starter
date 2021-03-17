@@ -29,7 +29,7 @@ dependencies:
   # firebase_analytics: "^7.1.0"
   google_sign_in: "^5.0.0"
   sign_in_with_apple:
-  intl_phone_number_input:
+  intl_phone_field:
   logger:
   get: ^3.26.0 #"^4.0.0-nullsafety.2"
   get_storage:

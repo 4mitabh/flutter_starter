@@ -49,7 +49,7 @@ class FireStarter {
     UpgradeCheckService.init();
 
     ThemeController themeController = ThemeController.to;
-    if (kDebugMode && themeIndex == -1)
+    if (false && kDebugMode && themeIndex == -1)
       Timer.periodic(const Duration(seconds: 15), (Timer timer) {
         themeIndex = (themeIndex + 7) % FlexScheme.values.length;
         themeController.setTheme(FlexScheme.values[themeIndex].toString().split('.')[1]);

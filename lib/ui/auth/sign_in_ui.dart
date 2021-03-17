@@ -2,6 +2,8 @@ import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:fire_starter/fire_starter.dart';
 import 'package:fire_starter/services/package_info.dart';
 import 'package:fire_starter/ui/components/widgets/link_button.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_field/phone_number.dart';
 import 'sign_in_controller.dart';
 import 'package:fire_starter/ui/components/widgets/glass/blob.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,6 @@ import 'package:get/get.dart';
 import 'package:fire_starter/localizations.dart';
 import 'package:fire_starter/ui/components/components.dart';
 import 'package:fire_starter/helpers/helpers.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class SignInUI extends StatelessWidget {
@@ -47,37 +48,19 @@ class SignInUI extends StatelessWidget {
                 SizedBox(height: 48.0),
                 if (!_signInController.waitingForOTP.value)
                   Container(
-                    padding: EdgeInsets.all(8),
-                    decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
-                    child: InternationalPhoneNumberInput(
-                        onInputChanged: (PhoneNumber number) {
-                          _signInController.phoneNumber = number.phoneNumber;
+                      padding: EdgeInsets.all(8),
+                      decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
+                      child: IntlPhoneField(
+                        controller: _signInController.phoneController,
+                        // countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
+                        style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
+                        decoration: InputDecoration(fillColor: Colors.transparent, border: InputBorder.none),
+                        initialCountryCode: PackageInfoService.country,
+                        onSaved: (PhoneNumber number) {
+                          print('On Saved: ${number.completeNumber}');
+                          _signInController.requestOTP(context, number.completeNumber ?? '');
                         },
-                        onInputValidated: (bool valid) {},
-                        selectorConfig: SelectorConfig(
-                          selectorType: PhoneInputSelectorType.DIALOG,
-                        ),
-                        selectorTextStyle: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
-                        ignoreBlank: true,
-                        autoValidateMode: AutovalidateMode.onUserInteraction,
-                        // selectorTextStyle: TextStyle(color: Colors.black),
-                        textFieldController: _signInController.phoneController,
-                        formatInput: true,
-                        countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
-                        // keyboardType: TextInputType.numberWithOptions(
-                        //     signed: true, decimal: false),
-                        // inputBorder: InputBorder.none,
-                        textStyle: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
-                        inputDecoration: InputDecoration(fillColor: Colors.transparent, border: InputBorder.none),
-                        initialValue: PhoneNumber(isoCode: PackageInfoService.country),
-                        onSaved: (String number) {
-                          print('On Saved: $number');
-                          _signInController.requestOTP(context, _signInController.phoneNumber ?? '');
-                        },
-                        onSubmit: () {}
-                        // maxLength: 16,
-                        ),
-                  )
+                      ))
                 else
                   Container(
                     padding: EdgeInsets.all(4),

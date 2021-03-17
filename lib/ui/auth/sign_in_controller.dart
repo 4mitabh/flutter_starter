@@ -20,6 +20,7 @@ class SignInController extends GetxController {
   final RxBool waitingForOTP = false.obs;
   String? _verificationId;
   String? phoneNumber;
+  ConfirmationResult? _confirmationResult;
 
   @override
   void onReady() async {
@@ -40,36 +41,43 @@ class SignInController extends GetxController {
     GetLogger.to.v('Sending OTP to $phone ');
     final labels = AppLocalizations.of(context);
     showLoadingIndicator();
-    try {
-      await _auth.verifyPhoneNumber(
-          phoneNumber: phone,
-          verificationCompleted: (credential) {
-            FirebaseAuth.instance.signInWithCredential(credential);
-            hideLoadingIndicator();
-          },
-          timeout: const Duration(seconds: 10),
-          verificationFailed: (error) {
-            GetLogger.to.e(error);
-            hideLoadingIndicator();
-            Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError, snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 7));
-          },
-          codeSent: (verificationId, __) {
-            waitingForOTP.value = true;
-            _verificationId = verificationId;
-            Get.snackbar(labels.auth.otpVerificationSentTitle, labels.auth.otpVerificationSent,
-                snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 7));
-          },
-          codeAutoRetrievalTimeout: (_) => hideLoadingIndicator());
-      // hideLoadingIndicator();
-    } catch (error) {
+    if (!kIsWeb)
+      try {
+        await _auth.verifyPhoneNumber(
+            phoneNumber: phone,
+            verificationCompleted: (credential) {
+              FirebaseAuth.instance.signInWithCredential(credential);
+              hideLoadingIndicator();
+            },
+            timeout: const Duration(seconds: 10),
+            verificationFailed: (error) {
+              GetLogger.to.e(error);
+              hideLoadingIndicator();
+              Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError,
+                  snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 7));
+            },
+            codeSent: (verificationId, __) {
+              waitingForOTP.value = true;
+              _verificationId = verificationId;
+              Get.snackbar(labels.auth.otpVerificationSentTitle, labels.auth.otpVerificationSent,
+                  snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 7));
+            },
+            codeAutoRetrievalTimeout: (_) => hideLoadingIndicator());
+        // hideLoadingIndicator();
+      } catch (error) {
+        hideLoadingIndicator();
+        GetLogger.to.e(error);
+        waitingForOTP.value = false;
+        Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: Duration(seconds: 7),
+            backgroundColor: Get.theme.snackBarTheme.backgroundColor,
+            colorText: Get.theme.snackBarTheme.actionTextColor);
+      }
+    else {
+      _confirmationResult = await _auth.signInWithPhoneNumber(phone);
+      if (_confirmationResult?.verificationId != null) waitingForOTP.value = true;
       hideLoadingIndicator();
-      GetLogger.to.e(error);
-      waitingForOTP.value = false;
-      Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 7),
-          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-          colorText: Get.theme.snackBarTheme.actionTextColor);
     }
   }
 
@@ -79,6 +87,11 @@ class SignInController extends GetxController {
     GetLogger.to.v('Using OTP $code ');
     final labels = AppLocalizations.of(context);
     showLoadingIndicator();
+    if (kIsWeb) {
+      UserCredential? userCredential = await _confirmationResult?.confirm(code);
+      Get.snackbar(labels.auth.signInErrorTitle, userCredential.toString());
+      hideLoadingIndicator();
+    }
     try {
       await _auth.signInWithCredential(PhoneAuthProvider.credential(
         verificationId: _verificationId!,

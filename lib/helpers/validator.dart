@@ -36,7 +36,7 @@ class Validator {
       return null;
   }
 
-  String? number(String? value) {
+  String? phoneNumber(String? value) {
     if (value == null) value = '';
     String pattern = r'^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$';
     RegExp regex = new RegExp(pattern);
@@ -46,7 +46,7 @@ class Validator {
       return null;
   }
 
-  String? amount(String? value) {
+  String? number(String? value) {
     if (value == null) value = '';
     String pattern = r'^\d+$';
     RegExp regex = new RegExp(pattern);

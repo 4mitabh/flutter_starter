@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/constants/firebase_paths.dart';
+import 'package:fire_starter/helpers/helpers.dart';
 
 class MetadataModel {
   int build;
@@ -20,8 +21,10 @@ class MetadataModel {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     try {
       DocumentSnapshot doc = await db.doc('${FirebasePaths.prefix}${FirebasePaths.metadata}/all').get();
+      if (!doc.exists) GetLogger.to.w('Cannout find ${FirebasePaths.prefix}${FirebasePaths.metadata}/all');
       return MetadataModel._fromDocumentSnapshot(doc);
     } on Exception catch (e) {
+      GetLogger.to.w(e);
       return MetadataModel(build: 1, version: '0.0.0', majorVersion: 0, minorVersion: 0);
     }
   }
