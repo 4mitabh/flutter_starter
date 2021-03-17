@@ -89,7 +89,6 @@ class SignInController extends GetxController {
     showLoadingIndicator();
     if (kIsWeb) {
       UserCredential? userCredential = await _confirmationResult?.confirm(code);
-      Get.snackbar(labels.auth.signInErrorTitle, userCredential.toString());
       hideLoadingIndicator();
     }
     try {
