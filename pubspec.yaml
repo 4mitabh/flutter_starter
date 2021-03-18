@@ -36,7 +36,7 @@ dependencies:
   logger:
   get: ^3.26.0 #"^4.0.0-nullsafety.2"
   get_storage:
-  flutter_sheet_localization: "^2.0.1"
+  flutter_sheet_localization:
   google_nav_bar:
   intl:
   package_info_plus: "^1.0.0"
@@ -49,7 +49,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.11.5
   material_design_icons_flutter: # ^5.0.5955-rc.1
-  # flutter_sheet_localization_generator: "^2.1.2"
+  flutter_sheet_localization_generator:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
