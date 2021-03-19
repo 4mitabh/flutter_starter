@@ -493,12 +493,10 @@ packages:
   intl_phone_field:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "7defded99d7b86e175b2eaf82d30946a3ff07eb6"
-      url: "https://github.com/4mitabh/intl_phone_field"
-    source: git
-    version: "1.4.2"
+      name: intl_phone_field
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.4.4"
   io:
     dependency: transitive
     description:
