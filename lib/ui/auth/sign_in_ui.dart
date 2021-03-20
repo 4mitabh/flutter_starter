@@ -54,11 +54,10 @@ class SignInUI extends StatelessWidget {
                         controller: _signInController.phoneController,
                         countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
                         style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
-                        decoration: InputDecoration(fillColor: Colors.transparent, border: InputBorder.none),
+                        decoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.only(top: 2, bottom: 2, right: 20)),
                         initialCountryCode: PackageInfoService.country,
-                        onSaved: (PhoneNumber number) {
-                          print('On Saved: ${number.completeNumber}');
-                          _signInController.requestOTP(context, number.completeNumber ?? '');
+                        onSaved: (PhoneNumber? number) {
+                          if ((number?.completeNumber) != null) _signInController.requestOTP(context, number!.completeNumber);
                         },
                       ))
                 else
