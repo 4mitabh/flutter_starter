@@ -12,7 +12,7 @@ class HomeUI extends StatelessWidget {
     final labels = AppLocalizations.of(context);
     final authService = AuthService.to;
 
-    return Blob(
+    return BlobBackground(
       child: SingleChildScrollView(
         child: Center(
           child: Column(

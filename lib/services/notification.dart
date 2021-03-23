@@ -7,13 +7,14 @@ import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  print("Background message: ${message.notification?.title} ${message.notification?.body}");
+  showSnackBar('${message.notification?.title}', '${message.notification?.body}');
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   _firestore.enableNetwork();
 }
@@ -31,6 +32,9 @@ class NotificationService extends GetxService {
       if (message.notification != null) showSnackBar(message.notification?.title ?? PackageInfoService.appName, message.notification?.body ?? '');
     });
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FGBGEvents.stream.listen((event) {
+      if (event == FGBGType.foreground) dismissNotifications();
+    });
   }
 
   Future<void> _getPermissions() async {
@@ -102,4 +106,6 @@ class NotificationService extends GetxService {
         .then(updateToken);
     _fcmTokenListener = _firebaseMessaging.onTokenRefresh.listen(updateToken);
   }
+
+  dismissNotifications() {}
 }

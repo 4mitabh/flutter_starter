@@ -4,10 +4,10 @@ import 'dart:ui';
 import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
 
-class Blob extends StatelessWidget {
+class BlobBackground extends StatelessWidget {
   final Widget child;
 
-  Blob({required this.child});
+  BlobBackground({required this.child});
   @override
   Widget build(BuildContext context) {
     return Stack(

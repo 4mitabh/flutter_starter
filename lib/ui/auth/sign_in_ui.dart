@@ -24,7 +24,7 @@ class SignInUI extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Widget build(BuildContext context) {
-    return Scaffold(body: Blob(child: Obx(() => buildForm(context))));
+    return Scaffold(body: BlobBackground(child: Obx(() => buildForm(context))));
   }
 
   Form buildForm(BuildContext context) {
@@ -54,7 +54,7 @@ class SignInUI extends StatelessWidget {
                         controller: _signInController.phoneController,
                         countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
                         style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
-                        decoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.only(top: 2, bottom: 2, right: 20)),
+                        decoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.only(top: 24, bottom: 2, right: 24)),
                         initialCountryCode: PackageInfoService.country,
                         onSaved: (PhoneNumber? number) {
                           if ((number?.completeNumber) != null) _signInController.requestOTP(context, number!.completeNumber);

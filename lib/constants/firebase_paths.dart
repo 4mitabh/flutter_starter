@@ -4,4 +4,5 @@ class FirebasePaths {
   static final prefix = FireStarter.settings['firestore']?['prefix'] ?? '';
   static final users = '/users';
   static final metadata = '/metadata';
+  static String chat(String uid) => '/users/$uid/workflows';
 }

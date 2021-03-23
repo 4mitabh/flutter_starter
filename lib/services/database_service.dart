@@ -6,8 +6,10 @@ import '../models/models.dart';
 class DatabaseService extends GetxService {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  static Future<List<FirebaseDoc>> collection(String path, {String? orderby, bool useCache = true}) async {
-    Query query = orderby == null ? _firestore.collection(path) : _firestore.collection(path).orderBy(orderby, descending: true);
+  static Future<List<FirebaseDoc>> collection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
+    Query query = orderby == null
+        ? _firestore.collection(path).limitToLast(limit)
+        : _firestore.collection(path).orderBy(orderby, descending: false).limitToLast(limit);
     QuerySnapshot qs;
     if (!useCache)
       qs = await query.get(GetOptions(source: Source.server));
