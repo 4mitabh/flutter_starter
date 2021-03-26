@@ -53,14 +53,12 @@ class SignInController extends GetxController {
             verificationFailed: (error) {
               GetLogger.to.e(error);
               hideLoadingIndicator();
-              Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError,
-                  snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 7));
+              showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInError);
             },
             codeSent: (verificationId, __) {
               waitingForOTP.value = true;
               _verificationId = verificationId;
-              Get.snackbar(labels.auth.otpVerificationSentTitle, labels.auth.otpVerificationSent,
-                  snackPosition: SnackPosition.BOTTOM, duration: Duration(seconds: 7));
+              showSnackBar(labels.auth.otpVerificationSentTitle, labels.auth.otpVerificationSent);
             },
             codeAutoRetrievalTimeout: (_) => hideLoadingIndicator());
         // hideLoadingIndicator();
@@ -68,11 +66,7 @@ class SignInController extends GetxController {
         hideLoadingIndicator();
         GetLogger.to.e(error);
         waitingForOTP.value = false;
-        Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError,
-            snackPosition: SnackPosition.BOTTOM,
-            duration: Duration(seconds: 7),
-            backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-            colorText: Get.theme.snackBarTheme.actionTextColor);
+        showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInError);
       }
     else {
       _confirmationResult = await _auth.signInWithPhoneNumber(phone);
@@ -99,11 +93,7 @@ class SignInController extends GetxController {
       hideLoadingIndicator();
     } catch (error) {
       hideLoadingIndicator();
-      Get.snackbar(labels.auth.signInErrorTitle, labels.auth.signInError,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 7),
-          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-          colorText: Get.theme.snackBarTheme.actionTextColor);
+      showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInError);
     }
   }
 

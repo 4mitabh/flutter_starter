@@ -9,6 +9,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class StorageService extends GetxService {
   static FirebaseStorage _storage = FirebaseStorage.instance;
@@ -48,17 +49,17 @@ class StorageService extends GetxService {
       // The final snapshot is also available on the task via `.snapshot`,
       // this can include 2 additional states, `TaskState.error` & `TaskState.canceled`
       GetLogger.to.w(e);
-      Get.snackbar('Upload $path', e.toString());
+      showSnackBar('Upload $path', e.toString());
     });
 
     // We can still optionally use the Future alongside the stream.
     try {
       await task;
       GetLogger.to.i('Upload $path Complete');
-      Get.snackbar('Upload $path', 'Complete');
+      showSnackBar('Upload $path', 'Complete');
     } on FirebaseException catch (e) {
       GetLogger.to.w(e);
-      Get.snackbar('Upload $path', e.toString());
+      showSnackBar('Upload $path', e.toString());
     }
   }
 

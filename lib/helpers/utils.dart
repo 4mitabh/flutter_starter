@@ -21,7 +21,7 @@ Future<String> getCountry() async {
   }
   // Extend more locales using timezone here....
 
-  String locale = (Get.deviceLocale.countryCode) ?? 'US';
+  String locale = (Get.deviceLocale?.countryCode) ?? 'US';
   if (locale.length >= 5) locale = locale.substring(locale.length - 2, locale.length);
   log.v("Country from locale: $locale");
   if (['IN', 'JP', 'US', 'CA', 'GB'].contains(locale)) return locale;
@@ -31,5 +31,5 @@ Future<String> getCountry() async {
 showSnackBar(title, message, {SnackPosition position = SnackPosition.TOP}) => Get.snackbar(title, message,
     snackPosition: position,
     duration: Duration(seconds: 7),
-    backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-    colorText: Get.theme.snackBarTheme.actionTextColor);
+    backgroundColor: Get.theme?.snackBarTheme.backgroundColor,
+    colorText: Get.theme?.snackBarTheme.actionTextColor);

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fire_starter/helpers/helpers.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import '../models/models.dart';
 import 'package:fire_starter/constants/constants.dart';
@@ -15,8 +16,8 @@ class AuthService extends GetxService {
   static AuthService to = Get.find();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
-  Rx<User> firebaseUser = Rx<User>();
-  Rx<UserModel> firestoreUser = Rx<UserModel>();
+  Rx<User?> firebaseUser = Rx<User?>(null);
+  Rx<UserModel?> firestoreUser = Rx<UserModel?>(null);
 
   // Firebase user one-time fetch
   Future<User?> get getFirebaseUser async => _auth.currentUser;
@@ -52,11 +53,13 @@ class AuthService extends GetxService {
   }
 
   //Streams the firestore user from the firestore collection
-  Future<Stream<UserModel>?> streamFirestoreUser() async {
+  Future<Stream<UserModel?>> streamFirestoreUser() async {
     UserModel? userRecord = await getFirestoreUser();
-    if (userRecord != null) {
-      return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${firebaseUser.value.uid}').snapshots().map((snapshot) {
-        return UserModel.fromMap(snapshot.data()!, firebaseUser.value.uid);
+    if (userRecord != null && firebaseUser.value != null) {
+      return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${firebaseUser.value!.uid}').snapshots().map((snapshot) {
+        print('reading');
+        print('reading ' + snapshot.data().toString());
+        return UserModel.fromMap(snapshot.data()!, firebaseUser.value!.uid);
       });
     }
     return Future.value();
@@ -64,10 +67,11 @@ class AuthService extends GetxService {
 
   //get the firestore user from the firestore collection
   Future<UserModel?> getFirestoreUser() {
-    if (firebaseUser.value?.uid != null) {
-      return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${firebaseUser.value.uid}').get().then((documentSnapshot) {
+    User? uservalue = firebaseUser.value;
+    if (uservalue != null) {
+      return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${uservalue.uid}').get().then((documentSnapshot) {
         if (documentSnapshot.exists)
-          return UserModel.fromMap(documentSnapshot.data()!, firebaseUser.value.uid);
+          return UserModel.fromMap(documentSnapshot.data()!, uservalue.uid);
         else {
           return _createNewUserFirestore();
         }
@@ -80,24 +84,16 @@ class AuthService extends GetxService {
   Future<void> updateUser(BuildContext context, UserModel user) async {
     final labels = AppLocalizations.of(context);
     try {
-      User _firebaseUser = firebaseUser.value;
+      User _firebaseUser = firebaseUser.value!;
       _updateUserFirestore(user, _firebaseUser);
       hideLoadingIndicator();
-      Get.snackbar(labels.auth.updateUserSuccessNoticeTitle, labels.auth.updateUserSuccessNotice,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 5),
-          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-          colorText: Get.theme.snackBarTheme.actionTextColor);
+      showSnackBar(labels.auth.updateUserSuccessNoticeTitle, labels.auth.updateUserSuccessNotice);
     } on PlatformException catch (error) {
       //List<String> errors = error.toString().split(',');
       // print("Error: " + errors[1]);
       hideLoadingIndicator();
       print(error.code);
-      Get.snackbar(labels.auth.unknownError, error.code,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 10),
-          backgroundColor: Get.theme.snackBarTheme.backgroundColor,
-          colorText: Get.theme.snackBarTheme.actionTextColor);
+      showSnackBar(labels.auth.unknownError, error.code);
     }
   }
 
@@ -113,7 +109,7 @@ class AuthService extends GetxService {
 
   UserModel? _createNewUserFirestore() {
     if (firebaseUser.value == null) return null;
-    User _firebaseUser = firebaseUser.value;
+    User _firebaseUser = firebaseUser.value!;
     UserModel _newUser = UserModel(
       id: _firebaseUser.uid,
       email: _firebaseUser.email,

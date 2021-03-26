@@ -43,7 +43,7 @@ class UpdateProfileUI extends StatelessWidget {
                         if ((_formKey.currentState != null) && _formKey.currentState!.validate()) {
                           SystemChannels.textInput.invokeMethod('TextInput.hide');
                           UserModel _updatedUser =
-                              UserModel(id: authController.firestoreUser.value.id, photoUrl: authController.firestoreUser.value?.photoUrl);
+                              UserModel(id: authController.firestoreUser.value!.id, photoUrl: authController.firestoreUser.value?.photoUrl);
                           authController.updateUser(context, _updatedUser);
                         }
                       }),

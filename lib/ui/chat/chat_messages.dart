@@ -35,11 +35,11 @@ class ChatMessagesController extends GetxController {
   final RxList<ChatMessage> messeges = <ChatMessage>[].obs;
 
   get user {
-    print(_authService.firestoreUser.value.id);
+    var userVal = _authService.firestoreUser.value!;
     return ChatUser(
-      name: _authService.firestoreUser.value.name,
-      uid: _authService.firestoreUser.value.id,
-      avatar: _authService.firestoreUser.value.photoUrl,
+      name: userVal.name,
+      uid: userVal.id,
+      avatar: userVal.photoUrl,
     );
   }
   // List<ChatMessage> messeges() {
@@ -69,7 +69,7 @@ class ChatMessagesController extends GetxController {
                 ),
               ],
             ),
-            user: ChatUser(uid: e.properties['by'], name: e.properties['by'])))
+            user: ChatUser(uid: e.properties['by'], avatar: _authService.firestoreUser.value!.photoUrl, name: e.properties['by'])))
         .toList());
   }
 

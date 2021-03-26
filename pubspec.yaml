@@ -9,7 +9,6 @@ environment:
   flutter: ">=1.17.0"
 
 dependency_overrides:
-  path_provider: ^2.0.1
   intl_phone_field:
     # git:
     #   url: https://github.com/4mitabh/intl_phone_field
@@ -35,7 +34,7 @@ dependencies:
   sign_in_with_apple:
   intl_phone_field:
   logger:
-  get: ^3.26.0 #"^4.0.0-nullsafety.2"
+  get: "^4.0.0"
   get_storage:
   flutter_sheet_localization:
   google_nav_bar:
@@ -48,6 +47,7 @@ dependencies:
   flutter_fgbg:
   # flutter_local_notifications:
   dash_chat: ^1.1.15-nullsafety
+  path_provider:
 
 dev_dependencies:
   flutter_test:
