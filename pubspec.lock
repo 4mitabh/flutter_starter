@@ -112,7 +112,7 @@ packages:
       name: cached_network_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.5.1"
+    version: "3.0.0"
   characters:
     dependency: transitive
     description:
@@ -343,7 +343,7 @@ packages:
       name: flex_color_scheme
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -355,14 +355,14 @@ packages:
       name: flutter_blurhash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.6.0"
   flutter_cache_manager:
     dependency: transitive
     description:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.2"
+    version: "3.0.1"
   flutter_fgbg:
     dependency: "direct main"
     description:
@@ -419,14 +419,14 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.3"
+    version: "4.1.1"
   get_storage:
     dependency: "direct main"
     description:
       name: get_storage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   glob:
     dependency: transitive
     description:
@@ -514,9 +514,9 @@ packages:
   intl_phone_field:
     dependency: "direct main"
     description:
-      path: "../intl_phone_field"
-      relative: true
-    source: path
+      name: intl_phone_field
+      url: "https://pub.dartlang.org"
+    source: hosted
     version: "2.0.0"
   io:
     dependency: transitive
@@ -594,7 +594,7 @@ packages:
       name: octo_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "1.0.0"
   package_config:
     dependency: transitive
     description:
@@ -762,7 +762,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.25.0"
+    version: "0.26.0"
   shelf:
     dependency: transitive
     description:
@@ -935,7 +935,7 @@ packages:
       name: uuid
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.3"
   vector_math:
     dependency: transitive
     description:
@@ -963,7 +963,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   xdg_directories:
     dependency: transitive
     description:

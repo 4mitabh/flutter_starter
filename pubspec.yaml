@@ -8,12 +8,6 @@ environment:
   sdk: "^2.12.1" # 2.12
   flutter: ">=1.17.0"
 
-dependency_overrides:
-  intl_phone_field:
-    # git:
-    #   url: https://github.com/4mitabh/intl_phone_field
-    path: "../intl_phone_field/"
-
 dependencies:
   flutter:
     sdk: flutter
@@ -28,7 +22,7 @@ dependencies:
   multi_image_picker: ^4.8.0
   flutter_staggered_grid_view: "^0.4.0-nullsafety.3"
   firebase_image: ^1.0.0
-  cached_network_image: ^2.5.1
+  cached_network_image:
   # firebase_analytics: "^7.1.0"
   google_sign_in: "^5.0.0"
   sign_in_with_apple:
@@ -46,7 +40,7 @@ dependencies:
   auto_size_text:
   flutter_fgbg:
   # flutter_local_notifications:
-  dash_chat: ^1.1.15-nullsafety
+  dash_chat:
   path_provider:
 
 dev_dependencies:

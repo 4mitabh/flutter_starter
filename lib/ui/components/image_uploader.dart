@@ -60,7 +60,8 @@ class FBImage extends StatelessWidget {
             ? CachedNetworkImage(
                 placeholder: (context, url) => CircularProgressIndicator(),
                 errorWidget: (context, url, error) => Icon(Icons.error),
-                imageUrl: urlSS.data)
+                imageUrl: urlSS.data!,
+              )
             : Container());
   }
 }
