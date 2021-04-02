@@ -103,7 +103,7 @@ class ChatMessagesController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(50);
+    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(100);
     query.snapshots().listen((messageDocs) {
       messeges(messageDocs.docs.map((e) {
         Map data = e.data() ?? {};
@@ -174,7 +174,8 @@ class ChatMessagesController extends GetxController {
       'action': 'message',
       'outlet': _chatId,
       'business': _chatId,
-      'user': uidToWriteTo
+      'user': uidToWriteTo,
+      'by': uidToWriteTo
     });
   }
 
@@ -186,7 +187,8 @@ class ChatMessagesController extends GetxController {
       'action': 'message',
       'outlet': _chatId,
       'business': _chatId,
-      'user': uidToWriteTo
+      'user': uidToWriteTo,
+      'by': uidToWriteTo
     });
   }
 }
