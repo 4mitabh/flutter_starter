@@ -3,12 +3,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat/dash_chat.dart';
 import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:fire_starter/services/storage_service.dart';
+import 'package:fire_starter/ui/components/components.dart';
+import 'package:fire_starter/ui/components/widgets/link_button.dart';
 import 'package:flutter_blurhash/flutter_blurhash.dart';
 import 'package:fire_starter/services/auth_service.dart';
 import 'package:fire_starter/services/database_service.dart';
 import 'package:fire_starter/ui/components/widgets/glass/blob.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatMessagesUI extends StatelessWidget {
   static Widget builder(String chatId, [RouteSettings? routeSettings]) =>
@@ -42,11 +45,13 @@ class ChatMessagesUI extends StatelessWidget {
             onPressed: _chatMessagesController.onUploadVideo,
           )
         ],
+        messageButtonsBuilder: messageBuilder,
         messageImageBuilder: messageImageBuilder);
   }
 
   Widget messageImageBuilder(String? url, [ChatMessage? message]) {
-    if (message != null) {
+    print(message?.customProperties.toString());
+    if (message != null && message.customProperties?['oringinalimage'] != null) {
       return (message.customProperties?['tn']?['h'] != null)
           ? (message.customProperties?['image'] != null)
               ? CachedNetworkImage(
@@ -63,8 +68,17 @@ class ChatMessagesUI extends StatelessWidget {
           : CachedNetworkImage(
               imageUrl: message.customProperties?['image'],
               errorWidget: (_, __, ___) => CachedNetworkImage(imageUrl: message.customProperties?['oringinalimage']));
-    } else
-      return Container();
+    } else if (message != null && message.customProperties?['video'] != null) {
+      return PrimaryButton(labelText: "Play Video", onPressed: () => launch(message.customProperties?['video']));
+    }
+    return Container();
+  }
+
+  List<Widget> messageBuilder(ChatMessage message) {
+    if (message.customProperties?['video'] != null)
+      return [LinkButton(labelText: "Play Video", onPressed: () => launch(message.customProperties?['video']))];
+    else
+      return [];
   }
 }
 
@@ -89,7 +103,7 @@ class ChatMessagesController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(100);
+    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(3);
     var messageDocs = await DatabaseService.query(query, useCache: true);
     messeges(messageDocs
         .map((e) => ChatMessage(
