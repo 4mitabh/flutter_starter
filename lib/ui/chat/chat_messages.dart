@@ -92,41 +92,43 @@ class ChatMessagesController extends GetxController {
   ChatMessagesController(this._chatId);
 
   get user {
-    var userVal = _authService.firestoreUser.value!;
+    var userVal = _authService.firestoreUser.value;
     return ChatUser(
-      name: userVal.name,
-      uid: userVal.id,
-      avatar: userVal.photoUrl,
+      name: userVal?.name ?? '',
+      uid: userVal?.id ?? '',
+      avatar: userVal?.photoUrl,
     );
   }
 
   @override
   void onReady() async {
     super.onReady();
-    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(3);
-    var messageDocs = await DatabaseService.query(query, useCache: true);
-    messeges(messageDocs
-        .map((e) => ChatMessage(
+    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(50);
+    query.snapshots().listen((messageDocs) {
+      messeges(messageDocs.docs.map((e) {
+        Map data = e.data() ?? {};
+        return ChatMessage(
             id: e.id,
-            createdAt: DateTime.fromMicrosecondsSinceEpoch((e.properties['ts'] as Timestamp).microsecondsSinceEpoch),
-            image: e.properties['image'],
-            video: e.properties['video'],
-            text: e.properties['title'] ?? '',
-            customProperties: e.properties,
-            quickReplies: QuickReplies(
-              values: <Reply>[
-                Reply(
-                  title: "😋 Yes, ${e.properties['title']}",
-                  value: "Yes",
-                ),
-                Reply(
-                  title: "😞 Nope.  ${e.properties['title']}",
-                  value: "no",
-                ),
-              ],
-            ),
-            user: ChatUser(uid: e.properties['by'], avatar: _authService.firestoreUser.value!.photoUrl, name: e.properties['by'])))
-        .toList());
+            createdAt: DateTime.fromMicrosecondsSinceEpoch((data['ts'] ?? 0 as Timestamp).microsecondsSinceEpoch),
+            image: data['image'],
+            video: data['video'],
+            text: data['title'] ?? '',
+            customProperties: Map.fromIterable(data.keys, key: (k) => k.toString(), value: (v) => data[v]),
+            // quickReplies: QuickReplies(
+            //   values: <Reply>[
+            //     Reply(
+            //       title: "😋 Yes, ${data['title']}",
+            //       value: "Yes",
+            //     ),
+            //     Reply(
+            //       title: "😞 Nope.  ${data['title']}",
+            //       value: "no",
+            //     ),
+            //   ],
+            // ),
+            user: ChatUser(uid: data['by'], avatar: _authService.firestoreUser.value!.photoUrl, name: data['by']));
+      }).toList());
+    });
   }
 
   @override
