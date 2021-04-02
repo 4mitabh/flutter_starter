@@ -175,7 +175,7 @@ class ChatMessagesController extends GetxController {
       'outlet': _chatId,
       'business': _chatId,
       'user': uidToWriteTo,
-      'by': uidToWriteTo
+      'by': _authService.firebaseUser.value!.uid
     });
   }
 
@@ -188,7 +188,7 @@ class ChatMessagesController extends GetxController {
       'outlet': _chatId,
       'business': _chatId,
       'user': uidToWriteTo,
-      'by': uidToWriteTo
+      'by': _authService.firebaseUser.value!.uid
     });
   }
 }
