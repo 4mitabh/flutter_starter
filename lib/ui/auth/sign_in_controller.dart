@@ -43,6 +43,7 @@ class SignInController extends GetxController {
     if (GetPlatform.isAndroid) showLoadingIndicator();
     if (!kIsWeb)
       try {
+        Future.delayed(Duration(seconds: 10)).then((value) => hideLoadingIndicator());
         await _auth.verifyPhoneNumber(
             phoneNumber: phone,
             verificationCompleted: (credential) {
@@ -120,8 +121,7 @@ class SignInController extends GetxController {
       UserCredential userCredential = await FirebaseAuth.instance.signInWithPopup(oAuthProvider);
       return userCredential.user;
     } else {
-      final appleIdCredential =
-          await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName]);
+      final appleIdCredential = await SignInWithApple.getAppleIDCredential(scopes: [AppleIDAuthorizationScopes.email, AppleIDAuthorizationScopes.fullName]);
 
       final oAuthProvider = OAuthProvider('apple.com');
       final credential = oAuthProvider.credential(idToken: appleIdCredential.identityToken, accessToken: appleIdCredential.authorizationCode);

@@ -1,6 +1,7 @@
 library firestarter;
 
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/controllers/controllers.dart';
 import 'package:fire_starter/services/auth_service.dart';
 import 'package:fire_starter/services/database_service.dart';
@@ -39,6 +40,7 @@ class FireStarter {
     WidgetsFlutterBinding.ensureInitialized();
     Get.put<Logger>(Logger());
     await Firebase.initializeApp();
+    // FirebaseFirestore.instance.settings = const Settings(host: '192.168.1.138:8080', sslEnabled: false, persistenceEnabled: false);
     await GetStorage.init();
     await PackageInfoService.init();
     Get.put<LanguageController>(LanguageController());

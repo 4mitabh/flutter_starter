@@ -6,7 +6,6 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
 
 class ImageUploadController extends GetxController {
   // final navMenuIndex = 0.obs;
@@ -38,7 +37,7 @@ class ImageUpload extends GetView {
             itemBuilder: (_, index) {
               if (index == 0)
                 return PrimaryButton(
-                  onPressed: () => StorageService.packAndUpload(path: path),
+                  onPressed: () => StorageService.packAndUploadPhoto(path: path, metadata: {}),
                   labelText: "Upload",
                 );
               return FBImage(ss.data?.items[index - 1]);

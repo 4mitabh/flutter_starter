@@ -1,15 +1,14 @@
 import 'dart:io';
-import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fire_starter/constants/firebase_paths.dart';
 import 'package:fire_starter/helpers/helpers.dart';
-import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:multi_image_picker/multi_image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class StorageService extends GetxService {
   static FirebaseStorage _storage = FirebaseStorage.instance;
@@ -28,19 +27,16 @@ class StorageService extends GetxService {
   }
 
   static Future<File> getImageFileFromAssets(ByteData byteData) async {
-    final file = File('${(await getTemporaryDirectory()).path}/${Random().nextInt(1000).toString()}');
+    final file = File('${(await getTemporaryDirectory()).path}/${Uuid().toString()}');
     await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
     return file;
   }
 
-  static Future<void> upload({required File file, required String path, Map<String, String> customMetadata = const {}}) async {
-    SettableMetadata metadata = SettableMetadata(
-      cacheControl: 'max-age=60',
-      customMetadata: customMetadata,
-    );
+  static Future<void> upload({required File file, required String path, required String contentType, required Map<String, String> metadata}) async {
+    SettableMetadata _metadata = SettableMetadata(cacheControl: 'max-age=60', contentType: contentType, customMetadata: metadata);
 
-    UploadTask task = _storage.ref(path).putFile(file, metadata);
+    UploadTask task = _storage.ref(FirebasePaths.prefix + path).putFile(file, _metadata);
 
     task.snapshotEvents.listen((TaskSnapshot snapshot) {
       GetLogger.to.d('Task state: ${snapshot.state}');
@@ -63,33 +59,13 @@ class StorageService extends GetxService {
     }
   }
 
-  static packAndUpload({required String path}) async {
-    List<Asset> resultList = <Asset>[];
-    List<String> imagePaths = <String>[];
+  static packAndUploadPhoto({required String path, required Map<String, String> metadata}) async {
+    final file = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (file != null) upload(file: File(file.path), path: '$path/upld-${Uuid().v1()}' + '.jpg', metadata: metadata, contentType: 'image/jpeg');
+  }
 
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 10,
-        enableCamera: true,
-        // selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-        materialOptions: MaterialOptions(
-          actionBarColor: "#abcdef",
-          actionBarTitle: PackageInfoService.appName,
-          allViewTitle: "All Photos",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#000000",
-        ),
-      );
-    } on Exception catch (e) {
-      GetLogger.to.w(e);
-    }
-    for (var r in resultList) {
-      //   // upload(filePath: r. , path: path+(r.name?? Random().nextInt(1000).toString() ) );
-      // }
-      // for (var r in imagePaths) {
-      var file = await getImageFileFromAssets(await r.getByteData());
-      upload(file: file, path: path + '/' + Random().nextInt(1000).toString() + '.jpg');
-    }
+  static packAndUploadVideo({required String path, required Map<String, String> metadata}) async {
+    final file = await ImagePicker().getVideo(source: ImageSource.gallery);
+    if (file != null) upload(file: File(file.path), path: '$path/upld-${Uuid().v1()}' + '.mp4', metadata: metadata, contentType: 'video/mpeg');
   }
 }
