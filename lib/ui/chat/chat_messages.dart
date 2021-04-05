@@ -51,9 +51,10 @@ class ChatMessagesUI extends StatelessWidget {
 
   Widget messageImageBuilder(String? url, [ChatMessage? message]) {
     print(message?.customProperties.toString());
-    if (message != null && message.customProperties?['oringinalimage'] != null) {
+    if (message != null) {
       return (message.customProperties?['tn']?['h'] != null)
-          ? (message.customProperties?['image'] != null)
+          ? // Thumbnail Exists
+          (message.customProperties?['image'] != '') // Image processing complete
               ? CachedNetworkImage(
                   errorWidget: (_, __, ___) => Column(
                         children: [CachedNetworkImage(imageUrl: message.customProperties?['oringinalimage']), Text('Failed to load')],
@@ -65,11 +66,10 @@ class ChatMessagesUI extends StatelessWidget {
               : AspectRatio(
                   aspectRatio: message.customProperties?['tn']['w'] / message.customProperties?['tn']['h'],
                   child: BlurHash(hash: message.customProperties?['tn']['i']))
-          : CachedNetworkImage(
+          : // No Thumbnail
+          CachedNetworkImage(
               imageUrl: message.customProperties?['image'],
               errorWidget: (_, __, ___) => CachedNetworkImage(imageUrl: message.customProperties?['oringinalimage']));
-    } else if (message != null && message.customProperties?['video'] != null) {
-      return PrimaryButton(labelText: "Play Video", onPressed: () => launch(message.customProperties?['video']));
     }
     return Container();
   }
@@ -109,7 +109,7 @@ class ChatMessagesController extends GetxController {
         Map data = e.data() ?? {};
         return ChatMessage(
             id: e.id,
-            createdAt: DateTime.fromMicrosecondsSinceEpoch((data['ts'] ?? 0 as Timestamp).microsecondsSinceEpoch),
+            createdAt: (data['ts'] == null ? DateTime.now() : DateTime.fromMicrosecondsSinceEpoch((data['ts'] as Timestamp).microsecondsSinceEpoch)),
             image: data['image'],
             video: data['video'],
             text: data['title'] ?? '',
@@ -136,8 +136,8 @@ class ChatMessagesController extends GetxController {
     super.onClose();
   }
 
-  onSend(ChatMessage chatMessage) {
-    print('Seinding ${chatMessage.text}');
+  onSend(ChatMessage chatMessage, [String? id]) {
+    print('Sending ${chatMessage.text}');
     Map<String, dynamic> data = {
       'title': chatMessage.text,
       'plan': _chatId,
@@ -148,7 +148,7 @@ class ChatMessagesController extends GetxController {
       'user': uidToWriteTo
     };
 
-    DatabaseService.create(uploadPath, data);
+    DatabaseService.create(uploadPath, data, id: id);
   }
 
   get uidToWriteTo => recipientTable[_authService.firebaseUser.value!.uid] ?? _authService.firebaseUser.value!.uid;
@@ -166,7 +166,7 @@ class ChatMessagesController extends GetxController {
 
   onQuickReply(Reply reply) => onSend(ChatMessage(text: reply.value, user: user));
 
-  void onUploadPhoto() {
+  onUploadPhoto() {
     StorageService.packAndUploadPhoto(path: uploadPath, metadata: {
       'title': 'New Photo',
       'plan': _chatId,
@@ -175,11 +175,11 @@ class ChatMessagesController extends GetxController {
       'outlet': _chatId,
       'business': _chatId,
       'user': uidToWriteTo,
-      'by': _authService.firebaseUser.value!.uid
+      'by': _authService.firebaseUser.value!.uid,
     });
   }
 
-  void onUploadVideo() {
+  onUploadVideo() {
     StorageService.packAndUploadVideo(path: uploadPath, metadata: {
       'title': 'New Video',
       'plan': _chatId,

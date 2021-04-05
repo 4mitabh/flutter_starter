@@ -14,6 +14,17 @@ class DatabaseService extends GetxService {
     return DatabaseService.query(query, useCache: useCache);
   }
 
+  static RxList<FirebaseDoc> watchQuery(Query query, {bool useCache = true}) {
+    RxList<FirebaseDoc> docs = RxList.empty();
+    // DatabaseService.query(query.orderBy('ts', descending: true).limit(50), useCache: true).then((result) {
+    //   Timestamp ts = (result.isNotEmpty ? result.first.properties['ts'] : null) ?? Timestamp.fromMicrosecondsSinceEpoch(0);
+    //   docs(result);
+    // });
+    docs.bindStream(
+        query.orderBy('ts', descending: true).limit(50).snapshots().map((event) => event.docs.map((e) => FirebaseDoc.fromDocumentSnapshot(e)).toList()));
+    return docs;
+  }
+
   static Future<List<FirebaseDoc>> query(Query query, {bool useCache = true}) async {
     QuerySnapshot qs;
     if (!useCache)
@@ -43,11 +54,14 @@ class DatabaseService extends GetxService {
     }
   }
 
-  static void create(String path, Map<String, dynamic> data) {
+  static void create(String path, Map<String, dynamic> data, {String? id, SetOptions? setOptions}) {
     data['by'] = AuthService.to.firebaseUser.value!.uid;
     data['ts'] = FieldValue.serverTimestamp();
-    print('Writing to ${FirebasePaths.prefix + path} ');
-    _firestore.collection(FirebasePaths.prefix + path).doc().set(data);
+    print('Writing $data to ${FirebasePaths.prefix + path} ');
+    if (id == null)
+      _firestore.collection(FirebasePaths.prefix + path).doc().set(data, setOptions);
+    else
+      _firestore.doc(FirebasePaths.prefix + path + '/' + id).set(data, setOptions);
   }
 }
 
