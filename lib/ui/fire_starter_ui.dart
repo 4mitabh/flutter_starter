@@ -34,7 +34,7 @@ class FireStarterUI extends StatelessWidget {
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: AppLocalizations.languages.keys.toList(), // <- Supported locales
+        supportedLocales: localizedLabels.keys.toList(), // <- Supported locales
         //end language translation stuff
         debugShowCheckedModeBanner: false,
         theme: themeController.appTheme.value.lightTheme(),

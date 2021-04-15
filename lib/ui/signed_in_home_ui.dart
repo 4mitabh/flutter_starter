@@ -27,7 +27,7 @@ class SignedInHome extends GetView {
 
   @override
   Widget build(BuildContext context) {
-    // final labels = AppLocalizations.of(context);
+    // final labels = context.localizations;
     return Scaffold(
       body: Obx(
         () => controller.page,

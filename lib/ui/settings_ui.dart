@@ -16,7 +16,7 @@ class SettingsUI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     return Scaffold(
       appBar: AppBar(
         title: Text(labels.settings.title),
@@ -27,7 +27,7 @@ class SettingsUI extends StatelessWidget {
   }
 
   Widget _buildLayoutSection(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
 
     return ListView(
       children: <Widget>[
@@ -59,7 +59,7 @@ class SettingsUI extends StatelessWidget {
   }
 
   languageListTile(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     return GetBuilder<LanguageController>(
       builder: (controller) => ListTile(
         title: Text(labels.settings.language),
@@ -76,7 +76,7 @@ class SettingsUI extends StatelessWidget {
   }
 
   themeListTile(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     final List<MenuOptionsModel> themeOptions = [
       MenuOptionsModel(key: "system", value: labels.settings.system, icon: Icons.brightness_4),
       MenuOptionsModel(key: "light", value: labels.settings.light, icon: Icons.brightness_low),

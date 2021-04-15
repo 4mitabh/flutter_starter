@@ -28,7 +28,7 @@ class SignInUI extends StatelessWidget {
   }
 
   Form buildForm(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     return Form(
       key: _formKey,
       child: Padding(

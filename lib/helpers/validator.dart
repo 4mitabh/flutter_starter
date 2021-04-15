@@ -3,7 +3,7 @@ import 'package:fire_starter/localizations.dart';
 // matching various patterns for kinds of data
 
 class Validator {
-  AppLocalizations_Labels labels;
+  AppLocalizationsData labels;
   Validator(this.labels);
 
   String? email(String? value) {

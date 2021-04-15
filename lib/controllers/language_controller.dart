@@ -20,11 +20,9 @@ class LanguageController extends GetxController {
 
   // Retrieves and Sets language based on device settings
   setInitialLocalLanguage() {
-    if ((currentLanguageStore.value == '') ||
-        (currentLanguageStore.value == null)) {
+    if (currentLanguageStore.value == '') {
       String _deviceLanguage = ui.window.locale.toString();
-      _deviceLanguage =
-          _deviceLanguage.substring(0, 2); //only get 1st 2 characters
+      _deviceLanguage = _deviceLanguage.substring(0, 2); //only get 1st 2 characters
       print(ui.window.locale.toString());
       updateLanguage(_deviceLanguage);
     }
@@ -38,15 +36,16 @@ class LanguageController extends GetxController {
 
   // gets the language locale app is set to
   Locale get getLocale {
-    if ((currentLanguageStore.value == '') ||
-        (currentLanguageStore.value == null)) {
+    if (currentLanguageStore.value == '') {
       language.value = Globals.defaultLanguage;
       updateLanguage(Globals.defaultLanguage);
     }
+
     // gets the default language key (from the translation language system)
-    Locale _updatedLocal = AppLocalizations.languages.keys.first;
+    Locale _updatedLocal = localizedLabels.keys.first;
+    ;
     // looks for matching language key stored and sets to it
-    AppLocalizations.languages.keys.forEach((locale) {
+    localizedLabels.keys.forEach((locale) {
       if (locale.languageCode == currentLanguage) {
         _updatedLocal = locale;
       }

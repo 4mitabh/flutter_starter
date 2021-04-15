@@ -82,7 +82,7 @@ class AuthService extends GetxService {
 
   //handles updating the user when updating profile
   Future<void> updateUser(BuildContext context, UserModel user) async {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     try {
       User _firebaseUser = firebaseUser.value!;
       _updateUserFirestore(user, _firebaseUser);

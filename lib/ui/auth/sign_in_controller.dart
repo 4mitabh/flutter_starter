@@ -39,7 +39,7 @@ class SignInController extends GetxController {
   requestOTP(BuildContext context, String phone) async {
     phoneNumber = phone;
     GetLogger.to.v('Sending OTP to $phone ');
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     if (GetPlatform.isAndroid) showLoadingIndicator();
     if (!kIsWeb)
       try {
@@ -80,7 +80,7 @@ class SignInController extends GetxController {
   verifyOTP(BuildContext context) async {
     String code = otpController.text.trim();
     GetLogger.to.v('Using OTP $code ');
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     showLoadingIndicator();
     if (kIsWeb) {
       UserCredential? userCredential = await _confirmationResult?.confirm(code);

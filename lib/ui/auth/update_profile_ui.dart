@@ -12,7 +12,7 @@ class UpdateProfileUI extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();
 
   Widget build(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     nameController.text = authController.firestoreUser.value?.name ?? '';
     return Scaffold(
       appBar: AppBar(title: Text(labels.auth.updateProfileTitle)),

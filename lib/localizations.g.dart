@@ -6,816 +6,1017 @@ part of 'localizations.dart';
 // SheetLocalizationGenerator
 // **************************************************************************
 
-// ignore_for_file: camel_case_types
-
-class AppLocalizations {
-  AppLocalizations(this.locale) : labels = languages[locale]!;
-
-  final Locale locale;
-
-  static final Map<Locale, AppLocalizations_Labels> languages = {
-    Locale.fromSubtags(languageCode: 'en'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Sign In With Google',
-        appleSignIn: 'Sign In With Apple',
-        aborted: 'Sign In Aborted',
-        phone: 'Enter Phone Number',
-        requestOTP: 'Get OTP',
-        enterOTP: 'Enter OTP',
-        otpVerificationSentTitle: 'OTP Sent',
-        otpVerificationSent: 'OTP sent to your mobile number',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP sent to ${phone}. Number not correct?''',
-        signInButton: 'Sign In',
-        nameFormField: 'Name',
-        emailFormField: 'Email',
-        signInErrorTitle: 'Sign In Error',
-        signInError: 'Login failed: OTP incorrect',
-        resetPasswordLabelButton: 'Forgot password?',
-        updateUser: 'Update Profile',
-        updateUserSuccessNoticeTitle: 'User Updated',
-        updateUserSuccessNotice: 'User information successfully updated.',
-        updateUserFailNotice: 'Failed to update user',
-        cancel: 'Cancel',
-        submit: 'Submit',
-        updateProfileTitle: 'Update Profile',
-        unknownError: 'Unknown Error',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'Settings',
-        language: 'Language',
-        theme: 'Theme',
-        signOut: 'Sign Out',
-        dark: 'Dark',
-        light: 'Light',
-        system: 'System',
-        updateProfile: 'Update Profile',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'Home',
-        nameLabel: 'Name',
-        uidLabel: 'UID',
-        emailLabel: 'Email',
-        phoneLabel: 'Phone',
-        adminUserLabel: 'Admin User',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'Please enter a valid email address.',
-        password: 'Password must be at least 6 characters.',
-        name: 'Please enter a name.',
-        number: 'Please enter a number.',
-        notEmpty: 'This is a required field.',
-        amount: 'Please enter a number i.e. 250 - no dollar symbol and no cents',
-      ),
+final localizedLabels = <Locale, AppLocalizationsData>{
+  Locale.fromSubtags(languageCode: 'en'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount: 'Please enter a number i.e. 250 - no dollar symbol and no cents',
+      notEmpty: 'This is a required field.',
+      number: 'Please enter a number.',
+      name: 'Please enter a name.',
+      password: 'Password must be at least 6 characters.',
+      email: 'Please enter a valid email address.',
     ),
-    Locale.fromSubtags(languageCode: 'fr'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Google Connexion',
-        appleSignIn: 'Apple Connexion',
-        aborted: 'Se connecter Aborted',
-        phone: 'Entrez numéro de téléphone',
-        requestOTP: 'Get OTP',
-        enterOTP: 'Entrez OTP',
-        otpVerificationSentTitle: 'Sent Bureau du Procureur',
-        otpVerificationSent: 'OTP envoyé à votre numéro de téléphone mobile',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP envoyé à $phone. Nombre incorrect?''',
-        signInButton: 'Se connecter',
-        nameFormField: 'Nom',
-        emailFormField: 'Email',
-        signInErrorTitle: 'Erreur de connexion',
-        signInError: 'Échec de la connexion: OTP incorrect',
-        resetPasswordLabelButton: 'Mot de passe oublié?',
-        updateUser: 'Mettre à jour le profil',
-        updateUserSuccessNoticeTitle: 'Mise à jour l\'utilisateur',
-        updateUserSuccessNotice: 'Informations sur l\'utilisateur mis à jour avec succès.',
-        updateUserFailNotice: 'Impossible de mettre à jour l\'utilisateur',
-        cancel: 'Annuler',
-        submit: 'Soumettre',
-        updateProfileTitle: 'Mettre à jour le profil',
-        unknownError: 'Erreur inconnue',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'Paramètres',
-        language: 'Langue',
-        theme: 'Thème',
-        signOut: 'Se déconnecter',
-        dark: 'Foncé',
-        light: 'Lumière',
-        system: 'Système',
-        updateProfile: 'Mettre à jour le profil',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'Accueil',
-        nameLabel: 'Nom',
-        uidLabel: 'UID',
-        emailLabel: 'Email',
-        phoneLabel: 'Téléphone',
-        adminUserLabel: 'utilisateur admin',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'S\'il vous plaît, mettez une adresse email valide.',
-        password: 'Le mot de passe doit être au moins de 6 caractères.',
-        name: 'S\'il vous plaît entrer un nom.',
-        number: 'S\'il vous plaît entrer un numéro.',
-        notEmpty: 'Ceci est un champ obligatoire.',
-        amount: 'S\'il vous plaît entrer un numéro à savoir 250 - aucun symbole du dollar et pas cents',
-      ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
     ),
-    Locale.fromSubtags(languageCode: 'es'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Iniciar sesión Google',
-        appleSignIn: 'En sesión de Apple',
-        aborted: 'Iniciar sesión abortada',
-        phone: 'Ingresar número telefónico',
-        requestOTP: 'Get OTP',
-        enterOTP: 'Introduzca OTP',
-        otpVerificationSentTitle: 'Enviados OTP',
-        otpVerificationSent: 'OTP enviado a su número de teléfono móvil',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP enviado al teléfono $phone. Número no es correcta?''',
-        signInButton: 'Registrarse',
-        nameFormField: 'Nombre',
-        emailFormField: 'Email',
-        signInErrorTitle: 'Error al iniciar sesión',
-        signInError: 'La conexión falló: OTP incorrectos',
-        resetPasswordLabelButton: '¿Se te olvidó tu contraseña?',
-        updateUser: 'Actualización del perfil',
-        updateUserSuccessNoticeTitle: 'Actualización de usuario',
-        updateUserSuccessNotice: 'La información de usuario actualizada correctamente.',
-        updateUserFailNotice: 'Error al usuario la actualización',
-        cancel: 'Cancelar',
-        submit: 'Enviar',
-        updateProfileTitle: 'Actualización del perfil',
-        unknownError: 'Error desconocido',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'ajustes',
-        language: 'Idioma',
-        theme: 'Tema',
-        signOut: 'Desconectar',
-        dark: 'Oscuro',
-        light: 'Ligero',
-        system: 'Sistema',
-        updateProfile: 'Actualización del perfil',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'Hogar',
-        nameLabel: 'Nombre',
-        uidLabel: 'UID',
-        emailLabel: 'Email',
-        phoneLabel: 'Teléfono',
-        adminUserLabel: 'admin User',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'Por favor, introduce una dirección de correo electrónico válida.',
-        password: 'La contraseña debe tener al menos 6 caracteres.',
-        name: 'Por favor, introduzca un nombre.',
-        number: 'Por favor, introduzca un número.',
-        notEmpty: 'Este es un campo obligatorio.',
-        amount: 'Por favor, introduzca un número, es decir 250 - ningún símbolo del dólar y sin centavos',
-      ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'Admin User',
+      phoneLabel: 'Phone',
+      emailLabel: 'Email',
+      uidLabel: 'UID',
+      nameLabel: 'Name',
+      title: 'Home',
     ),
-    Locale.fromSubtags(languageCode: 'de'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Google Anmelden',
-        appleSignIn: 'Apple Anmelden',
-        aborted: 'Anmelden Aborted',
-        phone: 'Telefonnummer eingeben',
-        requestOTP: 'Get OTP',
-        enterOTP: 'Geben Sie OTP',
-        otpVerificationSentTitle: 'OTP Sent',
-        otpVerificationSent: 'OTP an Ihre Handy-Nummer',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP an $phone. Nummer nicht korrekt?''',
-        signInButton: 'Anmelden',
-        nameFormField: 'Name',
-        emailFormField: 'Email',
-        signInErrorTitle: 'Anmelden Fehler',
-        signInError: 'Fehler bei der Anmeldung: OTP falsch',
-        resetPasswordLabelButton: 'Passwort vergessen?',
-        updateUser: 'Profil aktualisieren',
-        updateUserSuccessNoticeTitle: 'Benutzer Aktualisiert',
-        updateUserSuccessNotice: 'Benutzerinformationen erfolgreich aktualisiert.',
-        updateUserFailNotice: 'Fehler beim Update Benutzer',
-        cancel: 'Stornieren',
-        submit: 'einreichen',
-        updateProfileTitle: 'Profil aktualisieren',
-        unknownError: 'Unbekannter Fehler',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'die Einstellungen',
-        language: 'Sprache',
-        theme: 'Thema',
-        signOut: 'Austragen',
-        dark: 'Dunkel',
-        light: 'Licht',
-        system: 'System',
-        updateProfile: 'Profil aktualisieren',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'Zuhause',
-        nameLabel: 'Name',
-        uidLabel: 'UID',
-        emailLabel: 'Email',
-        phoneLabel: 'Telefon',
-        adminUserLabel: 'Admin Benutzer',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
-        password: 'Passwort muss mindestens 6 Zeichen lang sein.',
-        name: 'Bitte geben Sie einen Namen.',
-        number: 'Bitte gebe eine Nummer ein.',
-        notEmpty: 'Dies ist ein Pflichtfeld.',
-        amount: 'Bitte geben Sie eine Zahl das heißt 250 - kein Dollar-Symbol und keinen Cent',
-      ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'Update Profile',
+      system: 'System',
+      light: 'Light',
+      dark: 'Dark',
+      signOut: 'Sign Out',
+      theme: 'Theme',
+      language: 'Language',
+      title: 'Settings',
     ),
-    Locale.fromSubtags(languageCode: 'hi'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'गूगल साइन इन करें',
-        appleSignIn: 'एप्पल साइन इन करें',
-        aborted: 'साइन इन गर्भपात',
-        phone: 'फोन नंबर दर्ज',
-        requestOTP: 'प्राप्त OTP',
-        enterOTP: 'OTP दर्ज करें',
-        otpVerificationSentTitle: 'OTP भेजा',
-        otpVerificationSent: 'OTP अपने मोबाइल नंबर पर भेजा',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP भेजा $phone। संख्या नहीं सही है?''',
-        signInButton: 'दाखिल करना',
-        nameFormField: 'नाम',
-        emailFormField: 'ईमेल',
-        signInErrorTitle: 'साइन इन त्रुटि',
-        signInError: 'लॉगइन असफल: OTP गलत',
-        resetPasswordLabelButton: 'पासवर्ड भूल गए?',
-        updateUser: 'प्रोफ़ाइल अपडेट करें',
-        updateUserSuccessNoticeTitle: 'उपयोगकर्ता अपडेट किया गया',
-        updateUserSuccessNotice: 'उपयोगकर्ता जानकारी सफलतापूर्वक अपडेट।',
-        updateUserFailNotice: 'उपयोगकर्ता अद्यतन करने में विफल',
-        cancel: 'रद्द करना',
-        submit: 'प्रस्तुत',
-        updateProfileTitle: 'प्रोफ़ाइल अपडेट करें',
-        unknownError: 'अज्ञात त्रुटि',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'समायोजन',
-        language: 'भाषा: हिन्दी',
-        theme: 'विषय',
-        signOut: 'प्रस्थान करें',
-        dark: 'अंधेरा',
-        light: 'रोशनी',
-        system: 'प्रणाली',
-        updateProfile: 'प्रोफ़ाइल अपडेट करें',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'घर',
-        nameLabel: 'नाम',
-        uidLabel: 'यूआईडी',
-        emailLabel: 'ईमेल',
-        phoneLabel: 'फ़ोन',
-        adminUserLabel: 'व्यवस्थापक उपयोगकर्ता',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'कृपया एक वैध ई - मेल एड्रेस डालें।',
-        password: 'पासवर्ड कम से कम 6 अंकों का होना चाहिए।',
-        name: 'एक नाम दर्ज करें।',
-        number: 'एक संख्या दर्ज करें।',
-        notEmpty: 'यह एक आवश्यक फील्ड है।',
-        amount: 'कोई डॉलर प्रतीक और कोई सेंट - एक नंबर अर्थात 250 दर्ज करें',
-      ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'Unknown Error',
+      updateProfileTitle: 'Update Profile',
+      submit: 'Submit',
+      cancel: 'Cancel',
+      updateUserFailNotice: 'Failed to update user',
+      updateUserSuccessNotice: 'User information successfully updated.',
+      updateUserSuccessNoticeTitle: 'User Updated',
+      updateUser: 'Update Profile',
+      resetPasswordLabelButton: 'Forgot password?',
+      signInError: 'Login failed: OTP incorrect',
+      signInErrorTitle: 'Sign In Error',
+      emailFormField: 'Email',
+      nameFormField: 'Name',
+      signInButton: 'Sign In',
+      otpVerificationChangeNumber: 'OTP sent to {{phone}}. Number not correct?',
+      otpVerificationSent: 'OTP sent to your mobile number',
+      otpVerificationSentTitle: 'OTP Sent',
+      enterOTP: 'Enter OTP',
+      requestOTP: 'Get OTP',
+      phone: 'Enter Phone Number',
+      aborted: 'Sign In Aborted',
+      appleSignIn: 'Sign In With Apple',
+      googleSignIn: 'Sign In With Google',
     ),
-    Locale.fromSubtags(languageCode: 'pt'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Google Entrar',
-        appleSignIn: 'Sinal Apple Em',
-        aborted: 'Entrar Aborted',
-        phone: 'Introduzir número de telefone',
-        requestOTP: 'get OTP',
-        enterOTP: 'Digite OTP',
-        otpVerificationSentTitle: 'OTP Sent',
-        otpVerificationSent: 'OTP enviada para o seu número de telemóvel',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP enviado para $phone. Número não está correta?''',
-        signInButton: 'Assinar em',
-        nameFormField: 'Nome',
-        emailFormField: 'O email',
-        signInErrorTitle: 'Entrar erro',
-        signInError: 'Falha de logon: OTP incorreta',
-        resetPasswordLabelButton: 'Esqueceu sua senha?',
-        updateUser: 'Atualizar perfil',
-        updateUserSuccessNoticeTitle: 'do usuário atualizada',
-        updateUserSuccessNotice: 'informações do usuário atualizado com sucesso.',
-        updateUserFailNotice: 'Falha ao usuário de atualização',
-        cancel: 'Cancelar',
-        submit: 'Enviar',
-        updateProfileTitle: 'Atualizar perfil',
-        unknownError: 'Erro desconhecido',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'Definições',
-        language: 'Língua',
-        theme: 'Tema',
-        signOut: 'Sair',
-        dark: 'Sombrio',
-        light: 'Luz',
-        system: 'Sistema',
-        updateProfile: 'Atualizar perfil',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'Casa',
-        nameLabel: 'Nome',
-        uidLabel: 'UID',
-        emailLabel: 'O email',
-        phoneLabel: 'telefone',
-        adminUserLabel: 'admin User',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'Por favor insira um endereço de e-mail válido.',
-        password: 'A senha deve ter pelo menos 6 caracteres.',
-        name: 'Por favor, indique um nome.',
-        number: 'Por favor, coloque um numero.',
-        notEmpty: 'Este é um campo obrigatório.',
-        amount: 'Por favor insira um número ou seja 250 - nenhum símbolo dólar e há centavos',
-      ),
+  ),
+  Locale.fromSubtags(languageCode: 'fr'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount:
+          'S\'il vous plaît entrer un numéro à savoir 250 - aucun symbole du dollar et pas cents',
+      notEmpty: 'Ceci est un champ obligatoire.',
+      number: 'S\'il vous plaît entrer un numéro.',
+      name: 'S\'il vous plaît entrer un nom.',
+      password: 'Le mot de passe doit être au moins de 6 caractères.',
+      email: 'S\'il vous plaît, mettez une adresse email valide.',
     ),
-    Locale.fromSubtags(languageCode: 'zh'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: '谷歌登录',
-        appleSignIn: '苹果登录',
-        aborted: '登录中止',
-        phone: '输入电话号码',
-        requestOTP: '获取OTP',
-        enterOTP: '输入OTP',
-        otpVerificationSentTitle: 'OTP发送',
-        otpVerificationSent: 'OTP发送到您的手机号码',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP发送到$phone。号码不正确？''',
-        signInButton: '登入',
-        nameFormField: '名称',
-        emailFormField: '电子邮件',
-        signInErrorTitle: '登录错误',
-        signInError: '登录失败：不正确OTP',
-        resetPasswordLabelButton: '忘记密码？',
-        updateUser: '更新配置文件',
-        updateUserSuccessNoticeTitle: '用户更新',
-        updateUserSuccessNotice: '用户信息更新成功。',
-        updateUserFailNotice: '无法更新用户',
-        cancel: '取消',
-        submit: '提交',
-        updateProfileTitle: '更新配置文件',
-        unknownError: '未知错误',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: '设置',
-        language: '语言',
-        theme: '主题',
-        signOut: '登出',
-        dark: '黑暗',
-        light: '光',
-        system: '系统',
-        updateProfile: '更新配置文件',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: '家',
-        nameLabel: '名称',
-        uidLabel: 'UID',
-        emailLabel: '电子邮件',
-        phoneLabel: '电话',
-        adminUserLabel: '管理员用户',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: '请输入有效的电子邮件地址。',
-        password: '密码必须至少6个字符。',
-        name: '请输入姓名。',
-        number: '请输入一个数字。',
-        notEmpty: '这是一个必填字段。',
-        amount: '请输入一个数即250  - 没有美元符号和无分',
-      ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
     ),
-    Locale.fromSubtags(languageCode: 'ja'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Googleのサインイン',
-        appleSignIn: 'アップルサインイン',
-        aborted: '中止サインイン',
-        phone: '電話番号を入力します。',
-        requestOTP: '取得OTP',
-        enterOTP: 'OTPを入力します。',
-        otpVerificationSentTitle: 'OTP SENT',
-        otpVerificationSent: 'OTPは、あなたの携帯電話番号に送信されました',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTPは$phone電話に送られます。番号が正しくありませんか？''',
-        signInButton: 'ログイン',
-        nameFormField: '名前',
-        emailFormField: 'Eメール',
-        signInErrorTitle: 'エラーサインイン',
-        signInError: 'ログインに失敗しました：OTP正しくありません',
-        resetPasswordLabelButton: 'パスワードをお忘れですか？',
-        updateUser: 'プロフィールを更新',
-        updateUserSuccessNoticeTitle: 'ユーザーの更新',
-        updateUserSuccessNotice: 'ユーザー情報が正常に更新します。',
-        updateUserFailNotice: '更新ユーザーに失敗しました。',
-        cancel: 'キャンセル',
-        submit: '参加する',
-        updateProfileTitle: 'プロフィールを更新',
-        unknownError: '不明なエラー',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: '設定',
-        language: '言語',
-        theme: 'テーマ',
-        signOut: 'サインアウト',
-        dark: '闇',
-        light: '光',
-        system: 'システム',
-        updateProfile: 'プロフィールを更新',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: '家',
-        nameLabel: '名前',
-        uidLabel: 'UID',
-        emailLabel: 'Eメール',
-        phoneLabel: '電話',
-        adminUserLabel: '管理者ユーザー',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: '有効なメールアドレスを入力してください。',
-        password: 'パスワードは少なくとも6文字でなければなりません。',
-        name: '名前を入力してください。',
-        number: '番号を入力してください。',
-        notEmpty: 'これは必要項目です。',
-        amount: 'ノードル記号なしセント - すなわち、250番号を入力してください。',
-      ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'utilisateur admin',
+      phoneLabel: 'Téléphoner',
+      emailLabel: 'E-mail',
+      uidLabel: 'UID',
+      nameLabel: 'Nom',
+      title: 'Domicile',
     ),
-    Locale.fromSubtags(languageCode: 'ru'): AppLocalizations_Labels(
-      auth: AppLocalizations_Labels_Auth(
-        googleSignIn: 'Google Вход',
-        appleSignIn: 'Яблоко Вход',
-        aborted: 'Вход в систему абортированных',
-        phone: 'Введите номер телефона',
-        requestOTP: 'Get OTP',
-        enterOTP: 'Введите одноразовый пароль',
-        otpVerificationSentTitle: 'OTP Sent',
-        otpVerificationSent: 'OTP отправлено на Ваш номер мобильного',
-        otpVerificationChangeNumber: ({phone = ''}) => '''OTP адрес $phone. Номер не правильно?''',
-        signInButton: 'Войти в систему',
-        nameFormField: 'имя',
-        emailFormField: 'Эл. адрес',
-        signInErrorTitle: 'Ошибка входа',
-        signInError: 'Войти не удалось: OTP некорректный',
-        resetPasswordLabelButton: 'Забыли пароль?',
-        updateUser: 'Обновить профиль',
-        updateUserSuccessNoticeTitle: 'Пользователь Обновлено',
-        updateUserSuccessNotice: 'Информация о пользователе успешно обновлена.',
-        updateUserFailNotice: 'Не удался пользователь обновления',
-        cancel: 'Отмена',
-        submit: 'Разместить',
-        updateProfileTitle: 'Обновить профиль',
-        unknownError: 'Неизвестная ошибка',
-      ),
-      settings: AppLocalizations_Labels_Settings(
-        title: 'настройки',
-        language: 'язык',
-        theme: 'тема',
-        signOut: 'Выход',
-        dark: 'Тьма',
-        light: 'Свет',
-        system: 'система',
-        updateProfile: 'Обновить профиль',
-      ),
-      home: AppLocalizations_Labels_Home(
-        title: 'Главная',
-        nameLabel: 'имя',
-        uidLabel: 'UID',
-        emailLabel: 'Эл. адрес',
-        phoneLabel: 'Телефон',
-        adminUserLabel: 'Пользователь Admin',
-      ),
-      app: AppLocalizations_Labels_App(
-        title: 'Scorizen',
-      ),
-      validator: AppLocalizations_Labels_Validator(
-        email: 'Пожалуйста, введите действительный адрес электронной почты.',
-        password: 'Пароль должен быть не менее 6 символов.',
-        name: 'Пожалуйста, введите имя.',
-        number: 'Пожалуйста, введите число.',
-        notEmpty: 'Это поле обязательно для заполнения.',
-        amount: 'Пожалуйста, введите номер 250 - т.е. без символа доллара и ни цента',
-      ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'Mettre à jour le profil',
+      system: 'Système',
+      light: 'Lumière',
+      dark: 'Sombre',
+      signOut: 'Se déconnecter',
+      theme: 'Thème',
+      language: 'Langue',
+      title: 'Paramètres',
     ),
-  };
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'Erreur inconnue',
+      updateProfileTitle: 'Mettre à jour le profil',
+      submit: 'Soumettre',
+      cancel: 'Annuler',
+      updateUserFailNotice: 'Impossible de mettre à jour l\'utilisateur',
+      updateUserSuccessNotice:
+          'Informations sur l\'utilisateur mis à jour avec succès.',
+      updateUserSuccessNoticeTitle: 'Mise à jour l\'utilisateur',
+      updateUser: 'Mettre à jour le profil',
+      resetPasswordLabelButton: 'Mot de passe oublié?',
+      signInError: 'Échec de la connexion: OTP incorrect',
+      signInErrorTitle: 'Erreur de connexion',
+      emailFormField: 'E-mail',
+      nameFormField: 'Nom',
+      signInButton: 'S\'identifier',
+      otpVerificationChangeNumber:
+          'OTP envoyé à {{téléphone}}. Nombre incorrect?',
+      otpVerificationSent: 'OTP envoyé à votre numéro de téléphone mobile',
+      otpVerificationSentTitle: 'Sent Bureau du Procureur',
+      enterOTP: 'Entrez OTP',
+      requestOTP: 'Get OTP',
+      phone: 'Entrez numéro de téléphone',
+      aborted: 'Se connecter Aborted',
+      appleSignIn: 'Connectez-vous avec d\'Apple',
+      googleSignIn: 'Connectez-vous avec Google',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'es'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount:
+          'Por favor, introduzca un número, es decir 250 - ningún símbolo del dólar y sin centavos',
+      notEmpty: 'Este es un campo obligatorio.',
+      number: 'Por favor, introduzca un número.',
+      name: 'Por favor, introduzca un nombre.',
+      password: 'La contraseña debe tener al menos 6 caracteres.',
+      email: 'Por favor, introduce una dirección de correo electrónico válida.',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'admin User',
+      phoneLabel: 'Teléfono',
+      emailLabel: 'Correo electrónico',
+      uidLabel: 'UID',
+      nameLabel: 'Nombre',
+      title: 'Casa',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'Actualización del perfil',
+      system: 'Sistema',
+      light: 'Luz',
+      dark: 'Oscuro',
+      signOut: 'Desconectar',
+      theme: 'Tema',
+      language: 'Idioma',
+      title: 'Ajustes',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'Error desconocido',
+      updateProfileTitle: 'Actualización del perfil',
+      submit: 'Enviar',
+      cancel: 'Cancelar',
+      updateUserFailNotice: 'Error al usuario la actualización',
+      updateUserSuccessNotice:
+          'La información de usuario actualizada correctamente.',
+      updateUserSuccessNoticeTitle: 'Actualización de usuario',
+      updateUser: 'Actualización del perfil',
+      resetPasswordLabelButton: '¿Se te olvidó tu contraseña?',
+      signInError: 'La conexión falló: OTP incorrectos',
+      signInErrorTitle: 'Error al iniciar sesión',
+      emailFormField: 'Correo electrónico',
+      nameFormField: 'Nombre',
+      signInButton: 'Iniciar sesión',
+      otpVerificationChangeNumber:
+          'OTP enviado al teléfono {{}}. Número no es correcta?',
+      otpVerificationSent: 'OTP enviado a su número de teléfono móvil',
+      otpVerificationSentTitle: 'Enviados OTP',
+      enterOTP: 'Introduzca OTP',
+      requestOTP: 'Get OTP',
+      phone: 'Introduzca el número de teléfono',
+      aborted: 'Iniciar sesión abortada',
+      appleSignIn: 'Iniciar sesión con Apple',
+      googleSignIn: 'Inicia sesión con Google',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'de'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount:
+          'Bitte geben Sie eine Zahl das heißt 250 - kein Dollar-Symbol und keinen Cent',
+      notEmpty: 'Dies ist ein Pflichtfeld.',
+      number: 'Bitte gebe eine Nummer ein.',
+      name: 'Bitte geben Sie einen Namen.',
+      password: 'Passwort muss mindestens 6 Zeichen lang sein.',
+      email: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'Admin Benutzer',
+      phoneLabel: 'Telefon',
+      emailLabel: 'Email',
+      uidLabel: 'UID',
+      nameLabel: 'Name',
+      title: 'Zuhause',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'Profil aktualisieren',
+      system: 'System',
+      light: 'Licht',
+      dark: 'Dunkel',
+      signOut: 'Austragen',
+      theme: 'Thema',
+      language: 'Sprache',
+      title: 'die Einstellungen',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'Unbekannter Fehler',
+      updateProfileTitle: 'Profil aktualisieren',
+      submit: 'einreichen',
+      cancel: 'Stornieren',
+      updateUserFailNotice: 'Fehler beim Update Benutzer',
+      updateUserSuccessNotice:
+          'Benutzerinformationen erfolgreich aktualisiert.',
+      updateUserSuccessNoticeTitle: 'Benutzer Aktualisiert',
+      updateUser: 'Profil aktualisieren',
+      resetPasswordLabelButton: 'Passwort vergessen?',
+      signInError: 'Fehler bei der Anmeldung: OTP falsch',
+      signInErrorTitle: 'Anmelden Fehler',
+      emailFormField: 'Email',
+      nameFormField: 'Name',
+      signInButton: 'Einloggen',
+      otpVerificationChangeNumber: 'OTP an {{Telefon}}. Nummer nicht korrekt?',
+      otpVerificationSent: 'OTP an Ihre Handy-Nummer',
+      otpVerificationSentTitle: 'OTP Sent',
+      enterOTP: 'Geben Sie OTP',
+      requestOTP: 'Get OTP',
+      phone: 'Telefonnummer eingeben',
+      aborted: 'Anmelden Aborted',
+      appleSignIn: 'Einloggen mit Apple',
+      googleSignIn: 'Anmeldung mit Google',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'hi'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount: 'कोई डॉलर प्रतीक और कोई सेंट - एक नंबर अर्थात 250 दर्ज करें',
+      notEmpty: 'यह एक आवश्यक फील्ड है।',
+      number: 'एक संख्या दर्ज करें।',
+      name: 'एक नाम दर्ज करें।',
+      password: 'पासवर्ड कम से कम 6 अंकों का होना चाहिए।',
+      email: 'कृपया एक वैध ई - मेल एड्रेस डालें।',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'व्यवस्थापक उपयोगकर्ता',
+      phoneLabel: 'फ़ोन',
+      emailLabel: 'ईमेल',
+      uidLabel: 'यूआईडी',
+      nameLabel: 'नाम',
+      title: 'घर',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'प्रोफ़ाइल अपडेट करें',
+      system: 'प्रणाली',
+      light: 'रोशनी',
+      dark: 'अंधेरा',
+      signOut: 'प्रस्थान करें',
+      theme: 'विषय',
+      language: 'भाषा: हिन्दी',
+      title: 'समायोजन',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'अज्ञात त्रुटि',
+      updateProfileTitle: 'प्रोफ़ाइल अपडेट करें',
+      submit: 'प्रस्तुत',
+      cancel: 'रद्द करना',
+      updateUserFailNotice: 'उपयोगकर्ता अद्यतन करने में विफल',
+      updateUserSuccessNotice: 'उपयोगकर्ता जानकारी सफलतापूर्वक अपडेट।',
+      updateUserSuccessNoticeTitle: 'उपयोगकर्ता अपडेट किया गया',
+      updateUser: 'प्रोफ़ाइल अपडेट करें',
+      resetPasswordLabelButton: 'पासवर्ड भूल गए?',
+      signInError: 'लॉगइन असफल: OTP गलत',
+      signInErrorTitle: 'साइन इन त्रुटि',
+      emailFormField: 'ईमेल',
+      nameFormField: 'नाम',
+      signInButton: 'दाखिल करना',
+      otpVerificationChangeNumber: 'OTP भेजा {{फोन}}। संख्या नहीं सही है?',
+      otpVerificationSent: 'OTP अपने मोबाइल नंबर पर भेजा',
+      otpVerificationSentTitle: 'OTP भेजा',
+      enterOTP: 'OTP दर्ज करें',
+      requestOTP: 'प्राप्त OTP',
+      phone: 'फोन नंबर दर्ज',
+      aborted: 'साइन इन गर्भपात',
+      appleSignIn: 'साइन एप्पल के साथ में',
+      googleSignIn: 'साइन Google के साथ',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'pt'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount:
+          'Por favor insira um número ou seja 250 - nenhum símbolo dólar e há centavos',
+      notEmpty: 'Este é um campo obrigatório.',
+      number: 'Por favor, coloque um numero.',
+      name: 'Por favor, indique um nome.',
+      password: 'A senha deve ter pelo menos 6 caracteres.',
+      email: 'Por favor insira um endereço de e-mail válido.',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'admin User',
+      phoneLabel: 'Telefone',
+      emailLabel: 'E-mail',
+      uidLabel: 'UID',
+      nameLabel: 'Nome',
+      title: 'Casa',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'Atualizar perfil',
+      system: 'Sistema',
+      light: 'Luz',
+      dark: 'Escuro',
+      signOut: 'Sair',
+      theme: 'Tema',
+      language: 'Língua',
+      title: 'Definições',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'Erro desconhecido',
+      updateProfileTitle: 'Atualizar perfil',
+      submit: 'Enviar',
+      cancel: 'Cancelar',
+      updateUserFailNotice: 'Falha ao usuário de atualização',
+      updateUserSuccessNotice: 'informações do usuário atualizado com sucesso.',
+      updateUserSuccessNoticeTitle: 'do usuário atualizada',
+      updateUser: 'Atualizar perfil',
+      resetPasswordLabelButton: 'Esqueceu a senha?',
+      signInError: 'Falha de logon: OTP incorreta',
+      signInErrorTitle: 'Entrar erro',
+      emailFormField: 'E-mail',
+      nameFormField: 'Nome',
+      signInButton: 'Entrar',
+      otpVerificationChangeNumber:
+          'OTP enviado para {{telefone}}. Número não está correta?',
+      otpVerificationSent: 'OTP enviada para o seu número de telemóvel',
+      otpVerificationSentTitle: 'OTP Sent',
+      enterOTP: 'Digite OTP',
+      requestOTP: 'get OTP',
+      phone: 'Introduzir número de telefone',
+      aborted: 'Entrar Aborted',
+      appleSignIn: 'Entrar com a Apple',
+      googleSignIn: 'Faça login no Google',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'zh'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount: '请输入一个数，即250  - 没有美元符号和无分',
+      notEmpty: '这是一个必填字段。',
+      number: '请输入一个数字。',
+      name: '请输入姓名。',
+      password: '密码必须至少6个字符。',
+      email: '请输入有效的电子邮件地址。',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: '管理员用户',
+      phoneLabel: '电话',
+      emailLabel: '电子邮件',
+      uidLabel: 'UID',
+      nameLabel: '名称',
+      title: '家',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: '更新个人信息',
+      system: '系统',
+      light: '光',
+      dark: '黑暗的',
+      signOut: '登出',
+      theme: '主题',
+      language: '语',
+      title: '设置',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: '未知错误',
+      updateProfileTitle: '更新个人信息',
+      submit: '提交',
+      cancel: '取消',
+      updateUserFailNotice: '无法更新用户',
+      updateUserSuccessNotice: '用户信息更新成功。',
+      updateUserSuccessNoticeTitle: '用户更新',
+      updateUser: '更新个人信息',
+      resetPasswordLabelButton: '忘记密码？',
+      signInError: '登录失败：不正确OTP',
+      signInErrorTitle: '登录错误',
+      emailFormField: '电子邮件',
+      nameFormField: '名称',
+      signInButton: '登入',
+      otpVerificationChangeNumber: 'OTP发送到{{电话}}。号码不正确？',
+      otpVerificationSent: 'OTP发送到您的手机号码',
+      otpVerificationSentTitle: 'OTP发送',
+      enterOTP: '输入OTP',
+      requestOTP: '获取OTP',
+      phone: '输入电话号码',
+      aborted: '登录中止',
+      appleSignIn: '拍在与苹果',
+      googleSignIn: '在与谷歌',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'ja'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount: 'ノードル記号なしセント - すなわち、250番号を入力してください。',
+      notEmpty: 'これは必要項目です。',
+      number: '番号を入力してください。',
+      name: '名前を入力してください。',
+      password: 'パスワードは少なくとも6文字でなければなりません。',
+      email: '有効なメールアドレスを入力してください。',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: '管理者ユーザー',
+      phoneLabel: '電話',
+      emailLabel: 'Eメール',
+      uidLabel: 'UID',
+      nameLabel: '名前',
+      title: '家',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'プロフィールを更新',
+      system: 'システム',
+      light: '光',
+      dark: '闇',
+      signOut: 'サインアウト',
+      theme: 'テーマ',
+      language: '言語',
+      title: '設定',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: '不明なエラー',
+      updateProfileTitle: 'プロフィールを更新',
+      submit: '参加する',
+      cancel: 'キャンセル',
+      updateUserFailNotice: '更新ユーザーに失敗しました。',
+      updateUserSuccessNotice: 'ユーザー情報が正常に更新します。',
+      updateUserSuccessNoticeTitle: 'ユーザーの更新',
+      updateUser: 'プロフィールを更新',
+      resetPasswordLabelButton: 'パスワードをお忘れですか？',
+      signInError: 'ログインに失敗しました：OTP正しくありません',
+      signInErrorTitle: 'エラーサインイン',
+      emailFormField: 'Eメール',
+      nameFormField: '名前',
+      signInButton: 'サインイン',
+      otpVerificationChangeNumber: 'OTPは{{}}電話に送られます。番号が正しくありませんか？',
+      otpVerificationSent: 'OTPは、あなたの携帯電話番号に送信されました',
+      otpVerificationSentTitle: 'OTP SENT',
+      enterOTP: 'OTPを入力します。',
+      requestOTP: '取得OTP',
+      phone: '電話番号を入力します。',
+      aborted: '中止サインイン',
+      appleSignIn: 'アップルサインイン',
+      googleSignIn: 'でGoogleにログイン',
+    ),
+  ),
+  Locale.fromSubtags(languageCode: 'ru'): const AppLocalizationsData(
+    validator: const AppLocalizationsDataValidator(
+      amount:
+          'Пожалуйста, введите номер 250 - т.е. без символа доллара и ни цента',
+      notEmpty: 'Это поле обязательно для заполнения.',
+      number: 'Пожалуйста, введите номер.',
+      name: 'Пожалуйста, введите имя.',
+      password: 'Пароль должен быть не менее 6 символов.',
+      email: 'Пожалуйста, введите действительный адрес электронной почты.',
+    ),
+    app: const AppLocalizationsDataApp(
+      title: 'Scorizen',
+    ),
+    home: const AppLocalizationsDataHome(
+      adminUserLabel: 'Пользователь Admin',
+      phoneLabel: 'Телефон',
+      emailLabel: 'Электронное письмо',
+      uidLabel: 'UID',
+      nameLabel: 'Имя',
+      title: 'Дом',
+    ),
+    settings: const AppLocalizationsDataSettings(
+      updateProfile: 'Обновить профиль',
+      system: 'Система',
+      light: 'Свет',
+      dark: 'Темный',
+      signOut: 'Выход',
+      theme: 'Тема',
+      language: 'Язык',
+      title: 'Настройки',
+    ),
+    auth: const AppLocalizationsDataAuth(
+      unknownError: 'Неизвестная ошибка',
+      updateProfileTitle: 'Обновить профиль',
+      submit: 'Представлять на рассмотрение',
+      cancel: 'Отмена',
+      updateUserFailNotice: 'Не удался пользователь обновления',
+      updateUserSuccessNotice: 'Информация о пользователе успешно обновлена.',
+      updateUserSuccessNoticeTitle: 'Пользователь Обновлено',
+      updateUser: 'Обновить профиль',
+      resetPasswordLabelButton: 'забыл пароль?',
+      signInError: 'Войти не удалось: OTP некорректный',
+      signInErrorTitle: 'Ошибка входа',
+      emailFormField: 'Электронное письмо',
+      nameFormField: 'Имя',
+      signInButton: 'Войти',
+      otpVerificationChangeNumber: 'OTP адрес {{телефон}}. Номер не правильно?',
+      otpVerificationSent: 'OTP отправлено на Ваш номер мобильного',
+      otpVerificationSentTitle: 'OTP Sent',
+      enterOTP: 'Введите одноразовый пароль',
+      requestOTP: 'Get OTP',
+      phone: 'Введите номер телефона',
+      aborted: 'Вход в систему абортированных',
+      appleSignIn: 'Вход с помощью Apple,',
+      googleSignIn: 'Вход с помощью Google',
+    ),
+  ),
+};
 
-  final AppLocalizations_Labels labels;
+class AppLocalizationsData {
+  const AppLocalizationsData({
+    required this.validator,
+    required this.app,
+    required this.home,
+    required this.settings,
+    required this.auth,
+  });
 
-  static AppLocalizations_Labels of(BuildContext context) => (Localizations.of<AppLocalizations>(context, AppLocalizations)!.labels);
-}
-
-typedef AppLocalizations_Labels_Auth_otpVerificationChangeNumber = String Function({@required String phone});
-
-class AppLocalizations_Labels_Auth {
-  const AppLocalizations_Labels_Auth(
-      {required this.googleSignIn,
-      required this.appleSignIn,
-      required this.aborted,
-      required this.phone,
-      required this.requestOTP,
-      required this.enterOTP,
-      required this.otpVerificationSentTitle,
-      required this.otpVerificationSent,
-      required AppLocalizations_Labels_Auth_otpVerificationChangeNumber otpVerificationChangeNumber,
-      required this.signInButton,
-      required this.nameFormField,
-      required this.emailFormField,
-      required this.signInErrorTitle,
-      required this.signInError,
-      required this.resetPasswordLabelButton,
-      required this.updateUser,
-      required this.updateUserSuccessNoticeTitle,
-      required this.updateUserSuccessNotice,
-      required this.updateUserFailNotice,
-      required this.cancel,
-      required this.submit,
-      required this.updateProfileTitle,
-      required this.unknownError})
-      : _otpVerificationChangeNumber = otpVerificationChangeNumber;
-
-  final String googleSignIn;
-
-  final String appleSignIn;
-
-  final String aborted;
-
-  final String phone;
-
-  final String requestOTP;
-
-  final String enterOTP;
-
-  final String otpVerificationSentTitle;
-
-  final String otpVerificationSent;
-
-  final AppLocalizations_Labels_Auth_otpVerificationChangeNumber _otpVerificationChangeNumber;
-
-  final String signInButton;
-
-  final String nameFormField;
-
-  final String emailFormField;
-
-  final String signInErrorTitle;
-
-  final String signInError;
-
-  final String resetPasswordLabelButton;
-
-  final String updateUser;
-
-  final String updateUserSuccessNoticeTitle;
-
-  final String updateUserSuccessNotice;
-
-  final String updateUserFailNotice;
-
-  final String cancel;
-
-  final String submit;
-
-  final String updateProfileTitle;
-
-  final String unknownError;
-
-  String getByKey(String key) {
-    switch (key) {
-      case 'googleSignIn':
-        return googleSignIn;
-      case 'appleSignIn':
-        return appleSignIn;
-      case 'aborted':
-        return aborted;
-      case 'phone':
-        return phone;
-      case 'requestOTP':
-        return requestOTP;
-      case 'enterOTP':
-        return enterOTP;
-      case 'otpVerificationSentTitle':
-        return otpVerificationSentTitle;
-      case 'otpVerificationSent':
-        return otpVerificationSent;
-      case 'signInButton':
-        return signInButton;
-      case 'nameFormField':
-        return nameFormField;
-      case 'emailFormField':
-        return emailFormField;
-      case 'signInErrorTitle':
-        return signInErrorTitle;
-      case 'signInError':
-        return signInError;
-      case 'resetPasswordLabelButton':
-        return resetPasswordLabelButton;
-      case 'updateUser':
-        return updateUser;
-      case 'updateUserSuccessNoticeTitle':
-        return updateUserSuccessNoticeTitle;
-      case 'updateUserSuccessNotice':
-        return updateUserSuccessNotice;
-      case 'updateUserFailNotice':
-        return updateUserFailNotice;
-      case 'cancel':
-        return cancel;
-      case 'submit':
-        return submit;
-      case 'updateProfileTitle':
-        return updateProfileTitle;
-      case 'unknownError':
-        return unknownError;
-      default:
-        return '';
-    }
-  }
-
-  String otpVerificationChangeNumber({required String phone}) => _otpVerificationChangeNumber(
-        phone: phone,
+  final AppLocalizationsDataValidator validator;
+  final AppLocalizationsDataApp app;
+  final AppLocalizationsDataHome home;
+  final AppLocalizationsDataSettings settings;
+  final AppLocalizationsDataAuth auth;
+  factory AppLocalizationsData.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsData(
+        validator: AppLocalizationsDataValidator.fromJson(
+            map['validator']! as Map<String, Object?>),
+        app: AppLocalizationsDataApp.fromJson(
+            map['app']! as Map<String, Object?>),
+        home: AppLocalizationsDataHome.fromJson(
+            map['home']! as Map<String, Object?>),
+        settings: AppLocalizationsDataSettings.fromJson(
+            map['settings']! as Map<String, Object?>),
+        auth: AppLocalizationsDataAuth.fromJson(
+            map['auth']! as Map<String, Object?>),
       );
+
+  AppLocalizationsData copyWith({
+    AppLocalizationsDataValidator? validator,
+    AppLocalizationsDataApp? app,
+    AppLocalizationsDataHome? home,
+    AppLocalizationsDataSettings? settings,
+    AppLocalizationsDataAuth? auth,
+  }) =>
+      AppLocalizationsData(
+        validator: validator ?? this.validator,
+        app: app ?? this.app,
+        home: home ?? this.home,
+        settings: settings ?? this.settings,
+        auth: auth ?? this.auth,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsData &&
+          validator == other.validator &&
+          app == other.app &&
+          home == other.home &&
+          settings == other.settings &&
+          auth == other.auth);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      validator.hashCode ^
+      app.hashCode ^
+      home.hashCode ^
+      settings.hashCode ^
+      auth.hashCode;
 }
 
-class AppLocalizations_Labels_Settings {
-  const AppLocalizations_Labels_Settings(
-      {required this.title,
-      required this.language,
-      required this.theme,
-      required this.signOut,
-      required this.dark,
-      required this.light,
-      required this.system,
-      required this.updateProfile});
-
-  final String title;
-
-  final String language;
-
-  final String theme;
-
-  final String signOut;
-
-  final String dark;
-
-  final String light;
-
-  final String system;
-
-  final String updateProfile;
-
-  String getByKey(String key) {
-    switch (key) {
-      case 'title':
-        return title;
-      case 'language':
-        return language;
-      case 'theme':
-        return theme;
-      case 'signOut':
-        return signOut;
-      case 'dark':
-        return dark;
-      case 'light':
-        return light;
-      case 'system':
-        return system;
-      case 'updateProfile':
-        return updateProfile;
-      default:
-        return '';
-    }
-  }
-}
-
-class AppLocalizations_Labels_Home {
-  const AppLocalizations_Labels_Home(
-      {required this.title,
-      required this.nameLabel,
-      required this.uidLabel,
-      required this.emailLabel,
-      required this.phoneLabel,
-      required this.adminUserLabel});
-
-  final String title;
-
-  final String nameLabel;
-
-  final String uidLabel;
-
-  final String emailLabel;
-
-  final String phoneLabel;
-
-  final String adminUserLabel;
-
-  String getByKey(String key) {
-    switch (key) {
-      case 'title':
-        return title;
-      case 'nameLabel':
-        return nameLabel;
-      case 'uidLabel':
-        return uidLabel;
-      case 'emailLabel':
-        return emailLabel;
-      case 'phoneLabel':
-        return phoneLabel;
-      case 'adminUserLabel':
-        return adminUserLabel;
-      default:
-        return '';
-    }
-  }
-}
-
-class AppLocalizations_Labels_App {
-  const AppLocalizations_Labels_App({required this.title});
-
-  final String title;
-
-  String getByKey(String key) {
-    switch (key) {
-      case 'title':
-        return title;
-      default:
-        return '';
-    }
-  }
-}
-
-class AppLocalizations_Labels_Validator {
-  const AppLocalizations_Labels_Validator(
-      {required this.email, required this.password, required this.name, required this.number, required this.notEmpty, required this.amount});
-
-  final String email;
-
-  final String password;
-
-  final String name;
-
-  final String number;
-
-  final String notEmpty;
+class AppLocalizationsDataValidator {
+  const AppLocalizationsDataValidator({
+    required this.amount,
+    required this.notEmpty,
+    required this.number,
+    required this.name,
+    required this.password,
+    required this.email,
+  });
 
   final String amount;
+  final String notEmpty;
+  final String number;
+  final String name;
+  final String password;
+  final String email;
+  factory AppLocalizationsDataValidator.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataValidator(
+        amount: map['amount']! as String,
+        notEmpty: map['notEmpty']! as String,
+        number: map['number']! as String,
+        name: map['name']! as String,
+        password: map['password']! as String,
+        email: map['email']! as String,
+      );
 
-  String getByKey(String key) {
-    switch (key) {
-      case 'email':
-        return email;
-      case 'password':
-        return password;
-      case 'name':
-        return name;
-      case 'number':
-        return number;
-      case 'notEmpty':
-        return notEmpty;
-      case 'amount':
-        return amount;
-      default:
-        return '';
-    }
-  }
+  AppLocalizationsDataValidator copyWith({
+    String? amount,
+    String? notEmpty,
+    String? number,
+    String? name,
+    String? password,
+    String? email,
+  }) =>
+      AppLocalizationsDataValidator(
+        amount: amount ?? this.amount,
+        notEmpty: notEmpty ?? this.notEmpty,
+        number: number ?? this.number,
+        name: name ?? this.name,
+        password: password ?? this.password,
+        email: email ?? this.email,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataValidator &&
+          amount == other.amount &&
+          notEmpty == other.notEmpty &&
+          number == other.number &&
+          name == other.name &&
+          password == other.password &&
+          email == other.email);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      amount.hashCode ^
+      notEmpty.hashCode ^
+      number.hashCode ^
+      name.hashCode ^
+      password.hashCode ^
+      email.hashCode;
 }
 
-class AppLocalizations_Labels {
-  const AppLocalizations_Labels({required this.auth, required this.settings, required this.home, required this.app, required this.validator});
+class AppLocalizationsDataApp {
+  const AppLocalizationsDataApp({
+    required this.title,
+  });
 
-  final AppLocalizations_Labels_Auth auth;
+  final String title;
+  factory AppLocalizationsDataApp.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataApp(
+        title: map['title']! as String,
+      );
 
-  final AppLocalizations_Labels_Settings settings;
+  AppLocalizationsDataApp copyWith({
+    String? title,
+  }) =>
+      AppLocalizationsDataApp(
+        title: title ?? this.title,
+      );
 
-  final AppLocalizations_Labels_Home home;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataApp && title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ title.hashCode;
+}
 
-  final AppLocalizations_Labels_App app;
+class AppLocalizationsDataHome {
+  const AppLocalizationsDataHome({
+    required this.adminUserLabel,
+    required this.phoneLabel,
+    required this.emailLabel,
+    required this.uidLabel,
+    required this.nameLabel,
+    required this.title,
+  });
 
-  final AppLocalizations_Labels_Validator validator;
+  final String adminUserLabel;
+  final String phoneLabel;
+  final String emailLabel;
+  final String uidLabel;
+  final String nameLabel;
+  final String title;
+  factory AppLocalizationsDataHome.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataHome(
+        adminUserLabel: map['adminUserLabel']! as String,
+        phoneLabel: map['phoneLabel']! as String,
+        emailLabel: map['emailLabel']! as String,
+        uidLabel: map['uidLabel']! as String,
+        nameLabel: map['nameLabel']! as String,
+        title: map['title']! as String,
+      );
 
-  String getByKey(String key) {
-    switch (key) {
-      default:
-        return '';
-    }
+  AppLocalizationsDataHome copyWith({
+    String? adminUserLabel,
+    String? phoneLabel,
+    String? emailLabel,
+    String? uidLabel,
+    String? nameLabel,
+    String? title,
+  }) =>
+      AppLocalizationsDataHome(
+        adminUserLabel: adminUserLabel ?? this.adminUserLabel,
+        phoneLabel: phoneLabel ?? this.phoneLabel,
+        emailLabel: emailLabel ?? this.emailLabel,
+        uidLabel: uidLabel ?? this.uidLabel,
+        nameLabel: nameLabel ?? this.nameLabel,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataHome &&
+          adminUserLabel == other.adminUserLabel &&
+          phoneLabel == other.phoneLabel &&
+          emailLabel == other.emailLabel &&
+          uidLabel == other.uidLabel &&
+          nameLabel == other.nameLabel &&
+          title == other.title);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      adminUserLabel.hashCode ^
+      phoneLabel.hashCode ^
+      emailLabel.hashCode ^
+      uidLabel.hashCode ^
+      nameLabel.hashCode ^
+      title.hashCode;
+}
+
+class AppLocalizationsDataSettings {
+  const AppLocalizationsDataSettings({
+    required this.updateProfile,
+    required this.system,
+    required this.light,
+    required this.dark,
+    required this.signOut,
+    required this.theme,
+    required this.language,
+    required this.title,
+  });
+
+  final String updateProfile;
+  final String system;
+  final String light;
+  final String dark;
+  final String signOut;
+  final String theme;
+  final String language;
+  final String title;
+  factory AppLocalizationsDataSettings.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataSettings(
+        updateProfile: map['updateProfile']! as String,
+        system: map['system']! as String,
+        light: map['light']! as String,
+        dark: map['dark']! as String,
+        signOut: map['signOut']! as String,
+        theme: map['theme']! as String,
+        language: map['language']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataSettings copyWith({
+    String? updateProfile,
+    String? system,
+    String? light,
+    String? dark,
+    String? signOut,
+    String? theme,
+    String? language,
+    String? title,
+  }) =>
+      AppLocalizationsDataSettings(
+        updateProfile: updateProfile ?? this.updateProfile,
+        system: system ?? this.system,
+        light: light ?? this.light,
+        dark: dark ?? this.dark,
+        signOut: signOut ?? this.signOut,
+        theme: theme ?? this.theme,
+        language: language ?? this.language,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataSettings &&
+          updateProfile == other.updateProfile &&
+          system == other.system &&
+          light == other.light &&
+          dark == other.dark &&
+          signOut == other.signOut &&
+          theme == other.theme &&
+          language == other.language &&
+          title == other.title);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      updateProfile.hashCode ^
+      system.hashCode ^
+      light.hashCode ^
+      dark.hashCode ^
+      signOut.hashCode ^
+      theme.hashCode ^
+      language.hashCode ^
+      title.hashCode;
+}
+
+class AppLocalizationsDataAuth {
+  const AppLocalizationsDataAuth({
+    required this.unknownError,
+    required this.updateProfileTitle,
+    required this.submit,
+    required this.cancel,
+    required this.updateUserFailNotice,
+    required this.updateUserSuccessNotice,
+    required this.updateUserSuccessNoticeTitle,
+    required this.updateUser,
+    required this.resetPasswordLabelButton,
+    required this.signInError,
+    required this.signInErrorTitle,
+    required this.emailFormField,
+    required this.nameFormField,
+    required this.signInButton,
+    required String otpVerificationChangeNumber,
+    required this.otpVerificationSent,
+    required this.otpVerificationSentTitle,
+    required this.enterOTP,
+    required this.requestOTP,
+    required this.phone,
+    required this.aborted,
+    required this.appleSignIn,
+    required this.googleSignIn,
+  }) : _otpVerificationChangeNumber = otpVerificationChangeNumber;
+
+  final String unknownError;
+  final String updateProfileTitle;
+  final String submit;
+  final String cancel;
+  final String updateUserFailNotice;
+  final String updateUserSuccessNotice;
+  final String updateUserSuccessNoticeTitle;
+  final String updateUser;
+  final String resetPasswordLabelButton;
+  final String signInError;
+  final String signInErrorTitle;
+  final String emailFormField;
+  final String nameFormField;
+  final String signInButton;
+  final String _otpVerificationChangeNumber;
+  final String otpVerificationSent;
+  final String otpVerificationSentTitle;
+  final String enterOTP;
+  final String requestOTP;
+  final String phone;
+  final String aborted;
+  final String appleSignIn;
+  final String googleSignIn;
+
+  String otpVerificationChangeNumber({
+    required String phone,
+    String? locale,
+  }) {
+    return _otpVerificationChangeNumber.insertTemplateValues(
+      {
+        'phone': phone,
+      },
+      locale: locale,
+    );
   }
+
+  factory AppLocalizationsDataAuth.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataAuth(
+        unknownError: map['unknownError']! as String,
+        updateProfileTitle: map['updateProfileTitle']! as String,
+        submit: map['submit']! as String,
+        cancel: map['cancel']! as String,
+        updateUserFailNotice: map['updateUserFailNotice']! as String,
+        updateUserSuccessNotice: map['updateUserSuccessNotice']! as String,
+        updateUserSuccessNoticeTitle:
+            map['updateUserSuccessNoticeTitle']! as String,
+        updateUser: map['updateUser']! as String,
+        resetPasswordLabelButton: map['resetPasswordLabelButton']! as String,
+        signInError: map['signInError']! as String,
+        signInErrorTitle: map['signInErrorTitle']! as String,
+        emailFormField: map['emailFormField']! as String,
+        nameFormField: map['nameFormField']! as String,
+        signInButton: map['signInButton']! as String,
+        otpVerificationChangeNumber:
+            map['otpVerificationChangeNumber']! as String,
+        otpVerificationSent: map['otpVerificationSent']! as String,
+        otpVerificationSentTitle: map['otpVerificationSentTitle']! as String,
+        enterOTP: map['enterOTP']! as String,
+        requestOTP: map['requestOTP']! as String,
+        phone: map['phone']! as String,
+        aborted: map['aborted']! as String,
+        appleSignIn: map['appleSignIn']! as String,
+        googleSignIn: map['googleSignIn']! as String,
+      );
+
+  AppLocalizationsDataAuth copyWith({
+    String? unknownError,
+    String? updateProfileTitle,
+    String? submit,
+    String? cancel,
+    String? updateUserFailNotice,
+    String? updateUserSuccessNotice,
+    String? updateUserSuccessNoticeTitle,
+    String? updateUser,
+    String? resetPasswordLabelButton,
+    String? signInError,
+    String? signInErrorTitle,
+    String? emailFormField,
+    String? nameFormField,
+    String? signInButton,
+    String? otpVerificationChangeNumber,
+    String? otpVerificationSent,
+    String? otpVerificationSentTitle,
+    String? enterOTP,
+    String? requestOTP,
+    String? phone,
+    String? aborted,
+    String? appleSignIn,
+    String? googleSignIn,
+  }) =>
+      AppLocalizationsDataAuth(
+        unknownError: unknownError ?? this.unknownError,
+        updateProfileTitle: updateProfileTitle ?? this.updateProfileTitle,
+        submit: submit ?? this.submit,
+        cancel: cancel ?? this.cancel,
+        updateUserFailNotice: updateUserFailNotice ?? this.updateUserFailNotice,
+        updateUserSuccessNotice:
+            updateUserSuccessNotice ?? this.updateUserSuccessNotice,
+        updateUserSuccessNoticeTitle:
+            updateUserSuccessNoticeTitle ?? this.updateUserSuccessNoticeTitle,
+        updateUser: updateUser ?? this.updateUser,
+        resetPasswordLabelButton:
+            resetPasswordLabelButton ?? this.resetPasswordLabelButton,
+        signInError: signInError ?? this.signInError,
+        signInErrorTitle: signInErrorTitle ?? this.signInErrorTitle,
+        emailFormField: emailFormField ?? this.emailFormField,
+        nameFormField: nameFormField ?? this.nameFormField,
+        signInButton: signInButton ?? this.signInButton,
+        otpVerificationChangeNumber:
+            otpVerificationChangeNumber ?? _otpVerificationChangeNumber,
+        otpVerificationSent: otpVerificationSent ?? this.otpVerificationSent,
+        otpVerificationSentTitle:
+            otpVerificationSentTitle ?? this.otpVerificationSentTitle,
+        enterOTP: enterOTP ?? this.enterOTP,
+        requestOTP: requestOTP ?? this.requestOTP,
+        phone: phone ?? this.phone,
+        aborted: aborted ?? this.aborted,
+        appleSignIn: appleSignIn ?? this.appleSignIn,
+        googleSignIn: googleSignIn ?? this.googleSignIn,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataAuth &&
+          unknownError == other.unknownError &&
+          updateProfileTitle == other.updateProfileTitle &&
+          submit == other.submit &&
+          cancel == other.cancel &&
+          updateUserFailNotice == other.updateUserFailNotice &&
+          updateUserSuccessNotice == other.updateUserSuccessNotice &&
+          updateUserSuccessNoticeTitle == other.updateUserSuccessNoticeTitle &&
+          updateUser == other.updateUser &&
+          resetPasswordLabelButton == other.resetPasswordLabelButton &&
+          signInError == other.signInError &&
+          signInErrorTitle == other.signInErrorTitle &&
+          emailFormField == other.emailFormField &&
+          nameFormField == other.nameFormField &&
+          signInButton == other.signInButton &&
+          _otpVerificationChangeNumber == other._otpVerificationChangeNumber &&
+          otpVerificationSent == other.otpVerificationSent &&
+          otpVerificationSentTitle == other.otpVerificationSentTitle &&
+          enterOTP == other.enterOTP &&
+          requestOTP == other.requestOTP &&
+          phone == other.phone &&
+          aborted == other.aborted &&
+          appleSignIn == other.appleSignIn &&
+          googleSignIn == other.googleSignIn);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      unknownError.hashCode ^
+      updateProfileTitle.hashCode ^
+      submit.hashCode ^
+      cancel.hashCode ^
+      updateUserFailNotice.hashCode ^
+      updateUserSuccessNotice.hashCode ^
+      updateUserSuccessNoticeTitle.hashCode ^
+      updateUser.hashCode ^
+      resetPasswordLabelButton.hashCode ^
+      signInError.hashCode ^
+      signInErrorTitle.hashCode ^
+      emailFormField.hashCode ^
+      nameFormField.hashCode ^
+      signInButton.hashCode ^
+      _otpVerificationChangeNumber.hashCode ^
+      otpVerificationSent.hashCode ^
+      otpVerificationSentTitle.hashCode ^
+      enterOTP.hashCode ^
+      requestOTP.hashCode ^
+      phone.hashCode ^
+      aborted.hashCode ^
+      appleSignIn.hashCode ^
+      googleSignIn.hashCode;
 }

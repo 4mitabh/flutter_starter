@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat/dash_chat.dart';
 import 'package:fire_starter/controllers/theme_controller.dart';
+import 'package:fire_starter/helpers/helpers.dart';
 import 'package:fire_starter/services/storage_service.dart';
 import 'package:fire_starter/ui/components/components.dart';
 import 'package:fire_starter/ui/components/widgets/link_button.dart';
@@ -26,7 +27,7 @@ class ChatMessagesUI extends StatelessWidget {
   Widget buildMessageList(BuildContext context) {
     print(AuthService.to.firestoreUser.value?.id);
     return DashChat(
-        inverted: true,
+        inverted: false,
         user: _chatMessagesController.user,
         messages: _chatMessagesController.messeges,
         onSend: _chatMessagesController.onSend,
@@ -103,10 +104,12 @@ class ChatMessagesController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    Query query = FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: true).limit(100);
+    Query query =
+        FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: false).limitToLast(100);
     query.snapshots().listen((messageDocs) {
+      GetLogger.to.i('got ${messageDocs.size} updates ${messageDocs.metadata.isFromCache}');
       messeges(messageDocs.docs.map((e) {
-        Map data = e.data() ?? {};
+        Map data = e.data();
         return ChatMessage(
             id: e.id,
             createdAt: (data['ts'] == null ? DateTime.now() : DateTime.fromMicrosecondsSinceEpoch((data['ts'] as Timestamp).microsecondsSinceEpoch)),

@@ -9,14 +9,21 @@ part 'localizations.g.dart';
 //on command line run...
 //flutter packages pub run build_runner build  --delete-conflicting-outputs
 
+extension AppLocalizationsExtensions on BuildContext {
+  AppLocalizationsData get localizations {
+    return Localizations.of<AppLocalizationsData>(this, AppLocalizationsData)!;
+  }
+}
+
 @SheetLocalization("1cwOz3LVDOK4_0JTKt1OcZjH_P8uezPVa68OIU3Swt-M", "0", 6) // <- Bump versions here
-class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizationsData> {
   const AppLocalizationsDelegate();
 
   @override
-  bool isSupported(Locale locale) => AppLocalizations.languages.containsKey(locale);
+  bool isSupported(Locale locale) => localizedLabels.containsKey(locale);
+
   @override
-  Future<AppLocalizations> load(Locale locale) => SynchronousFuture<AppLocalizations>(AppLocalizations(locale));
+  Future<AppLocalizationsData> load(Locale locale) => SynchronousFuture<AppLocalizationsData>(localizedLabels[locale]!);
   @override
   bool shouldReload(AppLocalizationsDelegate old) => false;
 }

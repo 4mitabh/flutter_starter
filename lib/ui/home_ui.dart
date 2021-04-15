@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class HomeUI extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final labels = AppLocalizations.of(context);
+    final labels = context.localizations;
     final authService = AuthService.to;
 
     return BlobBackground(
