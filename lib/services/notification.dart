@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/constants/constants.dart';
 import 'package:fire_starter/helpers/helpers.dart';
-import 'package:fire_starter/models/models.dart';
 import 'package:fire_starter/services/auth_service.dart';
 import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -47,37 +46,47 @@ class NotificationService extends GetxService {
 
   FutureOr<void> updateToken(String? token) async {
     if (token == null || _uid == null) return null;
-    UserModel user = await UserModel.fromUID(_uid!);
-    var tokens = user.nt;
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    DocumentSnapshot userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
+    var tokens = userSS.data() != null ? (userSS.data()?[_NOTIFICATION_TOKEN]) : [];
     GetLogger.to.i('Token Updated for $_uid to $token');
-    if (!tokens.contains(token))
+    if (tokens == null)
+      tokens = [token];
+    else if (!tokens.contains(token))
       tokens = [...tokens, token];
     else
       return;
     final box = GetStorage();
-    String? savedToken = box.read(_NOTIFICATION_TOKEN);
+    String savedToken = box.read(_NOTIFICATION_TOKEN);
     if (savedToken != null && savedToken != token) {
       GetLogger.to.w('removing old token $savedToken');
       tokens = tokens..removeWhere((t) => t == savedToken);
     }
     box.write(_NOTIFICATION_TOKEN, token);
-    // GetLogger.to.i(userSS.reference.path);
-    user.update();
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    GetLogger.to.i(userSS.reference.path);
+    userSS.reference.update({
+      _NOTIFICATION_TOKEN: tokens,
+      'lastLogin': FieldValue.serverTimestamp(),
+      'ts': FieldValue.serverTimestamp(),
+      'ver': '${GetPlatform.isIOS ? 'i' : 'a'}.${packageInfo.version}.${packageInfo.buildNumber}'
+    });
   }
 
   Future<void> removeToken() async {
-    String? token = GetStorage().read(_NOTIFICATION_TOKEN);
+    String token = GetStorage().read(_NOTIFICATION_TOKEN);
     if (token == null) return null;
     GetLogger.to.i('Removing Token: $token');
-    UserModel user = await UserModel.fromUID(_uid!);
-
-    var tokens = user.nt;
-    if (!tokens.contains(token)) return;
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    DocumentSnapshot userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
+    var tokens = userSS.data()?[_NOTIFICATION_TOKEN];
+    if ((tokens == null) || (!tokens.contains(token))) return;
     GetStorage().remove(_NOTIFICATION_TOKEN);
     tokens = tokens..removeWhere((t) => t == token);
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-
-    user.update(custom: {'version': '${GetPlatform.isIOS ? 'i' : 'a'}.${packageInfo.version}.${packageInfo.buildNumber}'});
+    userSS.reference.update({
+      _NOTIFICATION_TOKEN: tokens,
+      'ts': FieldValue.serverTimestamp(),
+    });
   }
 
   Future<void> userUpdated(User? user) async {
@@ -92,7 +101,9 @@ class NotificationService extends GetxService {
     }
 
     _getPermissions();
-    _firebaseMessaging.getToken(vapidKey: "BJBffsstCZH1_qU7CBSoec4_o9J0hLCKVFPpU45ExcXwnJISia8-2i98a5iGk3OPRfNUa07xYge4NQl-SHaA8Ko").then(updateToken);
+    _firebaseMessaging
+        .getToken(vapidKey: "BJBffsstCZH1_qU7CBSoec4_o9J0hLCKVFPpU45ExcXwnJISia8-2i98a5iGk3OPRfNUa07xYge4NQl-SHaA8Ko")
+        .then(updateToken);
     _fcmTokenListener = _firebaseMessaging.onTokenRefresh.listen(updateToken);
   }
 
