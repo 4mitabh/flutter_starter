@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dash_chat/dash_chat.dart';
 import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:fire_starter/helpers/helpers.dart';
-import 'package:fire_starter/models/nodes/message_node.dart';
 import 'package:fire_starter/services/storage_service.dart';
 import 'package:fire_starter/ui/components/components.dart';
 import 'package:fire_starter/ui/components/widgets/link_button.dart';
@@ -59,7 +58,7 @@ class ChatMessagesUI extends StatelessWidget {
           (message.customProperties?['image'] != '') // Image processing complete
               ? CachedNetworkImage(
                   errorWidget: (_, __, ___) => Column(
-                        children: [CachedNetworkImage(imageUrl: message.customProperties?['originalimage']), Text('Failed to load')],
+                        children: [CachedNetworkImage(imageUrl: message.customProperties?['oringinalimage']), Text('Failed to load')],
                       ),
                   placeholder: (context, url) => AspectRatio(
                       aspectRatio: message.customProperties?['tn']['w'] / message.customProperties?['tn']['h'],
@@ -71,7 +70,7 @@ class ChatMessagesUI extends StatelessWidget {
           : // No Thumbnail
           CachedNetworkImage(
               imageUrl: message.customProperties?['image'],
-              errorWidget: (_, __, ___) => CachedNetworkImage(imageUrl: message.customProperties?['originalimage']));
+              errorWidget: (_, __, ___) => CachedNetworkImage(imageUrl: message.customProperties?['oringinalimage']));
     }
     return Container();
   }
@@ -118,6 +117,18 @@ class ChatMessagesController extends GetxController {
             video: data['video'],
             text: data['title'] ?? '',
             customProperties: Map.fromIterable(data.keys, key: (k) => k.toString(), value: (v) => data[v]),
+            // quickReplies: QuickReplies(
+            //   values: <Reply>[
+            //     Reply(
+            //       title: "😋 Yes, ${data['title']}",
+            //       value: "Yes",
+            //     ),
+            //     Reply(
+            //       title: "😞 Nope.  ${data['title']}",
+            //       value: "no",
+            //     ),
+            //   ],
+            // ),
             user: ChatUser(uid: data['by'], avatar: _authService.firestoreUser.value!.photoUrl, name: data['by']));
       }).toList());
     });
@@ -130,7 +141,15 @@ class ChatMessagesController extends GetxController {
 
   onSend(ChatMessage chatMessage, [String? id]) {
     print('Sending ${chatMessage.text}');
-    MessageNode message = MessageNode(title: chatMessage.text, parent: _chatId, group: [uidToWriteTo, _authService.firebaseUser.value!.uid]);
+    Map<String, dynamic> data = {
+      'title': chatMessage.text,
+      'plan': _chatId,
+      'type': 'messaging',
+      'action': 'message',
+      'outlet': _chatId,
+      'business': _chatId,
+      'user': uidToWriteTo
+    };
 
     DatabaseService.create(uploadPath, data, id: id);
   }

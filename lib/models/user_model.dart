@@ -44,19 +44,22 @@ class UserModel {
     return json;
   }
 
-  String toString() => toJson().toString();
+  String toString() => id + '\n' + toJson().toString();
 
   static UserModel fromFirestore(DocumentSnapshot<Map<String, dynamic?>> snapshot, SnapshotOptions? options) => UserModel.fromJson(snapshot.data()!);
   static Map<String, dynamic> toFirestore(UserModel user, SetOptions? options) => user.toJson();
 
-  static Future<UserModel> fromUID(String uid) async => (await getRef(uid).get()).data()!;
-
-  static DocumentReference<UserModel> getRef(String uid) => FirebaseFirestore.instance
-      .doc('${FirebasePaths.prefix}${FirebasePaths.users}/$uid')
-      .withConverter<UserModel>(fromFirestore: UserModel.fromFirestore, toFirestore: UserModel.toFirestore);
+  static Future<UserModel> fromUID(String uid) async => (await FirebaseFirestore.instance
+          .doc('${FirebasePaths.prefix}${FirebasePaths.users}/$uid')
+          .withConverter<UserModel>(fromFirestore: UserModel.fromFirestore, toFirestore: UserModel.toFirestore)
+          .get())
+      .data()!;
 
   void update({Map<String, dynamic>? custom}) {
     if (custom != null) this._custom.addAll(custom);
-    getRef(this.id).set(this, SetOptions(merge: true));
+    FirebaseFirestore.instance
+        .doc('${FirebasePaths.prefix}${FirebasePaths.users}/$this.id')
+        .withConverter<UserModel>(fromFirestore: UserModel.fromFirestore, toFirestore: UserModel.toFirestore)
+        .set(this, SetOptions(merge: true));
   }
 }
