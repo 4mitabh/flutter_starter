@@ -9,13 +9,13 @@ class DatabaseService extends GetxService {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<List<FirebaseDoc>> collection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
-    Query query = (orderby == null)
+    Query<Map<String, dynamic>> query = (orderby == null)
         ? _firestore.collection(FirebasePaths.prefix + path).limit(limit)
         : _firestore.collection(FirebasePaths.prefix + path).orderBy(orderby, descending: false).limit(limit);
     return DatabaseService.query(query, useCache: useCache);
   }
 
-  static RxList<FirebaseDoc> watchQuery(Query query, {bool useCache = true}) {
+  static RxList<FirebaseDoc> watchQuery(Query<Map<String, dynamic>> query, {bool useCache = true}) {
     RxList<FirebaseDoc> docs = RxList.empty();
     // DatabaseService.query(query.orderBy('ts', descending: true).limit(50), useCache: true).then((result) {
     //   Timestamp ts = (result.isNotEmpty ? result.first.properties['ts'] : null) ?? Timestamp.fromMicrosecondsSinceEpoch(0);
@@ -26,8 +26,8 @@ class DatabaseService extends GetxService {
     return docs;
   }
 
-  static Future<List<FirebaseDoc>> query(Query query, {bool useCache = true}) async {
-    QuerySnapshot qs;
+  static Future<List<FirebaseDoc>> query(Query<Map<String, dynamic>> query, {bool useCache = true}) async {
+    QuerySnapshot<Map<String, dynamic>> qs;
     if (!useCache)
       qs = await query.get(GetOptions(source: Source.server));
     else
@@ -41,7 +41,7 @@ class DatabaseService extends GetxService {
         qs = await query.get(GetOptions(source: Source.server));
       }
     GetLogger.to.i('${query.parameters} got ${qs.size} from ${qs.metadata.isFromCache ? 'cache' : 'server'}');
-    return qs.docs.map((QueryDocumentSnapshot doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
+    return qs.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
   }
 
   Future<void> update({required Map<String, dynamic> data, required String path}) async {
@@ -83,7 +83,7 @@ class DocumentWatcher extends GetxController {
     _firestore.doc(path).snapshots().listen(_updateListner);
   }
 
-  _updateListner(DocumentSnapshot snapshot) {
+  _updateListner(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     GetLogger.to.d('Update from doc watcher for ${snapshot.reference.path}');
     doc = FirebaseDoc.fromDocumentSnapshot(snapshot);
     update();

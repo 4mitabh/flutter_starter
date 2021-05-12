@@ -20,7 +20,7 @@ class MetadataModel {
   static Future<MetadataModel> get() async {
     final FirebaseFirestore db = FirebaseFirestore.instance;
     try {
-      DocumentSnapshot doc = await db.doc('${FirebasePaths.prefix}${FirebasePaths.metadata}/all').get();
+      DocumentSnapshot<Map<String, dynamic>> doc = await db.doc('${FirebasePaths.prefix}${FirebasePaths.metadata}/all').get();
       if (!doc.exists) GetLogger.to.w('Cannout find ${FirebasePaths.prefix}${FirebasePaths.metadata}/all');
       return MetadataModel._fromDocumentSnapshot(doc);
     } on Exception catch (e) {
@@ -29,7 +29,7 @@ class MetadataModel {
     }
   }
 
-  factory MetadataModel._fromDocumentSnapshot(DocumentSnapshot snapshot) {
+  factory MetadataModel._fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     var data = snapshot.data();
     if (data == null) return MetadataModel(build: 1, version: '0.0.0', majorVersion: 0, minorVersion: 0);
     return MetadataModel(

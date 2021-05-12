@@ -104,7 +104,7 @@ class ChatMessagesController extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    Query query =
+    Query<Map<String, dynamic>> query =
         FirebaseFirestore.instance.collectionGroup('workflows').where('business', isEqualTo: _chatId).orderBy('ts', descending: false).limitToLast(100);
     query.snapshots().listen((messageDocs) {
       GetLogger.to.i('got ${messageDocs.size} updates ${messageDocs.metadata.isFromCache}');

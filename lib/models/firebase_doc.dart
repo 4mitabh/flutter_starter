@@ -7,7 +7,7 @@ class FirebaseDoc {
   Map<String, dynamic> properties;
 
   FirebaseDoc({required this.id, required this.path, required this.properties});
-  factory FirebaseDoc.fromDocumentSnapshot(DocumentSnapshot snapshot) => FirebaseDoc.fromMap(snapshot.data() ?? {}, snapshot.reference);
+  factory FirebaseDoc.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) => FirebaseDoc.fromMap(snapshot.data() ?? {}, snapshot.reference);
   factory FirebaseDoc.fromMap(Map<String, dynamic> data, DocumentReference ref) {
     return FirebaseDoc(
       id: ref.id,

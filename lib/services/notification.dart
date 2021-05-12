@@ -7,7 +7,6 @@ import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -32,9 +31,9 @@ class NotificationService extends GetxService {
       if (message.notification != null) showSnackBar(message.notification?.title ?? PackageInfoService.appName, message.notification?.body ?? '');
     });
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-    FGBGEvents.stream.listen((event) {
-      if (event == FGBGType.foreground) dismissNotifications();
-    });
+    // FGBGEvents.stream.listen((event) {
+    //   if (event == FGBGType.foreground) dismissNotifications();
+    // });
   }
 
   Future<void> _getPermissions() async {
@@ -47,7 +46,7 @@ class NotificationService extends GetxService {
   FutureOr<void> updateToken(String? token) async {
     if (token == null || _uid == null) return null;
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
+    DocumentSnapshot<Map<String, dynamic>> userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
     var tokens = userSS.data() != null ? (userSS.data()?[_NOTIFICATION_TOKEN]) : [];
     GetLogger.to.i('Token Updated for $_uid to $token');
     if (tokens == null)
@@ -78,7 +77,7 @@ class NotificationService extends GetxService {
     if (token == null) return null;
     GetLogger.to.i('Removing Token: $token');
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    DocumentSnapshot userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
+    DocumentSnapshot<Map<String, dynamic>> userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
     var tokens = userSS.data()?[_NOTIFICATION_TOKEN];
     if ((tokens == null) || (!tokens.contains(token))) return;
     GetStorage().remove(_NOTIFICATION_TOKEN);
@@ -101,9 +100,7 @@ class NotificationService extends GetxService {
     }
 
     _getPermissions();
-    _firebaseMessaging
-        .getToken(vapidKey: "BJBffsstCZH1_qU7CBSoec4_o9J0hLCKVFPpU45ExcXwnJISia8-2i98a5iGk3OPRfNUa07xYge4NQl-SHaA8Ko")
-        .then(updateToken);
+    _firebaseMessaging.getToken(vapidKey: "BJBffsstCZH1_qU7CBSoec4_o9J0hLCKVFPpU45ExcXwnJISia8-2i98a5iGk3OPRfNUa07xYge4NQl-SHaA8Ko").then(updateToken);
     _fcmTokenListener = _firebaseMessaging.onTokenRefresh.listen(updateToken);
   }
 
