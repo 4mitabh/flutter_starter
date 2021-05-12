@@ -9,8 +9,9 @@ class DatabaseService extends GetxService {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   static Future<List<FirebaseDoc>> collection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
-    Query query =
-        orderby == null ? _firestore.collection(path).limitToLast(limit) : _firestore.collection(path).orderBy(orderby, descending: false).limitToLast(limit);
+    Query query = (orderby == null)
+        ? _firestore.collection(FirebasePaths.prefix + path).limit(limit)
+        : _firestore.collection(FirebasePaths.prefix + path).orderBy(orderby, descending: false).limit(limit);
     return DatabaseService.query(query, useCache: useCache);
   }
 
