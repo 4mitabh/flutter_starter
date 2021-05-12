@@ -39,12 +39,12 @@ class SignInUI extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
+                LogoGraphicHeader(),
                 Text(
                   PackageInfoService.appName,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline2!.copyWith(color: Theme.of(context).colorScheme.primary.withAlpha(120)),
                 ),
-                LogoGraphicHeader(),
                 SizedBox(height: 48.0),
                 if (!_signInController.waitingForOTP.value)
                   Container(
@@ -109,6 +109,7 @@ class SignInUI extends StatelessWidget {
                           showSnackBar('Error', e.toString());
                         }
                       }),
+                FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value &&
                     ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb))
                   LinkButton(
@@ -123,6 +124,26 @@ class SignInUI extends StatelessWidget {
                       onPressed: () async {
                         try {
                           await _signInController.signInWithGoogle();
+                        } catch (e) {
+                          showSnackBar('Error', e.toString());
+                        }
+                      }),
+                FormVerticalSpace(),
+                FormVerticalSpace(),
+                if (!_signInController.waitingForOTP.value && (FireStarter.settings['auth']?['anonymousSignIn'] == true))
+                  LinkButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(MdiIcons.debugStepOver),
+                          Text(' ' + labels.auth.anonymousSignIn,
+                              style: Theme.of(context).textTheme.button?.copyWith(fontSize: 18, color: Theme.of(context).accentColor)),
+                        ],
+                      ),
+                      onPressed: () async {
+                        try {
+                          await _signInController.signInAnonymously();
+                          // Get.toNamed('home');
                         } catch (e) {
                           showSnackBar('Error', e.toString());
                         }

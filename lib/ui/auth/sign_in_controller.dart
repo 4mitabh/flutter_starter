@@ -112,6 +112,11 @@ class SignInController extends GetxController {
     otpController.clear();
   }
 
+  Future<User?> signInAnonymously() async {
+    UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+    return userCredential.user;
+  }
+
   Future<User?> signInWithApple() async {
     if (kIsWeb) {
       GetLogger.to.d('Web Signin');

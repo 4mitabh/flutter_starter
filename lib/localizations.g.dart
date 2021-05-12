@@ -61,6 +61,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'Sign In Aborted',
       appleSignIn: 'Sign In With Apple',
       googleSignIn: 'Sign In With Google',
+      anonymousSignIn: 'Signup Later',
     ),
   ),
   Locale.fromSubtags(languageCode: 'fr'): const AppLocalizationsData(
@@ -120,6 +121,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'Se connecter Aborted',
       appleSignIn: 'Connectez-vous avec d\'Apple',
       googleSignIn: 'Connectez-vous avec Google',
+      anonymousSignIn: 'S\'inscrire plus tard',
     ),
   ),
   Locale.fromSubtags(languageCode: 'es'): const AppLocalizationsData(
@@ -179,6 +181,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'Iniciar sesión abortada',
       appleSignIn: 'Iniciar sesión con Apple',
       googleSignIn: 'Inicia sesión con Google',
+      anonymousSignIn: 'Registrese más tarde',
     ),
   ),
   Locale.fromSubtags(languageCode: 'de'): const AppLocalizationsData(
@@ -237,6 +240,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'Anmelden Aborted',
       appleSignIn: 'Einloggen mit Apple',
       googleSignIn: 'Anmeldung mit Google',
+      anonymousSignIn: 'Später anmelden',
     ),
   ),
   Locale.fromSubtags(languageCode: 'hi'): const AppLocalizationsData(
@@ -293,6 +297,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'साइन इन गर्भपात',
       appleSignIn: 'साइन एप्पल के साथ में',
       googleSignIn: 'साइन Google के साथ',
+      anonymousSignIn: 'बाद में साइन अप करें',
     ),
   ),
   Locale.fromSubtags(languageCode: 'pt'): const AppLocalizationsData(
@@ -351,6 +356,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'Entrar Aborted',
       appleSignIn: 'Entrar com a Apple',
       googleSignIn: 'Faça login no Google',
+      anonymousSignIn: 'Registar mais tarde',
     ),
   ),
   Locale.fromSubtags(languageCode: 'zh'): const AppLocalizationsData(
@@ -407,6 +413,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: '登录中止',
       appleSignIn: '拍在与苹果',
       googleSignIn: '在与谷歌',
+      anonymousSignIn: '注册之后',
     ),
   ),
   Locale.fromSubtags(languageCode: 'ja'): const AppLocalizationsData(
@@ -463,6 +470,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: '中止サインイン',
       appleSignIn: 'アップルサインイン',
       googleSignIn: 'でGoogleにログイン',
+      anonymousSignIn: 'その後サインアップ',
     ),
   ),
   Locale.fromSubtags(languageCode: 'ru'): const AppLocalizationsData(
@@ -520,6 +528,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       aborted: 'Вход в систему абортированных',
       appleSignIn: 'Вход с помощью Apple,',
       googleSignIn: 'Вход с помощью Google',
+      anonymousSignIn: 'Зарегистрироваться Позже',
     ),
   ),
 };
@@ -843,6 +852,7 @@ class AppLocalizationsDataAuth {
     required this.aborted,
     required this.appleSignIn,
     required this.googleSignIn,
+    required this.anonymousSignIn,
   }) : _otpVerificationChangeNumber = otpVerificationChangeNumber;
 
   final String unknownError;
@@ -868,6 +878,7 @@ class AppLocalizationsDataAuth {
   final String aborted;
   final String appleSignIn;
   final String googleSignIn;
+  final String anonymousSignIn;
 
   String otpVerificationChangeNumber({
     required String phone,
@@ -908,6 +919,7 @@ class AppLocalizationsDataAuth {
         aborted: map['aborted']! as String,
         appleSignIn: map['appleSignIn']! as String,
         googleSignIn: map['googleSignIn']! as String,
+        anonymousSignIn: map['anonymousSignIn']! as String,
       );
 
   AppLocalizationsDataAuth copyWith({
@@ -934,6 +946,7 @@ class AppLocalizationsDataAuth {
     String? aborted,
     String? appleSignIn,
     String? googleSignIn,
+    String? anonymousSignIn,
   }) =>
       AppLocalizationsDataAuth(
         unknownError: unknownError ?? this.unknownError,
@@ -964,6 +977,7 @@ class AppLocalizationsDataAuth {
         aborted: aborted ?? this.aborted,
         appleSignIn: appleSignIn ?? this.appleSignIn,
         googleSignIn: googleSignIn ?? this.googleSignIn,
+        anonymousSignIn: anonymousSignIn ?? this.anonymousSignIn,
       );
 
   @override
@@ -992,7 +1006,8 @@ class AppLocalizationsDataAuth {
           phone == other.phone &&
           aborted == other.aborted &&
           appleSignIn == other.appleSignIn &&
-          googleSignIn == other.googleSignIn);
+          googleSignIn == other.googleSignIn &&
+          anonymousSignIn == other.anonymousSignIn);
   @override
   int get hashCode =>
       runtimeType.hashCode ^
@@ -1018,5 +1033,6 @@ class AppLocalizationsDataAuth {
       phone.hashCode ^
       aborted.hashCode ^
       appleSignIn.hashCode ^
-      googleSignIn.hashCode;
+      googleSignIn.hashCode ^
+      anonymousSignIn.hashCode;
 }
