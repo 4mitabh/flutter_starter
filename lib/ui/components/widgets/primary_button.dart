@@ -2,11 +2,12 @@ import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
-  PrimaryButton({this.labelText = '', this.child, required this.onPressed});
+  PrimaryButton({this.labelText = '', this.child, this.decoration, required this.onPressed});
 
   final String labelText;
   final Widget? child;
   final void Function() onPressed;
+  final Decoration? decoration;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class PrimaryButton extends StatelessWidget {
           ),
         ),
         height: 66.0,
-        decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
+        decoration: decoration ?? ThemeController.to.appTheme.value.kGradientBoxDecoration(context).copyWith(),
       ),
     );
   }

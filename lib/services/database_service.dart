@@ -44,7 +44,7 @@ class DatabaseService extends GetxService {
     return qs.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
   }
 
-  Future<void> update({required Map<String, dynamic> data, required String path}) async {
+  static Future<void> update({required Map<String, dynamic> data, required String path}) async {
     try {
       data['ts'] = FieldValue.serverTimestamp();
       GetLogger.to.i('Updating ${path} to ${data.toString()}');

@@ -57,8 +57,7 @@ class AuthService extends GetxService {
     UserModel? userRecord = await getFirestoreUser();
     if (userRecord != null && firebaseUser.value != null) {
       return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${firebaseUser.value!.uid}').snapshots().map((snapshot) {
-        print('reading');
-        print('reading ' + snapshot.data().toString());
+        print('Writing User to stream... ${snapshot.id} ' + snapshot.data().toString());
         return UserModel.fromMap(snapshot.data()!, firebaseUser.value!.uid);
       });
     }
