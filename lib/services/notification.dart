@@ -56,7 +56,7 @@ class NotificationService extends GetxService {
     else
       return;
     final box = GetStorage();
-    String savedToken = box.read(_NOTIFICATION_TOKEN);
+    String? savedToken = box.read(_NOTIFICATION_TOKEN);
     if (savedToken != null && savedToken != token) {
       GetLogger.to.w('removing old token $savedToken');
       tokens = tokens..removeWhere((t) => t == savedToken);

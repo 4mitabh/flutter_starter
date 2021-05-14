@@ -30,7 +30,7 @@ class LanguageController extends GetxController {
 
 // Gets current language stored
   RxString get currentLanguageStore {
-    language.value = store.read('language');
+    language.value = store.read('language') ?? 'en';
     return language;
   }
 
