@@ -15,6 +15,13 @@ class DatabaseService extends GetxService {
     return DatabaseService.query(query, useCache: useCache);
   }
 
+  static Future<List<FirebaseDoc>> watchCollection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
+    Query<Map<String, dynamic>> query = (orderby == null)
+        ? _firestore.collection(FirebasePaths.prefix + path).limit(limit)
+        : _firestore.collection(FirebasePaths.prefix + path).orderBy(orderby, descending: false).limit(limit);
+    return DatabaseService.query(query, useCache: useCache);
+  }
+
   static RxList<FirebaseDoc> watchQuery(Query<Map<String, dynamic>> query, {bool useCache = true}) {
     RxList<FirebaseDoc> docs = RxList.empty();
     // DatabaseService.query(query.orderBy('ts', descending: true).limit(50), useCache: true).then((result) {

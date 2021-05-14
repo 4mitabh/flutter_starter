@@ -46,52 +46,56 @@ class SignInUI extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline2!.copyWith(color: Theme.of(context).colorScheme.primary.withAlpha(120)),
                 ),
                 SizedBox(height: 48.0),
-                if (!_signInController.waitingForOTP.value)
-                  Container(
-                      padding: EdgeInsets.all(8),
-                      decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
-                      child: IntlPhoneField(
-                        controller: _signInController.phoneController,
-                        autofocus: true,
-                        countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
-                        style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
-                        decoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.only(top: 24, bottom: 2, right: 24)),
-                        initialCountryCode: PackageInfoService.country,
-                        onSaved: (PhoneNumber? number) {
-                          if ((number?.completeNumber) != null) _signInController.requestOTP(context, number!.completeNumber);
-                        },
-                      ))
-                else
-                  Container(
-                    padding: EdgeInsets.all(4),
-                    decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
-                    child: FormInputFieldWithIcon(
-                      controller: _signInController.otpController,
-                      iconPrefix: Icons.vpn_key,
-                      labelText: labels.auth.enterOTP,
-                      validator: Validator(labels).number,
-                      maxLength: 6,
-                      keyboardType: TextInputType.phone,
-                      onChanged: (value) => null,
-                      onSaved: (value) => _signInController.phoneController.text = value ?? '',
-                    ),
-                  ),
-                FormVerticalSpace(),
-                if (!_signInController.waitingForOTP.value)
-                  PrimaryButton(
-                      labelText: labels.auth.requestOTP,
-                      onPressed: () {
-                        if (_formKey.currentState != null && _formKey.currentState!.validate()) _formKey.currentState!.save();
-                      })
-                else
-                  PrimaryButton(
-                      labelText: labels.auth.signInButton,
-                      onPressed: () async {
-                        if (_formKey.currentState != null && _formKey.currentState!.validate()) _signInController.verifyOTP(context);
-                      }),
+                if ((FireStarter.settings['auth']?['phoneSignIn'] != false))
+                  Column(children: [
+                    if (!_signInController.waitingForOTP.value)
+                      Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
+                          child: IntlPhoneField(
+                            controller: _signInController.phoneController,
+                            autofocus: true,
+                            countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
+                            style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
+                            decoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.only(top: 24, bottom: 2, right: 24)),
+                            initialCountryCode: PackageInfoService.country,
+                            onSaved: (PhoneNumber? number) {
+                              if ((number?.completeNumber) != null) _signInController.requestOTP(context, number!.completeNumber);
+                            },
+                          ))
+                    else
+                      Container(
+                        padding: EdgeInsets.all(4),
+                        decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
+                        child: FormInputFieldWithIcon(
+                          controller: _signInController.otpController,
+                          iconPrefix: Icons.vpn_key,
+                          labelText: labels.auth.enterOTP,
+                          validator: Validator(labels).number,
+                          maxLength: 6,
+                          keyboardType: TextInputType.phone,
+                          onChanged: (value) => null,
+                          onSaved: (value) => _signInController.phoneController.text = value ?? '',
+                        ),
+                      ),
+                    FormVerticalSpace(),
+                    if (!_signInController.waitingForOTP.value)
+                      PrimaryButton(
+                          labelText: labels.auth.requestOTP,
+                          onPressed: () {
+                            if (_formKey.currentState != null && _formKey.currentState!.validate()) _formKey.currentState!.save();
+                          })
+                    else
+                      PrimaryButton(
+                          labelText: labels.auth.signInButton,
+                          onPressed: () async {
+                            if (_formKey.currentState != null && _formKey.currentState!.validate()) _signInController.verifyOTP(context);
+                          })
+                  ]),
                 FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value &&
-                    ((FireStarter.settings['auth']?['appleSignIn'] == true) || GetPlatform.isMacOS || GetPlatform.isIOS))
+                    ((FireStarter.settings['auth']?['appleSignIn'] == true) || GetPlatform.isMacOS || GetPlatform.isIOS) &&
+                    (FireStarter.settings['auth']?['appleSignIn'] != false))
                   LinkButton(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -111,7 +115,8 @@ class SignInUI extends StatelessWidget {
                       }),
                 FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value &&
-                    ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb))
+                    ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb) &&
+                    (FireStarter.settings['auth']?['googleSignIn'] != false))
                   LinkButton(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -131,23 +136,36 @@ class SignInUI extends StatelessWidget {
                 FormVerticalSpace(),
                 FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value && (FireStarter.settings['auth']?['anonymousSignIn'] == true))
-                  LinkButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(MdiIcons.debugStepOver),
-                          Text(' ' + labels.auth.anonymousSignIn,
-                              style: Theme.of(context).textTheme.button?.copyWith(fontSize: 18, color: Theme.of(context).accentColor)),
-                        ],
-                      ),
-                      onPressed: () async {
-                        try {
-                          await _signInController.signInAnonymously();
-                          // Get.toNamed('home');
-                        } catch (e) {
-                          showSnackBar('Error', e.toString());
-                        }
-                      }),
+                  if ((FireStarter.settings['auth']?['googleSignIn'] == false) &&
+                      (FireStarter.settings['auth']?['phoneSignIn'] == false) &&
+                      (FireStarter.settings['auth']?['appleSignIn'] == false))
+                    PrimaryButton(
+                        labelText: 'Continue',
+                        onPressed: () async {
+                          try {
+                            await _signInController.signInAnonymously();
+                          } catch (e) {
+                            showSnackBar('Error', e.toString());
+                          }
+                        })
+                  else
+                    LinkButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(MdiIcons.debugStepOver),
+                            Text(' ' + labels.auth.anonymousSignIn,
+                                style: Theme.of(context).textTheme.button?.copyWith(fontSize: 18, color: Theme.of(context).accentColor)),
+                          ],
+                        ),
+                        onPressed: () async {
+                          try {
+                            await _signInController.signInAnonymously();
+                            // Get.toNamed('home');
+                          } catch (e) {
+                            showSnackBar('Error', e.toString());
+                          }
+                        }),
                 if (_signInController.waitingForOTP.value)
                   TextButton(
                       child: Text(labels.auth.otpVerificationChangeNumber(phone: _signInController.phoneNumber ?? '')),
