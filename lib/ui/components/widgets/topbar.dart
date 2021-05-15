@@ -33,7 +33,7 @@ class TopBar extends StatelessWidget with PreferredSizeWidget {
                 radius: 8,
                 padding: EdgeInsets.all(4),
                 child: Icon(Icons.chevron_left, color: Theme.of(context).colorScheme.onBackground),
-                onPressed: onBack!,
+                onPressed: onBack ?? () {},
               ),
             ),
     );

@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 
 class GlassCard extends StatelessWidget {
   final Widget child;
+  final Color? color;
+  final double borderWidth;
 
-  const GlassCard({Key? key, required this.child}) : super(key: key);
+  const GlassCard({Key? key, required this.child, this.color, this.borderWidth = 1}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Color bg = Theme.of(context).backgroundColor;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(8.0 - borderWidth + 1),
       child: Container(
         decoration: BoxDecoration(
-            color: bg.withAlpha(100),
+            color: color ?? bg.withAlpha(100),
             border: Border.all(
               color: bg.withAlpha(170),
+              width: borderWidth,
             ),
             borderRadius: BorderRadius.all(Radius.circular(20))),
         child: child,
