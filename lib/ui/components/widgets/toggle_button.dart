@@ -18,13 +18,17 @@ class ToggleButton<T> extends StatelessWidget {
         color: (selected) ? Theme.of(context).backgroundColor.withAlpha(180) : Theme.of(context).backgroundColor.withAlpha(30),
         borderWidth: selected ? 1 : 2,
         child: Padding(
-            padding: const EdgeInsets.all(22.0),
-            child: Center(
-              child: Text(
+          padding: const EdgeInsets.all(22.0),
+          child: Wrap(
+            children: [
+              if (selected) Icon(Icons.check),
+              Text(
                 labelText,
                 style: Theme.of(context).textTheme.headline6?.copyWith(color: Theme.of(context).colorScheme.primary),
               ),
-            )),
+            ],
+          ),
+        ),
       ),
     );
   }
