@@ -6,13 +6,37 @@ import 'package:get/get.dart';
 import '../models/models.dart';
 
 class DatabaseService extends GetxService {
+  bool USE_FIRESTORE_EMULATOR = false;
+
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  DatabaseService() : super() {
+    if (USE_FIRESTORE_EMULATOR)
+      FirebaseFirestore.instance.settings = const Settings(
+        host: '192.168.1.138:8080',
+        sslEnabled: false,
+        persistenceEnabled: false,
+      );
+  }
 
   static Future<List<FirebaseDoc>> collection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
+    GetLogger.to.i('Collection ${path}');
     Query<Map<String, dynamic>> query = (orderby == null)
         ? _firestore.collection(FirebasePaths.prefix + path).limit(limit)
         : _firestore.collection(FirebasePaths.prefix + path).orderBy(orderby, descending: false).limit(limit);
     return DatabaseService.query(query, useCache: useCache);
+  }
+
+  static Future<List<FirebaseDoc>> collectionGroup(String name,
+      {required String canRead,
+      Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query,
+      String? orderby,
+      bool useCache = true,
+      int limit = 100}) async {
+    GetLogger.to.i('Collection Group ${name}');
+    Query<Map<String, dynamic>> q = _firestore.collectionGroup(name).where('canRead', arrayContains: canRead);
+    if (query != null) q = query(q);
+    q = (orderby == null) ? q.limit(limit) : q.orderBy(orderby, descending: false).limit(limit);
+    return DatabaseService.query(q, useCache: useCache);
   }
 
   static Future<List<FirebaseDoc>> watchCollection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {

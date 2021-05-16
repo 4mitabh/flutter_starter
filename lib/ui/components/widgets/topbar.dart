@@ -10,10 +10,12 @@ class TopBar extends StatelessWidget with PreferredSizeWidget {
   final Size preferredSize;
   final void Function()? onBack;
   final String title;
+  final List<Widget>? actions;
 
   TopBar({
     required this.title,
     this.onBack,
+    this.actions,
     Key? key,
   })  : preferredSize = Size.fromHeight(50.0),
         super(key: key);
@@ -21,6 +23,7 @@ class TopBar extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      actions: actions,
       shadowColor: Colors.transparent,
       title: AutoSizeText(title, style: Theme.of(context).textTheme.headline5, maxLines: 1),
       backgroundColor: Colors.transparent,
