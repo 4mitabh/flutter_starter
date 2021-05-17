@@ -3,12 +3,13 @@ import 'package:fire_starter/ui/components/widgets/glass/glass_card.dart';
 import 'package:flutter/material.dart';
 
 class ToggleButton<T> extends StatelessWidget {
-  ToggleButton({this.labelText = '', required this.selected, required this.value, required this.onChange});
+  ToggleButton({this.labelText = '', required this.selected, this.padding = const EdgeInsets.all(22.0), required this.value, required this.onChange});
 
   final String labelText;
   final T value;
   final bool selected;
   final void Function(T) onChange;
+  final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class ToggleButton<T> extends StatelessWidget {
         color: (selected) ? Theme.of(context).backgroundColor.withAlpha(180) : Theme.of(context).backgroundColor.withAlpha(30),
         borderWidth: selected ? 1 : 2,
         child: Padding(
-          padding: const EdgeInsets.all(22.0),
+          padding: padding,
           child: Wrap(
             children: [
               if (selected) Icon(Icons.check),
