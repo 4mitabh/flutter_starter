@@ -10,8 +10,9 @@ class UserModel {
   String? name;
   String? photoUrl;
   List<String> memberOf;
+  List<String> subscriptions;
 
-  UserModel({required this.id, this.email, this.name, this.phone, this.photoUrl, this.memberOf = const []});
+  UserModel({required this.id, this.subscriptions = const [], this.email, this.name, this.phone, this.photoUrl, this.memberOf = const []});
 
   factory UserModel.fromMap(Map data, String id) {
     return UserModel(
@@ -21,10 +22,11 @@ class UserModel {
       name: data['name'],
       photoUrl: data['photoUrl'],
       memberOf: ((data['memberOf'] ?? []) as List).cast<String>(),
+      subscriptions: ((data['subscriptions'] ?? []) as List).cast<String>(),
     );
   }
 
-  Map<String, dynamic> toJson() => {"email": email, "phone": phone, "name": name, "photoUrl": photoUrl, "memberOf": memberOf};
+  Map<String, dynamic> toJson() => {"email": email, "phone": phone, "name": name, "photoUrl": photoUrl, "memberOf": memberOf, 'subscriptions': subscriptions};
   String toString() => id + '\n' + toJson().toString();
   save() {
     DatabaseService.update(data: toJson()..addAll({'ts': FieldValue.serverTimestamp()}), path: '${FirebasePaths.prefix}${FirebasePaths.users}/$id');
