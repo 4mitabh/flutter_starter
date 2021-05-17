@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../models/models.dart';
 
 class DatabaseService extends GetxService {
-  bool USE_FIRESTORE_EMULATOR = false;
+  bool USE_FIRESTORE_EMULATOR = true;
 
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   DatabaseService() : super() {
@@ -40,53 +40,33 @@ class DatabaseService extends GetxService {
   }
 
   static Future<Stream<List<FirebaseDoc>>> collectionGroupWatch(String name,
-      {required String canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, int limit = 100}) async {
+      {required String canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, required int limit}) async {
     GetLogger.to.i('Collection Group ${name}');
     Query<Map<String, dynamic>> q = _firestore.collectionGroup(name).where('canRead', arrayContains: canRead);
     if (query != null) q = query(q);
-    q = q.limit(limit);
-    return await DatabaseService.queryWatch(q);
+    return await DatabaseService.queryWatch(q, limit: limit);
   }
 
-  static Future<List<FirebaseDoc>> watchCollection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
-    Query<Map<String, dynamic>> query = (orderby == null)
-        ? _firestore.collection(FirebasePaths.prefix + path).limit(limit)
-        : _firestore.collection(FirebasePaths.prefix + path).orderBy(orderby, descending: false).limit(limit);
-    return DatabaseService.query(query, useCache: useCache);
-  }
-
-  static Future<Stream<List<FirebaseDoc>>> queryWatch(Query<Map<String, dynamic>> query) async {
-    var cachedResults = (await query.orderBy('ts', descending: false).get())
+  static Future<Stream<List<FirebaseDoc>>> queryWatch(Query<Map<String, dynamic>> query, {int limit = 100}) async {
+    var cachedResults = (await query.orderBy('ts', descending: false).limitToLast(limit).get(GetOptions(source: Source.cache)))
         .docs
         .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc))
         .toList();
-    Timestamp lastUpdate = cachedResults.last.properties['ts'];
-    GetLogger.to.w('Lastupdate $lastUpdate');
+
+    Timestamp lastUpdate = cachedResults.isEmpty ? Timestamp.fromMicrosecondsSinceEpoch(0) : cachedResults.last.properties['ts'];
 
     var stream = query
         .where('ts', isGreaterThan: lastUpdate)
         .snapshots()
         .map((event) => event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList());
     return stream.map((updates) {
+      GetLogger.to.i('Got updates $updates');
+      var updatedIDs = updates.map((e) => e.id).toList();
+      cachedResults.removeWhere((element) => updatedIDs.contains(element.id));
       cachedResults.addAll(updates);
+      if (cachedResults.length > limit) cachedResults.removeRange(0, cachedResults.length - limit);
       return cachedResults;
     });
-    /*List<FirebaseDoc> docs = RxList.empty();
-    var results = (await query.get()).docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
-    docs(results);
-    Timestamp lastUpdate = results.last.properties['ts'];
-    GetLogger.to.w('Lastupdate $lastUpdate');
-    query.where('ts', isGreaterThan: lastUpdate).snapshots().listen((event) {
-      var updatedDocs = event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
-      docs.value = updatedDocs;
-      GetLogger.to.w('update $updatedDocs');
-    });*/
-    // DatabaseService.query(query.orderBy('ts', descending: true).limit(50), useCache: true).then((result) {
-    //   Timestamp ts = (result.isNotEmpty ? result.first.properties['ts'] : null) ?? Timestamp.fromMicrosecondsSinceEpoch(0);
-    //   docs(result);
-    // });
-    // docs.bindStream(
-    //     query.where('ts', isGreaterThan: lastUpdate).snapshots().map((event) => event.docs.map((e) => FirebaseDoc.fromDocumentSnapshot(e)).toList()));
   }
 
   static Future<List<FirebaseDoc>> query(Query<Map<String, dynamic>> query, {bool useCache = true}) async {
@@ -97,7 +77,7 @@ class DatabaseService extends GetxService {
       try {
         qs = (await query.get(GetOptions(source: Source.cache)));
         if (qs.metadata.isFromCache && qs.size == 0) {
-          GetLogger.to.w('${query.parameters} got ${qs.size} from ${qs.metadata.isFromCache ? 'cache' : 'server'}. Forcing get from server.');
+          GetLogger.to.i('${query.parameters} got ${qs.size} from ${qs.metadata.isFromCache ? 'cache' : 'server'}. Forcing get from server.');
           qs = await query.get(GetOptions(source: Source.server));
         }
       } catch (_) {

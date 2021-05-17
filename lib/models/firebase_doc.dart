@@ -17,4 +17,5 @@ class FirebaseDoc {
   }
 
   Map<String, dynamic> toJson() => properties;
+  String toString() => '$id ${(properties['ts'] as Timestamp).toDate().toString()}';
 }
