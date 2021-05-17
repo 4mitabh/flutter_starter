@@ -39,8 +39,8 @@ class DatabaseService extends GetxService {
     return DatabaseService.query(q, useCache: useCache);
   }
 
-  static Future<RxList<FirebaseDoc>> collectionGroupWatch(String name,
-      {required String canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, int limit = 100}) async {
+  static Stream<List<FirebaseDoc>> collectionGroupWatch(String name,
+      {required String canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, int limit = 100}) {
     GetLogger.to.i('Collection Group ${name}');
     Query<Map<String, dynamic>> q = _firestore.collectionGroup(name).where('canRead', arrayContains: canRead);
     if (query != null) q = query(q);
@@ -55,24 +55,26 @@ class DatabaseService extends GetxService {
     return DatabaseService.query(query, useCache: useCache);
   }
 
-  static Future<RxList<FirebaseDoc>> queryWatch(Query<Map<String, dynamic>> query) async {
-    RxList<FirebaseDoc> docs = RxList.empty();
+  static Stream<List<FirebaseDoc>> queryWatch(Query<Map<String, dynamic>> query) {
+    return query
+        .snapshots()
+        .map((event) => event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList());
+    /*List<FirebaseDoc> docs = RxList.empty();
     var results = (await query.get()).docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
     docs(results);
     Timestamp lastUpdate = results.last.properties['ts'];
     GetLogger.to.w('Lastupdate $lastUpdate');
     query.where('ts', isGreaterThan: lastUpdate).snapshots().listen((event) {
       var updatedDocs = event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
-      docs(updatedDocs);
+      docs.value = updatedDocs;
       GetLogger.to.w('update $updatedDocs');
-    });
+    });*/
     // DatabaseService.query(query.orderBy('ts', descending: true).limit(50), useCache: true).then((result) {
     //   Timestamp ts = (result.isNotEmpty ? result.first.properties['ts'] : null) ?? Timestamp.fromMicrosecondsSinceEpoch(0);
     //   docs(result);
     // });
-    docs.bindStream(
-        query.where('ts', isGreaterThan: lastUpdate).snapshots().map((event) => event.docs.map((e) => FirebaseDoc.fromDocumentSnapshot(e)).toList()));
-    return docs;
+    // docs.bindStream(
+    //     query.where('ts', isGreaterThan: lastUpdate).snapshots().map((event) => event.docs.map((e) => FirebaseDoc.fromDocumentSnapshot(e)).toList()));
   }
 
   static Future<List<FirebaseDoc>> query(Query<Map<String, dynamic>> query, {bool useCache = true}) async {
