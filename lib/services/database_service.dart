@@ -39,13 +39,13 @@ class DatabaseService extends GetxService {
     return DatabaseService.query(q, useCache: useCache);
   }
 
-  static Stream<List<FirebaseDoc>> collectionGroupWatch(String name,
-      {required String canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, int limit = 100}) {
+  static Future<Stream<List<FirebaseDoc>>> collectionGroupWatch(String name,
+      {required String canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, int limit = 100}) async {
     GetLogger.to.i('Collection Group ${name}');
     Query<Map<String, dynamic>> q = _firestore.collectionGroup(name).where('canRead', arrayContains: canRead);
     if (query != null) q = query(q);
-    q = q.orderBy('ts', descending: false).limit(limit);
-    return DatabaseService.queryWatch(q);
+    q = q.limit(limit);
+    return await DatabaseService.queryWatch(q);
   }
 
   static Future<List<FirebaseDoc>> watchCollection(String path, {String? orderby, bool useCache = true, int limit = 100}) async {
@@ -55,10 +55,22 @@ class DatabaseService extends GetxService {
     return DatabaseService.query(query, useCache: useCache);
   }
 
-  static Stream<List<FirebaseDoc>> queryWatch(Query<Map<String, dynamic>> query) {
-    return query
+  static Future<Stream<List<FirebaseDoc>>> queryWatch(Query<Map<String, dynamic>> query) async {
+    var cachedResults = (await query.orderBy('ts', descending: false).get())
+        .docs
+        .map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc))
+        .toList();
+    Timestamp lastUpdate = cachedResults.last.properties['ts'];
+    GetLogger.to.w('Lastupdate $lastUpdate');
+
+    var stream = query
+        .where('ts', isGreaterThan: lastUpdate)
         .snapshots()
         .map((event) => event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList());
+    return stream.map((updates) {
+      cachedResults.addAll(updates);
+      return cachedResults;
+    });
     /*List<FirebaseDoc> docs = RxList.empty();
     var results = (await query.get()).docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList();
     docs(results);
