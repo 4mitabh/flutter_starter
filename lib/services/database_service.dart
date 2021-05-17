@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import '../models/models.dart';
 
 class DatabaseService extends GetxService {
-  bool USE_FIRESTORE_EMULATOR = true;
+  bool USE_FIRESTORE_EMULATOR = false;
 
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   DatabaseService() : super() {
