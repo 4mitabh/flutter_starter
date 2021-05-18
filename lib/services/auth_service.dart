@@ -31,6 +31,7 @@ class AuthService extends GetxService {
     ever(firebaseUser, handleAuthChanged);
     firebaseUser.value = await getFirebaseUser;
     firebaseUser.bindStream(user);
+    firebaseUser.stream.first.then((value) => Get.toNamed('/'));
     super.onReady();
   }
 
@@ -44,7 +45,7 @@ class AuthService extends GetxService {
     if (_firebaseUser?.uid != null) {
       firestoreUser.bindStream(await streamFirestoreUser());
     }
-    Get.toNamed('/');
+
     // if (_firebaseUser == null) {
     //   Get.toNamed('/signin');
     // } else {
@@ -115,7 +116,6 @@ class AuthService extends GetxService {
       name: _firebaseUser.displayName,
       photoUrl: _firebaseUser.photoURL,
       phone: _firebaseUser.phoneNumber,
-      memberOf: ['users'],
     );
     //create the user in firestore
     _createUserFirestore(_newUser, _firebaseUser);

@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/constants/firebase_paths.dart';
 import 'package:fire_starter/helpers/helpers.dart';
 import 'package:fire_starter/services/auth_service.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import '../models/models.dart';
 
 class DatabaseService extends GetxService {
-  bool USE_FIRESTORE_EMULATOR = false;
+  bool USE_FIRESTORE_EMULATOR = kReleaseMode ? false : false;
 
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   DatabaseService() : super() {
