@@ -45,12 +45,9 @@ class AuthService extends GetxService {
     if (_firebaseUser?.uid != null) {
       firestoreUser.bindStream(await streamFirestoreUser());
     }
-
-    // if (_firebaseUser == null) {
-    //   Get.toNamed('/signin');
-    // } else {
-    //   Get.toNamed('/home');
-    // }
+    if (_firebaseUser == null) {
+      Get.offNamed('/');
+    }
   }
 
   //Streams the firestore user from the firestore collection
