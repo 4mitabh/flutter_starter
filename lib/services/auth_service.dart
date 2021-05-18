@@ -31,7 +31,7 @@ class AuthService extends GetxService {
     ever(firebaseUser, handleAuthChanged);
     firebaseUser.value = await getFirebaseUser;
     firebaseUser.bindStream(user);
-    firebaseUser.stream.first.then((value) => Get.toNamed('/'));
+    firebaseUser.stream.first.then((value) => Get.offNamed('/'));
     super.onReady();
   }
 
@@ -45,9 +45,7 @@ class AuthService extends GetxService {
     if (_firebaseUser?.uid != null) {
       firestoreUser.bindStream(await streamFirestoreUser());
     }
-    if (_firebaseUser == null) {
-      Get.offNamed('/');
-    }
+    Get.offNamed('/');
   }
 
   //Streams the firestore user from the firestore collection
