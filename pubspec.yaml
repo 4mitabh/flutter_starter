@@ -40,7 +40,6 @@ dependencies:
   auto_size_text:
   # flutter_fgbg:
   # flutter_local_notifications:
-  dash_chat:
   path_provider:
   blurhash_dart:
   flutter_blurhash:

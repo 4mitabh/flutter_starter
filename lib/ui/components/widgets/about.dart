@@ -40,7 +40,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
                 Expanded(
                     child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: Text('${AuthService.to.firebaseUser.value!.uid}', style: Theme.of(context).textTheme.subtitle2),
+                  child: Text('${AuthService.to.firebaseUser.value?.uid ?? ''}', style: Theme.of(context).textTheme.subtitle2),
                 )),
                 if (_count > 10 || ConfigStorage.diagnostics) showHidden()
               ],
