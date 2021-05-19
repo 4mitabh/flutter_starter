@@ -55,7 +55,7 @@ class SignInUI extends StatelessWidget {
                           decoration: ThemeController.to.appTheme.value.kGradientBoxDecoration(context),
                           child: IntlPhoneField(
                             controller: _signInController.phoneController,
-                            autofocus: true,
+                            // autofocus: true,
                             countries: FireStarter.settings['auth']?['countries'] ?? ['IN', 'US', 'CA', 'JP'],
                             style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).colorScheme.primary.withAlpha(120)),
                             decoration: InputDecoration(border: InputBorder.none, contentPadding: EdgeInsets.only(top: 24, bottom: 2, right: 24)),

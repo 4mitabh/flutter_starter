@@ -31,7 +31,7 @@ class _AboutAppDialogState extends State<AboutAppDialog> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(children: [BackButton(color: Colors.pink, onPressed: () => Get.back())]),
+                Row(children: [BackButton(color: Colors.pink, onPressed: () => Navigator.pop(context))]),
                 Spacer(),
                 GestureDetector(
                     onTap: () => setState(() => this._count++), child: Text(PackageInfoService.appName, style: Theme.of(context).textTheme.headline3)),
