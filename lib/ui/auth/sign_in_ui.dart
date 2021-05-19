@@ -1,5 +1,6 @@
 import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:fire_starter/fire_starter.dart';
+import 'package:fire_starter/services/config_service.dart';
 import 'package:fire_starter/services/package_info.dart';
 import 'package:fire_starter/ui/components/widgets/link_button.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
@@ -46,7 +47,7 @@ class SignInUI extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline2!.copyWith(color: Theme.of(context).colorScheme.primary.withAlpha(120)),
                 ),
                 SizedBox(height: 48.0),
-                if ((FireStarter.settings['auth']?['phoneSignIn'] != false))
+                if (ConfigStorage.diagnostics || (FireStarter.settings['auth']?['phoneSignIn'] != false))
                   Column(children: [
                     if (!_signInController.waitingForOTP.value)
                       Container(
@@ -94,8 +95,9 @@ class SignInUI extends StatelessWidget {
                   ]),
                 FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value &&
-                    ((FireStarter.settings['auth']?['appleSignIn'] == true) || GetPlatform.isMacOS || GetPlatform.isIOS) &&
-                    (FireStarter.settings['auth']?['appleSignIn'] != false))
+                    (ConfigStorage.diagnostics ||
+                        ((FireStarter.settings['auth']?['appleSignIn'] == true) || GetPlatform.isMacOS || GetPlatform.isIOS) &&
+                            (FireStarter.settings['auth']?['appleSignIn'] != false)))
                   LinkButton(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -115,8 +117,9 @@ class SignInUI extends StatelessWidget {
                       }),
                 FormVerticalSpace(),
                 if (!_signInController.waitingForOTP.value &&
-                    ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb) &&
-                    (FireStarter.settings['auth']?['googleSignIn'] != false))
+                    (ConfigStorage.diagnostics ||
+                        ((FireStarter.settings['auth']?['googleSignIn'] == true) || GetPlatform.isAndroid || GetPlatform.isWeb) &&
+                            (FireStarter.settings['auth']?['googleSignIn'] != false)))
                   LinkButton(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
