@@ -52,10 +52,11 @@ class AuthService extends GetxService {
   //Streams the firestore user from the firestore collection
   Future<Stream<UserModel?>> streamFirestoreUser() async {
     UserModel? userRecord = await getFirestoreUser();
-    if (userRecord != null && firebaseUser.value != null) {
-      return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${firebaseUser.value!.uid}').snapshots().map((snapshot) {
+    var value = firebaseUser.value;
+    if (userRecord != null && value != null) {
+      return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${value.uid}').snapshots().map((snapshot) {
         print('Writing User to stream... ${snapshot.id} ' + snapshot.data().toString());
-        return UserModel.fromMap(snapshot.data()!, firebaseUser.value!.uid);
+        return UserModel.fromMap(snapshot.data()!, value.uid);
       });
     }
     return Future.value();
