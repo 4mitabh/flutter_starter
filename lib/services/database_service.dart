@@ -55,8 +55,10 @@ class DatabaseService extends GetxService {
   }
 
   static Future<Stream<List<FirebaseDoc>>> queryWatch(Query<Map<String, dynamic>> query, {int limit = 100}) async {
-    var stream =
-        query.snapshots().map((event) => event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList());
+    var stream = query
+        .limit(limit)
+        .snapshots()
+        .map((event) => event.docs.map((QueryDocumentSnapshot<Map<String, dynamic>> doc) => FirebaseDoc.fromDocumentSnapshot(doc)).toList());
     return stream.map((updates) {
       GetLogger.to.i('Got updates $updates');
       return updates;
