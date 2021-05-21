@@ -63,8 +63,8 @@ class _UpgradePromptUIState extends State<UpgradePromptUI> {
                         shape: StadiumBorder(),
                         onPressed: () => {
                               launch(GetPlatform.isIOS
-                                  ? 'https://apps.apple.com/in/app/hyperk/id1475304152'
-                                  : 'https://play.google.com/store/apps/details?id=com.enthrall.scorizen')
+                                  ? FireStarter.settings['upgrade']?['ios']
+                                  : FireStarter.settings['upgrade']?['android'])
                             }),
                   ],
                 ),
