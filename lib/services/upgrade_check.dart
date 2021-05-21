@@ -7,7 +7,8 @@ class UpgradeCheckService {
   static init() async {
     if (GetPlatform.isWeb) _result = 0;
     MetadataModel metadata = await MetadataModel.get();
-    if (metadata == null) return Future.delayed(Duration(seconds: 5)).then((value) => UpgradeCheckService.init());
+    PackageInfoService.metadata = metadata;
+    if (metadata.build == 0) return Future.delayed(Duration(seconds: 5)).then((value) => UpgradeCheckService.init());
     int appVersion = PackageInfoService.majorVersion;
     GetLogger.to.i('Upgrade check: Local ${PackageInfoService.majorVersion} server: $metadata');
 
