@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/helpers/helpers.dart';
+import 'package:fire_starter/services/config_service.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import '../models/models.dart';
 import 'package:fire_starter/constants/constants.dart';
@@ -106,12 +107,12 @@ class AuthService extends GetxService {
     if (firebaseUser.value == null) return null;
     User _firebaseUser = firebaseUser.value!;
     UserModel _newUser = UserModel(
-      id: _firebaseUser.uid,
-      email: _firebaseUser.email,
-      name: _firebaseUser.displayName,
-      photoUrl: _firebaseUser.photoURL,
-      phone: _firebaseUser.phoneNumber,
-    );
+        id: _firebaseUser.uid,
+        email: _firebaseUser.email,
+        name: _firebaseUser.displayName,
+        photoUrl: _firebaseUser.photoURL,
+        phone: _firebaseUser.phoneNumber,
+        memberOf: ConfigStorage.isAlpha ? ['alpha-users'] : ['users']);
     //create the user in firestore
     _createUserFirestore(_newUser, _firebaseUser);
     return _newUser;
