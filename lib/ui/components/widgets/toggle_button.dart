@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:fire_starter/controllers/theme_controller.dart';
 import 'package:fire_starter/ui/components/widgets/glass/glass_card.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,9 @@ class ToggleButton<T> extends StatelessWidget {
           child: Wrap(
             children: [
               if (selected) Icon(Icons.check),
-              Text(
+              AutoSizeText(
                 labelText,
+                maxLines: 4,
                 style: Theme.of(context).textTheme.headline6?.copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ],
