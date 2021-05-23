@@ -1,8 +1,10 @@
 import 'dart:io';
-
 import 'package:fire_starter/fire_starter.dart';
 import 'package:fire_starter/helpers/helpers.dart';
+import 'package:fire_starter/ui/components/components.dart';
+import 'package:fire_starter/ui/components/widgets/glass/glass_card.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -46,16 +48,4 @@ Future<String> getImageFilePathFromAssets(String path) async {
   final file = File('${(await getTemporaryDirectory()).path}/temp.jpg');
   await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
   return file.path;
-}
-
-requestReview() async {
-  final InAppReview inAppReview = InAppReview.instance;
-
-  if (await inAppReview.isAvailable()) {
-    inAppReview.requestReview();
-  } else {
-    inAppReview.openStoreListing(
-      appStoreId: FireStarter.settings['app']?['appStoreId'],
-    );
-  }
 }
