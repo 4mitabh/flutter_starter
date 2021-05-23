@@ -24,46 +24,43 @@ class RateAppDialog extends StatelessWidget {
     return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
         title: Text('Did you find this app useful ?', style: TextStyle(fontSize: 22)),
-        content: GlassCard(
-          color: Colors.white,
-          child: Container(
-              padding: EdgeInsets.all(2),
-              child: Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
-                Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.pink,
-                        minimumSize: Size(88, 36),
-                        padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
-                        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
-                      ),
-                      onPressed: () {
-                        if (GetPlatform.isAndroid)
-                          inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId']);
-                        else {
-                          Navigator.pop(context);
-                          inAppReview.requestReview();
-                        }
-                      },
-                      child: Text('Yes, I want to rate it ⭐⭐⭐⭐⭐',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ))),
-                ),
-                ElevatedButton(
+        content: Container(
+            padding: EdgeInsets.all(2),
+            child: Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
+              Padding(
+                padding: const EdgeInsets.all(18.0),
+                child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      onPrimary: Colors.black87,
                       primary: Colors.pink,
                       minimumSize: Size(88, 36),
                       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
                       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
                     ),
-                    onPressed: () => launch(feedbackURL),
-                    child: Text('No, Have Feeedback.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18))),
-              ])),
-        ));
+                    onPressed: () {
+                      if (GetPlatform.isAndroid)
+                        inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId']);
+                      else {
+                        Navigator.pop(context);
+                        inAppReview.requestReview();
+                      }
+                    },
+                    child: Text('Yes, I want to rate it ⭐⭐⭐⭐⭐',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ))),
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    onPrimary: Colors.black87,
+                    primary: Colors.pink,
+                    minimumSize: Size(88, 36),
+                    padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
+                  ),
+                  onPressed: () => launch(feedbackURL),
+                  child: Text('No, Have Feeedback.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18))),
+            ])));
   }
 }
