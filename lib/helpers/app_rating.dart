@@ -62,7 +62,7 @@ class RateAppDialog extends StatelessWidget {
                       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
                     ),
                     onPressed: () => launch(feedbackURL),
-                    child: Text('No, Have Feeedback.', style: TextStyle(color: Colors.white, fontSize: 18))),
+                    child: Text('No, Have Feeedback.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18))),
               ])),
         ));
   }
