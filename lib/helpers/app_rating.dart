@@ -38,9 +38,14 @@ class RateAppDialog extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
                       ),
-                      onPressed: () => GetPlatform.isAndroid
-                          ? inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId'])
-                          : inAppReview.requestReview(),
+                      onPressed: () {
+                        if (GetPlatform.isAndroid)
+                          inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId']);
+                        else {
+                          Navigator.pop(context);
+                          inAppReview.requestReview();
+                        }
+                      },
                       child: Text('Yes, I want to rate it ⭐⭐⭐⭐⭐',
                           textAlign: TextAlign.center,
                           style: TextStyle(
