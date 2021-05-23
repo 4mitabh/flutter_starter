@@ -1,6 +1,7 @@
 import 'package:fire_starter/fire_starter.dart';
 import 'package:fire_starter/helpers/helpers.dart';
 import 'package:fire_starter/services/upgrade_check.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -62,8 +63,7 @@ class _UpgradePromptUIState extends State<UpgradePromptUI> {
                         color: Colors.greenAccent,
                         child: Text('Upgrade'),
                         shape: StadiumBorder(),
-                        onPressed: () =>
-                            {launch(GetPlatform.isIOS ? (FireStarter.settings['upgrade']?['ios']) : (FireStarter.settings['upgrade']?['android']))}),
+                        onPressed: () => InAppReview.instance.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId']))
                   ],
                 ),
               ),

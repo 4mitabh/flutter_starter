@@ -42,7 +42,7 @@ class ThemeController extends GetxController {
   }
 
   getThemeModeFromStore() async {
-    String _themeString = await store.read('themeMode') ?? 'system';
+    String _themeString = store.read('themeMode') ?? 'light';
     setThemeMode(_themeString);
   }
 

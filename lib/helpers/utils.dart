@@ -1,6 +1,13 @@
+import 'dart:io';
+
+import 'package:fire_starter/fire_starter.dart';
+import 'package:fire_starter/helpers/helpers.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:logger/logger.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 extension GetLogger on Logger {
   static Logger to = Get.find();
@@ -33,3 +40,22 @@ showSnackBar(title, message, {SnackPosition position = SnackPosition.TOP}) => Ge
     duration: Duration(seconds: 7),
     backgroundColor: Get.theme.snackBarTheme.backgroundColor,
     colorText: Get.theme.snackBarTheme.actionTextColor);
+
+Future<String> getImageFilePathFromAssets(String path) async {
+  final byteData = await rootBundle.load(path);
+  final file = File('${(await getTemporaryDirectory()).path}/temp.jpg');
+  await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  return file.path;
+}
+
+requestReview() async {
+  final InAppReview inAppReview = InAppReview.instance;
+
+  if (await inAppReview.isAvailable()) {
+    inAppReview.requestReview();
+  } else {
+    inAppReview.openStoreListing(
+      appStoreId: FireStarter.settings['app']?['appStoreId'],
+    );
+  }
+}
