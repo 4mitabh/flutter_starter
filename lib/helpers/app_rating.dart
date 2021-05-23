@@ -1,22 +1,15 @@
-import 'dart:io';
 import 'package:fire_starter/fire_starter.dart';
-import 'package:fire_starter/helpers/helpers.dart';
-import 'package:fire_starter/ui/components/components.dart';
 import 'package:fire_starter/ui/components/widgets/glass/glass_card.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:logger/logger.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:url_launcher/url_launcher.dart';
 
 requestReview(context, String feedbackURL) async {
   final InAppReview inAppReview = InAppReview.instance;
   if (await inAppReview.isAvailable()) {
     showDialog(context: context, builder: (_) => RateAppDialog(inAppReview, feedbackURL), useRootNavigator: true);
-    inAppReview.requestReview();
+    if (GetPlatform.isAndroid) inAppReview.requestReview();
   } else {
     inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId']);
   }
@@ -45,7 +38,9 @@ class RateAppDialog extends StatelessWidget {
                         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 18),
                         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
                       ),
-                      onPressed: () => inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId']),
+                      onPressed: () => GetPlatform.isAndroid
+                          ? inAppReview.openStoreListing(appStoreId: FireStarter.settings['app']?['appStoreId'])
+                          : inAppReview.requestReview(),
                       child: Text('Yes, I want to rate it ⭐⭐⭐⭐⭐',
                           textAlign: TextAlign.center,
                           style: TextStyle(
