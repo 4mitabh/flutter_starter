@@ -12,7 +12,7 @@ class UpgradeCheckService {
     int appVersion = PackageInfoService.majorVersion;
     GetLogger.to.i('Upgrade check: Local ${PackageInfoService.majorVersion} server: $metadata');
 
-    if (metadata.majorVersion < appVersion) return _result = 1;
+    if (metadata.majorVersion > appVersion) return _result = 1;
     int appMinorVersion = PackageInfoService.minorVersion;
     if (metadata.minorVersion > appMinorVersion) return _result = 2;
     _result = 0;
