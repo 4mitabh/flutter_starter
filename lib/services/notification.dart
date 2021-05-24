@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/constants/constants.dart';
 import 'package:fire_starter/helpers/helpers.dart';
@@ -14,6 +15,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   showSnackBar('${message.notification?.title}', '${message.notification?.body}');
+  AwesomeNotifications().createNotificationFromJsonData(message.data);
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   _firestore.enableNetwork();
 }
@@ -27,6 +29,19 @@ class NotificationService extends GetxService {
   NotificationService() {
     AuthService authService = AuthService.to;
     authService.user.listen(userUpdated);
+    AwesomeNotifications().initialize(
+        'resource://drawable/notification',
+        [
+          NotificationChannel(
+              channelKey: 'notify',
+              importance: NotificationImportance.Max,
+              channelName: 'notify',
+              soundSource: 'resource://raw/res_notify',
+              channelDescription: 'Notification channel for alerts',
+              defaultColor: Color(0xFF69B4FF),
+              ledColor: Colors.white)
+        ]);
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) showSnackBar(message.notification?.title ?? PackageInfoService.appName, message.notification?.body ?? '');
     });
