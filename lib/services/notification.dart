@@ -8,6 +8,7 @@ import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -29,18 +30,16 @@ class NotificationService extends GetxService {
   NotificationService() {
     AuthService authService = AuthService.to;
     authService.user.listen(userUpdated);
-    AwesomeNotifications().initialize(
-        'resource://drawable/notification',
-        [
-          NotificationChannel(
-              channelKey: 'notify',
-              importance: NotificationImportance.Max,
-              channelName: 'notify',
-              soundSource: 'resource://raw/res_notify',
-              channelDescription: 'Notification channel for alerts',
-              defaultColor: Color(0xFF69B4FF),
-              ledColor: Colors.white)
-        ]);
+    AwesomeNotifications().initialize('resource://drawable/notification', [
+      NotificationChannel(
+          channelKey: 'notify',
+          importance: NotificationImportance.Max,
+          channelName: 'notify',
+          soundSource: 'resource://raw/res_notify',
+          channelDescription: 'Notification channel for alerts',
+          defaultColor: Color(0xFF69B4FF),
+          ledColor: Colors.white)
+    ]);
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) showSnackBar(message.notification?.title ?? PackageInfoService.appName, message.notification?.body ?? '');
