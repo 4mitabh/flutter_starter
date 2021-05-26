@@ -8,6 +8,50 @@ part of 'localizations.dart';
 
 final localizedLabels = <Locale, AppLocalizationsData>{
   Locale.fromSubtags(languageCode: 'en'): const AppLocalizationsData(
+    questrack: const AppLocalizationsDataQuestrack(
+      share: const AppLocalizationsDataQuestrackShare(
+        title: 'Booked Vaccination Slot!',
+        body:
+            'I used Questrack app to find my vaccination slot https://questrack.app/v/\nSimply install the app and select your city. You will get notified the moment new slots appear.',
+      ),
+      review: const AppLocalizationsDataQuestrackReview(
+        dialog: const AppLocalizationsDataQuestrackReviewDialog(
+          no: 'No, I have feedback',
+          yes: 'Yes, I want to rate it ⭐⭐⭐⭐⭐',
+          body: 'Did you find this app useful?',
+        ),
+        snack: const AppLocalizationsDataQuestrackReviewSnack(
+          body: 'If this app helped you, please leave a 5 star rating',
+          title: 'Thank you',
+        ),
+      ),
+      menu: const AppLocalizationsDataQuestrackMenu(
+        about: 'About',
+        editCities: 'Edit Cities',
+        review: 'Write a review',
+        switchLocale: 'Switch to Hindi',
+        share: 'Share',
+        signout: 'Sign Out',
+      ),
+      questpicker: const AppLocalizationsDataQuestrackQuestpicker(
+        cityTitle: 'Pick your cities to receive alerts:',
+        save: 'Save',
+        errorTooMany:
+            const AppLocalizationsDataQuestrackQuestpickerErrorTooMany(
+          body: 'Please limit your selections to {{num}}',
+          title: 'Cannot add more than {{num}}',
+        ),
+      ),
+      feed: const AppLocalizationsDataQuestrackFeed(
+        opencowin: 'Open CoWin Website',
+        title: 'Live Availability',
+        empty: const AppLocalizationsDataQuestrackFeedEmpty(
+          body:
+              'You will receive alerts here as and when slots open up in your city',
+          title: 'No Updates',
+        ),
+      ),
+    ),
     validator: const AppLocalizationsDataValidator(
       amount: 'Please enter a number i.e. 250 - no dollar symbol and no cents',
       notEmpty: 'This is a required field.',
@@ -65,6 +109,49 @@ final localizedLabels = <Locale, AppLocalizationsData>{
     ),
   ),
   Locale.fromSubtags(languageCode: 'hi'): const AppLocalizationsData(
+    questrack: const AppLocalizationsDataQuestrack(
+      share: const AppLocalizationsDataQuestrackShare(
+        title: 'मैंने अपना टीकाकरण स्लॉट बुक कर लिया है!',
+        body:
+            'मैंने अपना टीकाकरण स्लॉट खोजने के लिए Questrack ऐप का इस्तेमाल किया https://questrack.app/v/\nबस ऐप इंस्टॉल करें और अपने शहर का चयन करें। जैसे ही नए स्लॉट दिखाई देंगे आपको सूचना मिल जाएगी।',
+      ),
+      review: const AppLocalizationsDataQuestrackReview(
+        dialog: const AppLocalizationsDataQuestrackReviewDialog(
+          no: 'नहीं, मेरे पास सुझाव हैं',
+          yes: 'हां, मैं इसे ⭐⭐⭐⭐⭐ रेट करना चाहता हूं',
+          body: 'क्या इस ऐप ने आपकी मदद की?',
+        ),
+        snack: const AppLocalizationsDataQuestrackReviewSnack(
+          body: 'अगर इस ऐप ने आपकी मदद की है, तो कृपया 5 स्टार रेटिंग दें',
+          title: 'धन्यवाद',
+        ),
+      ),
+      menu: const AppLocalizationsDataQuestrackMenu(
+        about: 'ऐप के बारे में',
+        editCities: 'शहर चुनें',
+        review: 'रेटिंग दें',
+        switchLocale: 'अंग्रेजी में बदलें',
+        share: 'शेयर करें',
+        signout: 'लॉग आउट',
+      ),
+      questpicker: const AppLocalizationsDataQuestrackQuestpicker(
+        cityTitle: 'अलर्ट प्राप्त करने के लिए अपने शहर चुनें:',
+        save: 'आगे बढ़ें',
+        errorTooMany:
+            const AppLocalizationsDataQuestrackQuestpickerErrorTooMany(
+          body: 'कृपया अपने चयन को {{num}} तक सीमित करें',
+          title: '{{num}} से अधिक शहर न चुनें',
+        ),
+      ),
+      feed: const AppLocalizationsDataQuestrackFeed(
+        opencowin: 'CoWin वेबसाइट खोलें',
+        title: 'लाइव उपलब्धता',
+        empty: const AppLocalizationsDataQuestrackFeedEmpty(
+          body: 'आपके शहर में स्लॉट खुलते ही आपको यहां अलर्ट प्राप्त होंगे',
+          title: '\nकोई नई सुचना नहीं है',
+        ),
+      ),
+    ),
     validator: const AppLocalizationsDataValidator(
       amount: 'कोई डॉलर प्रतीक और कोई सेंट - एक नंबर अर्थात 250 दर्ज करें',
       notEmpty: 'यह एक आवश्यक फील्ड है।',
@@ -113,12 +200,12 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       otpVerificationSent: 'आपके मोबाइल नंबर पर OTP भेज दिया गया है',
       otpVerificationSentTitle: 'OTP भेजा गया है',
       enterOTP: 'OTP दर्ज करें',
-      requestOTP: 'ओटीपी प्राप्त करें',
+      requestOTP: 'OTP प्राप्त करें',
       phone: '\nअपना फोन नंबर दर्ज करें',
       aborted: 'साइन-इन रद्द',
       appleSignIn: 'Apple  साइन-इन करें',
       googleSignIn: 'Google साइन-इन करें',
-      anonymousSignIn: 'बाद में साइन अप करें',
+      anonymousSignIn: 'Signup Later',
       skipSignIn: 'आगे बढ़ें',
     ),
   ),
@@ -126,6 +213,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
 
 class AppLocalizationsData {
   const AppLocalizationsData({
+    required this.questrack,
     required this.validator,
     required this.app,
     required this.home,
@@ -133,6 +221,7 @@ class AppLocalizationsData {
     required this.auth,
   });
 
+  final AppLocalizationsDataQuestrack questrack;
   final AppLocalizationsDataValidator validator;
   final AppLocalizationsDataApp app;
   final AppLocalizationsDataHome home;
@@ -140,6 +229,8 @@ class AppLocalizationsData {
   final AppLocalizationsDataAuth auth;
   factory AppLocalizationsData.fromJson(Map<String, Object?> map) =>
       AppLocalizationsData(
+        questrack: AppLocalizationsDataQuestrack.fromJson(
+            map['questrack']! as Map<String, Object?>),
         validator: AppLocalizationsDataValidator.fromJson(
             map['validator']! as Map<String, Object?>),
         app: AppLocalizationsDataApp.fromJson(
@@ -153,6 +244,7 @@ class AppLocalizationsData {
       );
 
   AppLocalizationsData copyWith({
+    AppLocalizationsDataQuestrack? questrack,
     AppLocalizationsDataValidator? validator,
     AppLocalizationsDataApp? app,
     AppLocalizationsDataHome? home,
@@ -160,6 +252,7 @@ class AppLocalizationsData {
     AppLocalizationsDataAuth? auth,
   }) =>
       AppLocalizationsData(
+        questrack: questrack ?? this.questrack,
         validator: validator ?? this.validator,
         app: app ?? this.app,
         home: home ?? this.home,
@@ -171,6 +264,7 @@ class AppLocalizationsData {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsData &&
+          questrack == other.questrack &&
           validator == other.validator &&
           app == other.app &&
           home == other.home &&
@@ -179,11 +273,469 @@ class AppLocalizationsData {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      questrack.hashCode ^
       validator.hashCode ^
       app.hashCode ^
       home.hashCode ^
       settings.hashCode ^
       auth.hashCode;
+}
+
+class AppLocalizationsDataQuestrack {
+  const AppLocalizationsDataQuestrack({
+    required this.share,
+    required this.review,
+    required this.menu,
+    required this.questpicker,
+    required this.feed,
+  });
+
+  final AppLocalizationsDataQuestrackShare share;
+  final AppLocalizationsDataQuestrackReview review;
+  final AppLocalizationsDataQuestrackMenu menu;
+  final AppLocalizationsDataQuestrackQuestpicker questpicker;
+  final AppLocalizationsDataQuestrackFeed feed;
+  factory AppLocalizationsDataQuestrack.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrack(
+        share: AppLocalizationsDataQuestrackShare.fromJson(
+            map['share']! as Map<String, Object?>),
+        review: AppLocalizationsDataQuestrackReview.fromJson(
+            map['review']! as Map<String, Object?>),
+        menu: AppLocalizationsDataQuestrackMenu.fromJson(
+            map['menu']! as Map<String, Object?>),
+        questpicker: AppLocalizationsDataQuestrackQuestpicker.fromJson(
+            map['questpicker']! as Map<String, Object?>),
+        feed: AppLocalizationsDataQuestrackFeed.fromJson(
+            map['feed']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataQuestrack copyWith({
+    AppLocalizationsDataQuestrackShare? share,
+    AppLocalizationsDataQuestrackReview? review,
+    AppLocalizationsDataQuestrackMenu? menu,
+    AppLocalizationsDataQuestrackQuestpicker? questpicker,
+    AppLocalizationsDataQuestrackFeed? feed,
+  }) =>
+      AppLocalizationsDataQuestrack(
+        share: share ?? this.share,
+        review: review ?? this.review,
+        menu: menu ?? this.menu,
+        questpicker: questpicker ?? this.questpicker,
+        feed: feed ?? this.feed,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrack &&
+          share == other.share &&
+          review == other.review &&
+          menu == other.menu &&
+          questpicker == other.questpicker &&
+          feed == other.feed);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      share.hashCode ^
+      review.hashCode ^
+      menu.hashCode ^
+      questpicker.hashCode ^
+      feed.hashCode;
+}
+
+class AppLocalizationsDataQuestrackShare {
+  const AppLocalizationsDataQuestrackShare({
+    required this.title,
+    required this.body,
+  });
+
+  final String title;
+  final String body;
+  factory AppLocalizationsDataQuestrackShare.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackShare(
+        title: map['title']! as String,
+        body: map['body']! as String,
+      );
+
+  AppLocalizationsDataQuestrackShare copyWith({
+    String? title,
+    String? body,
+  }) =>
+      AppLocalizationsDataQuestrackShare(
+        title: title ?? this.title,
+        body: body ?? this.body,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackShare &&
+          title == other.title &&
+          body == other.body);
+  @override
+  int get hashCode => runtimeType.hashCode ^ title.hashCode ^ body.hashCode;
+}
+
+class AppLocalizationsDataQuestrackReview {
+  const AppLocalizationsDataQuestrackReview({
+    required this.dialog,
+    required this.snack,
+  });
+
+  final AppLocalizationsDataQuestrackReviewDialog dialog;
+  final AppLocalizationsDataQuestrackReviewSnack snack;
+  factory AppLocalizationsDataQuestrackReview.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackReview(
+        dialog: AppLocalizationsDataQuestrackReviewDialog.fromJson(
+            map['dialog']! as Map<String, Object?>),
+        snack: AppLocalizationsDataQuestrackReviewSnack.fromJson(
+            map['snack']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataQuestrackReview copyWith({
+    AppLocalizationsDataQuestrackReviewDialog? dialog,
+    AppLocalizationsDataQuestrackReviewSnack? snack,
+  }) =>
+      AppLocalizationsDataQuestrackReview(
+        dialog: dialog ?? this.dialog,
+        snack: snack ?? this.snack,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackReview &&
+          dialog == other.dialog &&
+          snack == other.snack);
+  @override
+  int get hashCode => runtimeType.hashCode ^ dialog.hashCode ^ snack.hashCode;
+}
+
+class AppLocalizationsDataQuestrackReviewDialog {
+  const AppLocalizationsDataQuestrackReviewDialog({
+    required this.no,
+    required this.yes,
+    required this.body,
+  });
+
+  final String no;
+  final String yes;
+  final String body;
+  factory AppLocalizationsDataQuestrackReviewDialog.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackReviewDialog(
+        no: map['no']! as String,
+        yes: map['yes']! as String,
+        body: map['body']! as String,
+      );
+
+  AppLocalizationsDataQuestrackReviewDialog copyWith({
+    String? no,
+    String? yes,
+    String? body,
+  }) =>
+      AppLocalizationsDataQuestrackReviewDialog(
+        no: no ?? this.no,
+        yes: yes ?? this.yes,
+        body: body ?? this.body,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackReviewDialog &&
+          no == other.no &&
+          yes == other.yes &&
+          body == other.body);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ no.hashCode ^ yes.hashCode ^ body.hashCode;
+}
+
+class AppLocalizationsDataQuestrackReviewSnack {
+  const AppLocalizationsDataQuestrackReviewSnack({
+    required this.body,
+    required this.title,
+  });
+
+  final String body;
+  final String title;
+  factory AppLocalizationsDataQuestrackReviewSnack.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackReviewSnack(
+        body: map['body']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataQuestrackReviewSnack copyWith({
+    String? body,
+    String? title,
+  }) =>
+      AppLocalizationsDataQuestrackReviewSnack(
+        body: body ?? this.body,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackReviewSnack &&
+          body == other.body &&
+          title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ body.hashCode ^ title.hashCode;
+}
+
+class AppLocalizationsDataQuestrackMenu {
+  const AppLocalizationsDataQuestrackMenu({
+    required this.about,
+    required this.editCities,
+    required this.review,
+    required this.switchLocale,
+    required this.share,
+    required this.signout,
+  });
+
+  final String about;
+  final String editCities;
+  final String review;
+  final String switchLocale;
+  final String share;
+  final String signout;
+  factory AppLocalizationsDataQuestrackMenu.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackMenu(
+        about: map['about']! as String,
+        editCities: map['editCities']! as String,
+        review: map['review']! as String,
+        switchLocale: map['switchLocale']! as String,
+        share: map['share']! as String,
+        signout: map['signout']! as String,
+      );
+
+  AppLocalizationsDataQuestrackMenu copyWith({
+    String? about,
+    String? editCities,
+    String? review,
+    String? switchLocale,
+    String? share,
+    String? signout,
+  }) =>
+      AppLocalizationsDataQuestrackMenu(
+        about: about ?? this.about,
+        editCities: editCities ?? this.editCities,
+        review: review ?? this.review,
+        switchLocale: switchLocale ?? this.switchLocale,
+        share: share ?? this.share,
+        signout: signout ?? this.signout,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackMenu &&
+          about == other.about &&
+          editCities == other.editCities &&
+          review == other.review &&
+          switchLocale == other.switchLocale &&
+          share == other.share &&
+          signout == other.signout);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      about.hashCode ^
+      editCities.hashCode ^
+      review.hashCode ^
+      switchLocale.hashCode ^
+      share.hashCode ^
+      signout.hashCode;
+}
+
+class AppLocalizationsDataQuestrackQuestpicker {
+  const AppLocalizationsDataQuestrackQuestpicker({
+    required this.cityTitle,
+    required this.save,
+    required this.errorTooMany,
+  });
+
+  final String cityTitle;
+  final String save;
+  final AppLocalizationsDataQuestrackQuestpickerErrorTooMany errorTooMany;
+  factory AppLocalizationsDataQuestrackQuestpicker.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackQuestpicker(
+        cityTitle: map['cityTitle']! as String,
+        save: map['save']! as String,
+        errorTooMany:
+            AppLocalizationsDataQuestrackQuestpickerErrorTooMany.fromJson(
+                map['errorTooMany']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataQuestrackQuestpicker copyWith({
+    String? cityTitle,
+    String? save,
+    AppLocalizationsDataQuestrackQuestpickerErrorTooMany? errorTooMany,
+  }) =>
+      AppLocalizationsDataQuestrackQuestpicker(
+        cityTitle: cityTitle ?? this.cityTitle,
+        save: save ?? this.save,
+        errorTooMany: errorTooMany ?? this.errorTooMany,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackQuestpicker &&
+          cityTitle == other.cityTitle &&
+          save == other.save &&
+          errorTooMany == other.errorTooMany);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      cityTitle.hashCode ^
+      save.hashCode ^
+      errorTooMany.hashCode;
+}
+
+class AppLocalizationsDataQuestrackQuestpickerErrorTooMany {
+  const AppLocalizationsDataQuestrackQuestpickerErrorTooMany({
+    required String body,
+    required String title,
+  })  : _body = body,
+        _title = title;
+
+  final String _body;
+  final String _title;
+
+  String body({
+    required String num,
+    String? locale,
+  }) {
+    return _body.insertTemplateValues(
+      {
+        'num': num,
+      },
+      locale: locale,
+    );
+  }
+
+  String title({
+    required String num,
+    String? locale,
+  }) {
+    return _title.insertTemplateValues(
+      {
+        'num': num,
+      },
+      locale: locale,
+    );
+  }
+
+  factory AppLocalizationsDataQuestrackQuestpickerErrorTooMany.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackQuestpickerErrorTooMany(
+        body: map['body']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataQuestrackQuestpickerErrorTooMany copyWith({
+    String? body,
+    String? title,
+  }) =>
+      AppLocalizationsDataQuestrackQuestpickerErrorTooMany(
+        body: body ?? _body,
+        title: title ?? _title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackQuestpickerErrorTooMany &&
+          _body == other._body &&
+          _title == other._title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ _body.hashCode ^ _title.hashCode;
+}
+
+class AppLocalizationsDataQuestrackFeed {
+  const AppLocalizationsDataQuestrackFeed({
+    required this.opencowin,
+    required this.title,
+    required this.empty,
+  });
+
+  final String opencowin;
+  final String title;
+  final AppLocalizationsDataQuestrackFeedEmpty empty;
+  factory AppLocalizationsDataQuestrackFeed.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackFeed(
+        opencowin: map['opencowin']! as String,
+        title: map['title']! as String,
+        empty: AppLocalizationsDataQuestrackFeedEmpty.fromJson(
+            map['empty']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataQuestrackFeed copyWith({
+    String? opencowin,
+    String? title,
+    AppLocalizationsDataQuestrackFeedEmpty? empty,
+  }) =>
+      AppLocalizationsDataQuestrackFeed(
+        opencowin: opencowin ?? this.opencowin,
+        title: title ?? this.title,
+        empty: empty ?? this.empty,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackFeed &&
+          opencowin == other.opencowin &&
+          title == other.title &&
+          empty == other.empty);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      opencowin.hashCode ^
+      title.hashCode ^
+      empty.hashCode;
+}
+
+class AppLocalizationsDataQuestrackFeedEmpty {
+  const AppLocalizationsDataQuestrackFeedEmpty({
+    required this.body,
+    required this.title,
+  });
+
+  final String body;
+  final String title;
+  factory AppLocalizationsDataQuestrackFeedEmpty.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackFeedEmpty(
+        body: map['body']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataQuestrackFeedEmpty copyWith({
+    String? body,
+    String? title,
+  }) =>
+      AppLocalizationsDataQuestrackFeedEmpty(
+        body: body ?? this.body,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackFeedEmpty &&
+          body == other.body &&
+          title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ body.hashCode ^ title.hashCode;
 }
 
 class AppLocalizationsDataValidator {

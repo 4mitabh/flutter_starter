@@ -37,9 +37,9 @@ Future<String> getCountry() async {
   return locale;
 }
 
-showSnackBar(title, message, {SnackPosition position = SnackPosition.TOP}) => Get.snackbar(title, message,
+showSnackBar(title, message, {SnackPosition position = SnackPosition.TOP, int duration = 15}) => Get.snackbar(title, message,
     snackPosition: position,
-    duration: Duration(seconds: 7),
+    duration: Duration(seconds: duration),
     backgroundColor: Get.theme.snackBarTheme.backgroundColor,
     colorText: Get.theme.snackBarTheme.actionTextColor);
 

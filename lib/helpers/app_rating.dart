@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:fire_starter/localizations.dart';
 
 requestReview(context, String feedbackURL) async {
   final InAppReview inAppReview = InAppReview.instance;
@@ -21,9 +22,10 @@ class RateAppDialog extends StatelessWidget {
   final String feedbackURL;
   @override
   Widget build(BuildContext context) {
+    final labels = context.localizations;
     return AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-        title: Text('Did you find this app useful ?', style: TextStyle(fontSize: 22)),
+        title: Text(labels.questrack.review.dialog.body, style: TextStyle(fontSize: 22)),
         content: Container(
             padding: EdgeInsets.all(2),
             child: Column(mainAxisAlignment: MainAxisAlignment.center, mainAxisSize: MainAxisSize.min, children: [
@@ -44,7 +46,7 @@ class RateAppDialog extends StatelessWidget {
                         inAppReview.requestReview();
                       }
                     },
-                    child: Text('Yes, I want to rate it ⭐⭐⭐⭐⭐',
+                    child: Text(labels.questrack.review.dialog.yes,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.white,
@@ -60,7 +62,7 @@ class RateAppDialog extends StatelessWidget {
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(42))),
                   ),
                   onPressed: () => launch(feedbackURL),
-                  child: Text('No, Have Feeedback.', textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18))),
+                  child: Text(labels.questrack.review.dialog.no, textAlign: TextAlign.center, style: TextStyle(color: Colors.white, fontSize: 18))),
             ])));
   }
 }
