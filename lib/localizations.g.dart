@@ -56,8 +56,9 @@ final localizedLabels = <Locale, AppLocalizationsData>{
             button: 'Your city not in the list ?',
             dialog:
                 const AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog(
-              button: 'My city is not listed',
-              title: 'Others',
+              button: 'Write to us',
+              title:
+                  'Let us know if you would like a city to be added to this list. We will add it in the next update.',
             ),
           ),
         ),
@@ -137,7 +138,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
     upgrade: const AppLocalizationsDataUpgrade(
       button: 'अपडेट करें',
       body: 'इसमें एक मिनट से भी कम समय लगेगा....',
-      title: 'अपडेट आवश्यक',
+      title: 'अपडेट आवश्यक है',
       network: const AppLocalizationsDataUpgradeNetwork(
         waiting: 'नेटवर्क कनेक्शन उपलब्ध नहीं है',
       ),
@@ -180,8 +181,9 @@ final localizedLabels = <Locale, AppLocalizationsData>{
             button: 'आपका शहर सूची में नहीं है?',
             dialog:
                 const AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog(
-              button: 'मेरा शहर उपलब्ध नहीं है',
-              title: 'अन्य',
+              button: 'अपना अनुरोध भेजें',
+              title:
+                  'अगर आप किसी शहर को इस सूची में शामिल करना चाहते हैं तो हमें बताएं. हम इसे अगले अपडेट में जोड़ देंगे.',
             ),
           ),
         ),
