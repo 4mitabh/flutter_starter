@@ -91,6 +91,7 @@ class SignInUI extends StatelessWidget {
                           labelText: labels.auth.signInButton,
                           onPressed: () async {
                             if (_formKey.currentState != null && _formKey.currentState!.validate()) _signInController.verifyOTP(context);
+                            if (_formKey.currentState != null && _formKey.currentState!.validate()) _signInController.verifyOTP(context);
                           })
                   ]),
                 FormVerticalSpace(),
@@ -112,7 +113,7 @@ class SignInUI extends StatelessWidget {
                           await _signInController.signInWithApple();
                           // Get.toNamed('home');
                         } catch (e) {
-                          showSnackBar('Error', e.toString());
+                          showSnackBar(labels.auth.signInErrorTitle, e.toString());
                         }
                       }),
                 FormVerticalSpace(),
@@ -133,7 +134,7 @@ class SignInUI extends StatelessWidget {
                         try {
                           await _signInController.signInWithGoogle();
                         } catch (e) {
-                          showSnackBar('Error', e.toString());
+                          showSnackBar(labels.auth.signInErrorTitle, e.toString());
                         }
                       }),
                 FormVerticalSpace(),
@@ -143,12 +144,12 @@ class SignInUI extends StatelessWidget {
                       (FireStarter.settings['auth']?['phoneSignIn'] == false) &&
                       (FireStarter.settings['auth']?['appleSignIn'] == false))
                     PrimaryButton(
-                        labelText: 'Continue',
+                        labelText: labels.auth.skipSignIn,
                         onPressed: () async {
                           try {
                             await _signInController.signInAnonymously();
                           } catch (e) {
-                            showSnackBar('Error', e.toString());
+                            showSnackBar(labels.auth.signInErrorTitle, e.toString());
                           }
                         })
                   else
@@ -166,7 +167,7 @@ class SignInUI extends StatelessWidget {
                             await _signInController.signInAnonymously();
                             // Get.toNamed('home');
                           } catch (e) {
-                            showSnackBar('Error', e.toString());
+                            showSnackBar(labels.auth.signInErrorTitle, e.toString());
                           }
                         }),
                 if (_signInController.waitingForOTP.value)

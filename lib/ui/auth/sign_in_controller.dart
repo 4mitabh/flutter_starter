@@ -54,7 +54,7 @@ class SignInController extends GetxController {
             verificationFailed: (error) {
               GetLogger.to.e(error);
               hideLoadingIndicator();
-              showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInError);
+              showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInErrorPhone);
             },
             codeSent: (verificationId, __) {
               waitingForOTP.value = true;
@@ -67,7 +67,7 @@ class SignInController extends GetxController {
         hideLoadingIndicator();
         GetLogger.to.e(error);
         waitingForOTP.value = false;
-        showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInError);
+        showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInErrorPhone);
       }
     else {
       _confirmationResult = await _auth.signInWithPhoneNumber(phone);
@@ -94,7 +94,7 @@ class SignInController extends GetxController {
       hideLoadingIndicator();
     } catch (error) {
       hideLoadingIndicator();
-      showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInError);
+      showSnackBar(labels.auth.signInErrorTitle, labels.auth.signInErrorPhone);
     }
   }
 

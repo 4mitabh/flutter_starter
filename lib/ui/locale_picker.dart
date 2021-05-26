@@ -1,5 +1,6 @@
 import 'package:fire_starter/controllers/controllers.dart';
 import 'package:fire_starter/services/config_service.dart';
+import 'package:fire_starter/services/package_info.dart';
 import 'package:fire_starter/ui/auth/auth.dart';
 import 'package:fire_starter/ui/components/components.dart';
 import 'package:fire_starter/ui/components/widgets/glass/blob.dart';
@@ -16,13 +17,20 @@ class LocalePicker extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Text(
+            //   PackageInfoService.appName,
+            //   textAlign: TextAlign.center,
+            //   style: Theme.of(context).textTheme.headline2!.copyWith(color: Theme.of(context).colorScheme.primary.withAlpha(120)),
+            // ),
+            LogoGraphicHeader(),
+            SizedBox(height: 40),
             Text(
               'Pick Your Langage',
               style: Theme.of(context).textTheme.headline4,
             ),
             Text(
               'अपनी भाषा चुने',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w100),
             ),
             SizedBox(height: 30),
             PrimaryButton(

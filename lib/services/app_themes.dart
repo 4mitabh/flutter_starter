@@ -1,4 +1,5 @@
 import 'package:fire_starter/helpers/helpers.dart';
+import 'package:fire_starter/services/config_service.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -72,7 +73,7 @@ class AppTheme {
       headline2: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w100),
       headline1: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.w200),
     );
-
+    if (ConfigStorage.locale == 'hi') return GoogleFonts.martelTextTheme(textTheme);
     return GoogleFonts.quicksandTextTheme(textTheme);
   }
 }
