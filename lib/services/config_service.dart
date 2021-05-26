@@ -29,7 +29,7 @@ class ConfigStorage {
   static bool get diagnostics => ConfigStorage._diagnostics ?? prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
 
   static String? _locale;
-  static Future saveLocale(String locale) => prefs.write(PreferencesNames.locale, locale);
+  static Future saveLocale(String? locale) => prefs.write(PreferencesNames.locale, locale);
   static String? get locale => ConfigStorage._locale ?? prefs.read(PreferencesNames.locale);
 
   static Future saveUseEmulation(bool emulation) => prefs.write(PreferencesNames.emulation, emulation);

@@ -127,6 +127,8 @@ class AuthService extends GetxService {
   Future<void> signOut() async {
     firestoreUser(null);
     firebaseUser(null);
+    ConfigStorage.saveShowIntroSlider(true);
+    ConfigStorage.saveLocale(null);
     await Future.delayed(Duration(seconds: 2));
     return _auth.signOut();
   }
