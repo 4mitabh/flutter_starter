@@ -15,7 +15,7 @@ extension AppLocalizationsExtensions on BuildContext {
   }
 }
 
-@SheetLocalization("1cwOz3LVDOK4_0JTKt1OcZjH_P8uezPVa68OIU3Swt-M", "0", 1) // <- Bump versions here
+@SheetLocalization("1cwOz3LVDOK4_0JTKt1OcZjH_P8uezPVa68OIU3Swt-M", "0", 12) // <- Bump versions here
 class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizationsData> {
   const AppLocalizationsDelegate();
 

@@ -8,6 +8,20 @@ part of 'localizations.dart';
 
 final localizedLabels = <Locale, AppLocalizationsData>{
   Locale.fromSubtags(languageCode: 'en'): const AppLocalizationsData(
+    upgrade: const AppLocalizationsDataUpgrade(
+      button: 'Update',
+      body:
+          'We have made the app better and added new features. It is recommended that you update to the latest build. This will take less than a minuite....',
+      title: 'Update Required',
+      network: const AppLocalizationsDataUpgradeNetwork(
+        waiting: 'Waiting for a network connection...',
+      ),
+      optional: const AppLocalizationsDataUpgradeOptional(
+        body:
+            'We have made the app better and added new features. It is recommended that you update to the latest build',
+        title: 'A New Update Is Available',
+      ),
+    ),
     questrack: const AppLocalizationsDataQuestrack(
       share: const AppLocalizationsDataQuestrackShare(
         title: 'Booked Vaccination Slot!',
@@ -34,8 +48,19 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         signout: 'Sign Out',
       ),
       questpicker: const AppLocalizationsDataQuestrackQuestpicker(
-        cityTitle: 'Pick your cities to receive alerts:',
         save: 'Save',
+        citylist: const AppLocalizationsDataQuestrackQuestpickerCitylist(
+          title: 'Pick your cities to receive alerts:',
+          missing:
+              const AppLocalizationsDataQuestrackQuestpickerCitylistMissing(
+            button: 'Your city not in the list ?',
+            dialog:
+                const AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog(
+              button: 'My city is not listed',
+              title: 'Others',
+            ),
+          ),
+        ),
         errorTooMany:
             const AppLocalizationsDataQuestrackQuestpickerErrorTooMany(
           body: 'Please limit your selections to {{num}}',
@@ -109,6 +134,18 @@ final localizedLabels = <Locale, AppLocalizationsData>{
     ),
   ),
   Locale.fromSubtags(languageCode: 'hi'): const AppLocalizationsData(
+    upgrade: const AppLocalizationsDataUpgrade(
+      button: 'अपडेट करें',
+      body: 'इसमें एक मिनट से भी कम समय लगेगा....',
+      title: 'अपडेट आवश्यक',
+      network: const AppLocalizationsDataUpgradeNetwork(
+        waiting: 'नेटवर्क कनेक्शन उपलब्ध नहीं है',
+      ),
+      optional: const AppLocalizationsDataUpgradeOptional(
+        body: 'यह सुझाव दिया जाता है कि आप नवीनतम बिल्ड में अपडेट करें',
+        title: 'एक नया संस्करण उपलब्ध है',
+      ),
+    ),
     questrack: const AppLocalizationsDataQuestrack(
       share: const AppLocalizationsDataQuestrackShare(
         title: 'मैंने अपना टीकाकरण स्लॉट बुक कर लिया है!',
@@ -135,8 +172,19 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         signout: 'लॉग आउट',
       ),
       questpicker: const AppLocalizationsDataQuestrackQuestpicker(
-        cityTitle: 'अलर्ट प्राप्त करने के लिए अपने शहर चुनें:',
         save: 'आगे बढ़ें',
+        citylist: const AppLocalizationsDataQuestrackQuestpickerCitylist(
+          title: 'अलर्ट प्राप्त करने के लिए अपने शहर चुनें:',
+          missing:
+              const AppLocalizationsDataQuestrackQuestpickerCitylistMissing(
+            button: 'आपका शहर सूची में नहीं है?',
+            dialog:
+                const AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog(
+              button: 'मेरा शहर उपलब्ध नहीं है',
+              title: 'अन्य',
+            ),
+          ),
+        ),
         errorTooMany:
             const AppLocalizationsDataQuestrackQuestpickerErrorTooMany(
           body: 'कृपया अपने चयन को {{num}} तक सीमित करें',
@@ -213,6 +261,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
 
 class AppLocalizationsData {
   const AppLocalizationsData({
+    required this.upgrade,
     required this.questrack,
     required this.validator,
     required this.app,
@@ -221,6 +270,7 @@ class AppLocalizationsData {
     required this.auth,
   });
 
+  final AppLocalizationsDataUpgrade upgrade;
   final AppLocalizationsDataQuestrack questrack;
   final AppLocalizationsDataValidator validator;
   final AppLocalizationsDataApp app;
@@ -229,6 +279,8 @@ class AppLocalizationsData {
   final AppLocalizationsDataAuth auth;
   factory AppLocalizationsData.fromJson(Map<String, Object?> map) =>
       AppLocalizationsData(
+        upgrade: AppLocalizationsDataUpgrade.fromJson(
+            map['upgrade']! as Map<String, Object?>),
         questrack: AppLocalizationsDataQuestrack.fromJson(
             map['questrack']! as Map<String, Object?>),
         validator: AppLocalizationsDataValidator.fromJson(
@@ -244,6 +296,7 @@ class AppLocalizationsData {
       );
 
   AppLocalizationsData copyWith({
+    AppLocalizationsDataUpgrade? upgrade,
     AppLocalizationsDataQuestrack? questrack,
     AppLocalizationsDataValidator? validator,
     AppLocalizationsDataApp? app,
@@ -252,6 +305,7 @@ class AppLocalizationsData {
     AppLocalizationsDataAuth? auth,
   }) =>
       AppLocalizationsData(
+        upgrade: upgrade ?? this.upgrade,
         questrack: questrack ?? this.questrack,
         validator: validator ?? this.validator,
         app: app ?? this.app,
@@ -264,6 +318,7 @@ class AppLocalizationsData {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsData &&
+          upgrade == other.upgrade &&
           questrack == other.questrack &&
           validator == other.validator &&
           app == other.app &&
@@ -273,12 +328,133 @@ class AppLocalizationsData {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      upgrade.hashCode ^
       questrack.hashCode ^
       validator.hashCode ^
       app.hashCode ^
       home.hashCode ^
       settings.hashCode ^
       auth.hashCode;
+}
+
+class AppLocalizationsDataUpgrade {
+  const AppLocalizationsDataUpgrade({
+    required this.button,
+    required this.body,
+    required this.title,
+    required this.network,
+    required this.optional,
+  });
+
+  final String button;
+  final String body;
+  final String title;
+  final AppLocalizationsDataUpgradeNetwork network;
+  final AppLocalizationsDataUpgradeOptional optional;
+  factory AppLocalizationsDataUpgrade.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataUpgrade(
+        button: map['button']! as String,
+        body: map['body']! as String,
+        title: map['title']! as String,
+        network: AppLocalizationsDataUpgradeNetwork.fromJson(
+            map['network']! as Map<String, Object?>),
+        optional: AppLocalizationsDataUpgradeOptional.fromJson(
+            map['optional']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataUpgrade copyWith({
+    String? button,
+    String? body,
+    String? title,
+    AppLocalizationsDataUpgradeNetwork? network,
+    AppLocalizationsDataUpgradeOptional? optional,
+  }) =>
+      AppLocalizationsDataUpgrade(
+        button: button ?? this.button,
+        body: body ?? this.body,
+        title: title ?? this.title,
+        network: network ?? this.network,
+        optional: optional ?? this.optional,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataUpgrade &&
+          button == other.button &&
+          body == other.body &&
+          title == other.title &&
+          network == other.network &&
+          optional == other.optional);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      button.hashCode ^
+      body.hashCode ^
+      title.hashCode ^
+      network.hashCode ^
+      optional.hashCode;
+}
+
+class AppLocalizationsDataUpgradeNetwork {
+  const AppLocalizationsDataUpgradeNetwork({
+    required this.waiting,
+  });
+
+  final String waiting;
+  factory AppLocalizationsDataUpgradeNetwork.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataUpgradeNetwork(
+        waiting: map['waiting']! as String,
+      );
+
+  AppLocalizationsDataUpgradeNetwork copyWith({
+    String? waiting,
+  }) =>
+      AppLocalizationsDataUpgradeNetwork(
+        waiting: waiting ?? this.waiting,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataUpgradeNetwork && waiting == other.waiting);
+  @override
+  int get hashCode => runtimeType.hashCode ^ waiting.hashCode;
+}
+
+class AppLocalizationsDataUpgradeOptional {
+  const AppLocalizationsDataUpgradeOptional({
+    required this.body,
+    required this.title,
+  });
+
+  final String body;
+  final String title;
+  factory AppLocalizationsDataUpgradeOptional.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataUpgradeOptional(
+        body: map['body']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataUpgradeOptional copyWith({
+    String? body,
+    String? title,
+  }) =>
+      AppLocalizationsDataUpgradeOptional(
+        body: body ?? this.body,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataUpgradeOptional &&
+          body == other.body &&
+          title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ body.hashCode ^ title.hashCode;
 }
 
 class AppLocalizationsDataQuestrack {
@@ -555,32 +731,33 @@ class AppLocalizationsDataQuestrackMenu {
 
 class AppLocalizationsDataQuestrackQuestpicker {
   const AppLocalizationsDataQuestrackQuestpicker({
-    required this.cityTitle,
     required this.save,
+    required this.citylist,
     required this.errorTooMany,
   });
 
-  final String cityTitle;
   final String save;
+  final AppLocalizationsDataQuestrackQuestpickerCitylist citylist;
   final AppLocalizationsDataQuestrackQuestpickerErrorTooMany errorTooMany;
   factory AppLocalizationsDataQuestrackQuestpicker.fromJson(
           Map<String, Object?> map) =>
       AppLocalizationsDataQuestrackQuestpicker(
-        cityTitle: map['cityTitle']! as String,
         save: map['save']! as String,
+        citylist: AppLocalizationsDataQuestrackQuestpickerCitylist.fromJson(
+            map['citylist']! as Map<String, Object?>),
         errorTooMany:
             AppLocalizationsDataQuestrackQuestpickerErrorTooMany.fromJson(
                 map['errorTooMany']! as Map<String, Object?>),
       );
 
   AppLocalizationsDataQuestrackQuestpicker copyWith({
-    String? cityTitle,
     String? save,
+    AppLocalizationsDataQuestrackQuestpickerCitylist? citylist,
     AppLocalizationsDataQuestrackQuestpickerErrorTooMany? errorTooMany,
   }) =>
       AppLocalizationsDataQuestrackQuestpicker(
-        cityTitle: cityTitle ?? this.cityTitle,
         save: save ?? this.save,
+        citylist: citylist ?? this.citylist,
         errorTooMany: errorTooMany ?? this.errorTooMany,
       );
 
@@ -588,15 +765,120 @@ class AppLocalizationsDataQuestrackQuestpicker {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackQuestpicker &&
-          cityTitle == other.cityTitle &&
           save == other.save &&
+          citylist == other.citylist &&
           errorTooMany == other.errorTooMany);
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      cityTitle.hashCode ^
       save.hashCode ^
+      citylist.hashCode ^
       errorTooMany.hashCode;
+}
+
+class AppLocalizationsDataQuestrackQuestpickerCitylist {
+  const AppLocalizationsDataQuestrackQuestpickerCitylist({
+    required this.title,
+    required this.missing,
+  });
+
+  final String title;
+  final AppLocalizationsDataQuestrackQuestpickerCitylistMissing missing;
+  factory AppLocalizationsDataQuestrackQuestpickerCitylist.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackQuestpickerCitylist(
+        title: map['title']! as String,
+        missing:
+            AppLocalizationsDataQuestrackQuestpickerCitylistMissing.fromJson(
+                map['missing']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataQuestrackQuestpickerCitylist copyWith({
+    String? title,
+    AppLocalizationsDataQuestrackQuestpickerCitylistMissing? missing,
+  }) =>
+      AppLocalizationsDataQuestrackQuestpickerCitylist(
+        title: title ?? this.title,
+        missing: missing ?? this.missing,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackQuestpickerCitylist &&
+          title == other.title &&
+          missing == other.missing);
+  @override
+  int get hashCode => runtimeType.hashCode ^ title.hashCode ^ missing.hashCode;
+}
+
+class AppLocalizationsDataQuestrackQuestpickerCitylistMissing {
+  const AppLocalizationsDataQuestrackQuestpickerCitylistMissing({
+    required this.button,
+    required this.dialog,
+  });
+
+  final String button;
+  final AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog dialog;
+  factory AppLocalizationsDataQuestrackQuestpickerCitylistMissing.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackQuestpickerCitylistMissing(
+        button: map['button']! as String,
+        dialog: AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog
+            .fromJson(map['dialog']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataQuestrackQuestpickerCitylistMissing copyWith({
+    String? button,
+    AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog? dialog,
+  }) =>
+      AppLocalizationsDataQuestrackQuestpickerCitylistMissing(
+        button: button ?? this.button,
+        dialog: dialog ?? this.dialog,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackQuestpickerCitylistMissing &&
+          button == other.button &&
+          dialog == other.dialog);
+  @override
+  int get hashCode => runtimeType.hashCode ^ button.hashCode ^ dialog.hashCode;
+}
+
+class AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog {
+  const AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog({
+    required this.button,
+    required this.title,
+  });
+
+  final String button;
+  final String title;
+  factory AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog(
+        button: map['button']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog copyWith({
+    String? button,
+    String? title,
+  }) =>
+      AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog(
+        button: button ?? this.button,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackQuestpickerCitylistMissingDialog &&
+          button == other.button &&
+          title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ button.hashCode ^ title.hashCode;
 }
 
 class AppLocalizationsDataQuestrackQuestpickerErrorTooMany {
