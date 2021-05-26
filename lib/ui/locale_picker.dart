@@ -26,10 +26,12 @@ class LocalePicker extends StatelessWidget {
             SizedBox(height: 40),
             Text(
               'Pick Your Langage',
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline4,
             ),
             Text(
               'अपनी भाषा चुने',
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.headline4!.copyWith(fontWeight: FontWeight.w100),
             ),
             SizedBox(height: 30),
