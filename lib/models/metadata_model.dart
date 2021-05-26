@@ -40,8 +40,8 @@ class MetadataModel {
     return MetadataModel(
         build: data['build'],
         version: data['version'],
-        introSlider: (data['introSlider'] as List).cast(),
-        introSlider_hi: (data['introSlider_hi'] as List).cast(),
+        introSlider: ((data['introSlider'] ?? []) as List).cast(),
+        introSlider_hi: ((data['introSlider_hi'] ?? []) as List).cast(),
         maxBuildVaccine: (GetPlatform.isAndroid ? data['maxBuildVaccineAndroid'] : data['maxBuildVaccineIOS']) ?? 0,
         majorVersion: int.parse(data['version'].split('.')[0]),
         minorVersion: int.parse(data['version'].split('.')[1]));

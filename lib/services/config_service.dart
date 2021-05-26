@@ -20,14 +20,17 @@ class PreferencesNames {
 class ConfigStorage {
   static GetStorage prefs = GetStorage();
 
+  static bool? _alpha;
   static Future saveAlpha(bool alpha) => prefs.write(PreferencesNames.isAlpha, alpha);
-  static bool get isAlpha => prefs.read(PreferencesNames.isAlpha) ?? kDebugMode;
+  static bool get isAlpha => ConfigStorage._alpha ?? prefs.read(PreferencesNames.isAlpha) ?? kDebugMode;
 
+  static bool? _diagnostics;
   static Future saveDiagnostics(bool diagnostics) => prefs.write(PreferencesNames.diagnostics, diagnostics);
-  static bool get diagnostics => prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
+  static bool get diagnostics => ConfigStorage._diagnostics ?? prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
 
+  static String? _locale;
   static Future saveLocale(String locale) => prefs.write(PreferencesNames.locale, locale);
-  static String? get locale => prefs.read(PreferencesNames.locale);
+  static String? get locale => ConfigStorage._locale ?? prefs.read(PreferencesNames.locale);
 
   static Future saveUseEmulation(bool emulation) => prefs.write(PreferencesNames.emulation, emulation);
   static bool get useEmulation => prefs.read(PreferencesNames.emulation) ?? false;
