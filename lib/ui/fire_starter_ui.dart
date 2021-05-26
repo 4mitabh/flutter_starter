@@ -2,8 +2,11 @@ import 'package:fire_starter/constants/constants.dart';
 import 'package:fire_starter/helpers/helpers.dart';
 import 'package:fire_starter/localizations.dart';
 import 'package:fire_starter/services/auth_service.dart';
+import 'package:fire_starter/services/config_service.dart';
 import 'package:fire_starter/services/upgrade_check.dart';
 import 'package:fire_starter/ui/auth/auth.dart';
+import 'package:fire_starter/ui/intro_slider.dart';
+import 'package:fire_starter/ui/locale_picker.dart';
 import 'package:fire_starter/ui/ui.dart';
 import 'package:fire_starter/ui/upgrade_prompt_ui.dart';
 // import 'package:firebase_analytics/firebase_analytics.dart';
@@ -14,6 +17,7 @@ import 'package:fire_starter/controllers/controllers.dart';
 import 'package:fire_starter/ui/components/components.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:intro_slider/intro_slider.dart';
 
 class FireStarterUI extends StatelessWidget {
   final Map<String, Widget Function(BuildContext)> routes;
@@ -27,7 +31,7 @@ class FireStarterUI extends StatelessWidget {
         //begin language translation stuff //https://github.com/aloisdeniel/flutter_sheet_localization
         child: Obx(() {
       return GetMaterialApp(
-        locale: Get.deviceLocale,
+        locale: ConfigStorage.locale != null ? Locale(ConfigStorage.locale!, 'IN') : Get.deviceLocale,
         fallbackLocale: Locale('en', 'US'),
         localizationsDelegates: [
           const AppLocalizationsDelegate(), // <- Your custom delegate
@@ -61,6 +65,12 @@ class FireStarterUI extends StatelessWidget {
             //   break;
             case RouteNames.UPGRADE:
               builder = (_) => UpgradePromptUI();
+              break;
+            case RouteNames.LOCALE:
+              builder = (_) => LocalePicker();
+              break;
+            case RouteNames.INTRO:
+              builder = (_) => IntroSliderUI();
               break;
             default:
               print('checking ${path[1]} ${routes[path[1]]} ');

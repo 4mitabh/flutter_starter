@@ -13,17 +13,25 @@ class PreferencesNames {
   static String token = 'token';
   static String messages = 'messages';
   static String unlockTime = 'unlockTime';
+  static String locale = 'locale';
+  static String showIntroSlider = 'showIntroSlider';
 }
 
 class ConfigStorage {
   static GetStorage prefs = GetStorage();
 
   static Future saveAlpha(bool alpha) => prefs.write(PreferencesNames.isAlpha, alpha);
-  static get isAlpha => prefs.read(PreferencesNames.isAlpha) ?? kDebugMode;
+  static bool get isAlpha => prefs.read(PreferencesNames.isAlpha) ?? kDebugMode;
 
   static Future saveDiagnostics(bool diagnostics) => prefs.write(PreferencesNames.diagnostics, diagnostics);
-  static get diagnostics => prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
+  static bool get diagnostics => prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
+
+  static Future saveLocale(String locale) => prefs.write(PreferencesNames.locale, locale);
+  static String? get locale => prefs.read(PreferencesNames.locale);
 
   static Future saveUseEmulation(bool emulation) => prefs.write(PreferencesNames.emulation, emulation);
-  static get useEmulation => prefs.read(PreferencesNames.emulation) ?? false;
+  static bool get useEmulation => prefs.read(PreferencesNames.emulation) ?? false;
+
+  static Future saveShowIntroSlider(bool showIntroSlider) => prefs.write(PreferencesNames.showIntroSlider, showIntroSlider);
+  static bool get showIntroSlider => prefs.read(PreferencesNames.showIntroSlider) ?? true;
 }

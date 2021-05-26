@@ -23,6 +23,8 @@ class Globals {
 
 class RouteNames {
   static const HOME = 'home';
+  static const LOCALE = 'locale';
+  static const INTRO = 'intro_slider';
   static const SIGN_IN = 'signin';
   static const UPGRADE = 'upgrade';
 }
