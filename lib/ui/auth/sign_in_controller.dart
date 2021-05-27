@@ -113,7 +113,10 @@ class SignInController extends GetxController {
   }
 
   Future<User?> signInAnonymously() async {
+    showLoadingIndicator();
     UserCredential userCredential = await FirebaseAuth.instance.signInAnonymously();
+    await Future.delayed(Duration(seconds: 10));
+    hideLoadingIndicator();
     return userCredential.user;
   }
 
