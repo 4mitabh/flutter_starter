@@ -1,3 +1,4 @@
+import 'package:fire_starter/constants/globals.dart';
 import 'package:fire_starter/controllers/controllers.dart';
 import 'package:fire_starter/services/config_service.dart';
 import 'package:fire_starter/services/package_info.dart';
@@ -54,6 +55,6 @@ class LocalePicker extends StatelessWidget {
     ConfigStorage.saveLocale(s);
     await controller.updateLanguage(s);
     Get.forceAppUpdate();
-    Get.toNamed('/');
+    await Get.toNamed('/${RouteNames.INTRO}');
   }
 }
