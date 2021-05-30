@@ -8,22 +8,9 @@ part of 'localizations.dart';
 
 final localizedLabels = <Locale, AppLocalizationsData>{
   Locale.fromSubtags(languageCode: 'en'): const AppLocalizationsData(
-    upgrade: const AppLocalizationsDataUpgrade(
-      button: 'Update',
-      body:
-          'We have made the app better and added new features. It is recommended that you update to the latest build. This will take less than a minuite....',
-      title: 'Update Required',
-      network: const AppLocalizationsDataUpgradeNetwork(
-        waiting: 'Waiting for a network connection...',
-      ),
-      optional: const AppLocalizationsDataUpgradeOptional(
-        body:
-            'We have made the app better and added new features. It is recommended that you update to the latest build',
-        title: 'A New Update Is Available',
-      ),
-    ),
     questrack: const AppLocalizationsDataQuestrack(
       share: const AppLocalizationsDataQuestrackShare(
+        button: 'Share This',
         title: 'Booked Vaccination Slot!',
         body:
             'I used Questrack app to find my vaccination slot https://questrack.app/v/\nSimply install the app and select your city. You will get notified the moment new slots appear.',
@@ -76,6 +63,20 @@ final localizedLabels = <Locale, AppLocalizationsData>{
               'You will receive alerts here as and when slots open up in your city',
           title: 'No Updates',
         ),
+      ),
+    ),
+    upgrade: const AppLocalizationsDataUpgrade(
+      button: 'Update',
+      body:
+          'We have made the app better and added new features. It is recommended that you update to the latest build. This will take less than a minuite....',
+      title: 'Update Required',
+      network: const AppLocalizationsDataUpgradeNetwork(
+        waiting: 'Waiting for a network connection...',
+      ),
+      optional: const AppLocalizationsDataUpgradeOptional(
+        body:
+            'We have made the app better and added new features. It is recommended that you update to the latest build',
+        title: 'A New Update Is Available',
       ),
     ),
     validator: const AppLocalizationsDataValidator(
@@ -135,20 +136,9 @@ final localizedLabels = <Locale, AppLocalizationsData>{
     ),
   ),
   Locale.fromSubtags(languageCode: 'hi'): const AppLocalizationsData(
-    upgrade: const AppLocalizationsDataUpgrade(
-      button: 'अपडेट करें',
-      body: 'इसमें एक मिनट से भी कम समय लगेगा....',
-      title: 'अपडेट आवश्यक है',
-      network: const AppLocalizationsDataUpgradeNetwork(
-        waiting: 'नेटवर्क कनेक्शन उपलब्ध नहीं है',
-      ),
-      optional: const AppLocalizationsDataUpgradeOptional(
-        body: 'यह सुझाव दिया जाता है कि आप नवीनतम बिल्ड में अपडेट करें',
-        title: 'एक नया संस्करण उपलब्ध है',
-      ),
-    ),
     questrack: const AppLocalizationsDataQuestrack(
       share: const AppLocalizationsDataQuestrackShare(
+        button: 'शेयर करें',
         title: 'मैंने अपना टीकाकरण स्लॉट बुक कर लिया है!',
         body:
             'मैंने अपना टीकाकरण स्लॉट खोजने के लिए Questrack ऐप का इस्तेमाल किया https://questrack.app/v/\nबस ऐप इंस्टॉल करें और अपने शहर का चयन करें। जैसे ही नए स्लॉट दिखाई देंगे आपको सूचना मिल जाएगी।',
@@ -200,6 +190,18 @@ final localizedLabels = <Locale, AppLocalizationsData>{
           body: 'आपके शहर में स्लॉट खुलते ही आपको यहां अलर्ट प्राप्त होंगे',
           title: '\nकोई नई सुचना नहीं है',
         ),
+      ),
+    ),
+    upgrade: const AppLocalizationsDataUpgrade(
+      button: 'अपडेट करें',
+      body: 'इसमें एक मिनट से भी कम समय लगेगा....',
+      title: 'अपडेट आवश्यक है',
+      network: const AppLocalizationsDataUpgradeNetwork(
+        waiting: 'नेटवर्क कनेक्शन उपलब्ध नहीं है',
+      ),
+      optional: const AppLocalizationsDataUpgradeOptional(
+        body: 'यह सुझाव दिया जाता है कि आप नवीनतम बिल्ड में अपडेट करें',
+        title: 'एक नया संस्करण उपलब्ध है',
       ),
     ),
     validator: const AppLocalizationsDataValidator(
@@ -263,8 +265,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
 
 class AppLocalizationsData {
   const AppLocalizationsData({
-    required this.upgrade,
     required this.questrack,
+    required this.upgrade,
     required this.validator,
     required this.app,
     required this.home,
@@ -272,8 +274,8 @@ class AppLocalizationsData {
     required this.auth,
   });
 
-  final AppLocalizationsDataUpgrade upgrade;
   final AppLocalizationsDataQuestrack questrack;
+  final AppLocalizationsDataUpgrade upgrade;
   final AppLocalizationsDataValidator validator;
   final AppLocalizationsDataApp app;
   final AppLocalizationsDataHome home;
@@ -281,10 +283,10 @@ class AppLocalizationsData {
   final AppLocalizationsDataAuth auth;
   factory AppLocalizationsData.fromJson(Map<String, Object?> map) =>
       AppLocalizationsData(
-        upgrade: AppLocalizationsDataUpgrade.fromJson(
-            map['upgrade']! as Map<String, Object?>),
         questrack: AppLocalizationsDataQuestrack.fromJson(
             map['questrack']! as Map<String, Object?>),
+        upgrade: AppLocalizationsDataUpgrade.fromJson(
+            map['upgrade']! as Map<String, Object?>),
         validator: AppLocalizationsDataValidator.fromJson(
             map['validator']! as Map<String, Object?>),
         app: AppLocalizationsDataApp.fromJson(
@@ -298,8 +300,8 @@ class AppLocalizationsData {
       );
 
   AppLocalizationsData copyWith({
-    AppLocalizationsDataUpgrade? upgrade,
     AppLocalizationsDataQuestrack? questrack,
+    AppLocalizationsDataUpgrade? upgrade,
     AppLocalizationsDataValidator? validator,
     AppLocalizationsDataApp? app,
     AppLocalizationsDataHome? home,
@@ -307,8 +309,8 @@ class AppLocalizationsData {
     AppLocalizationsDataAuth? auth,
   }) =>
       AppLocalizationsData(
-        upgrade: upgrade ?? this.upgrade,
         questrack: questrack ?? this.questrack,
+        upgrade: upgrade ?? this.upgrade,
         validator: validator ?? this.validator,
         app: app ?? this.app,
         home: home ?? this.home,
@@ -320,8 +322,8 @@ class AppLocalizationsData {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsData &&
-          upgrade == other.upgrade &&
           questrack == other.questrack &&
+          upgrade == other.upgrade &&
           validator == other.validator &&
           app == other.app &&
           home == other.home &&
@@ -330,133 +332,13 @@ class AppLocalizationsData {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      upgrade.hashCode ^
       questrack.hashCode ^
+      upgrade.hashCode ^
       validator.hashCode ^
       app.hashCode ^
       home.hashCode ^
       settings.hashCode ^
       auth.hashCode;
-}
-
-class AppLocalizationsDataUpgrade {
-  const AppLocalizationsDataUpgrade({
-    required this.button,
-    required this.body,
-    required this.title,
-    required this.network,
-    required this.optional,
-  });
-
-  final String button;
-  final String body;
-  final String title;
-  final AppLocalizationsDataUpgradeNetwork network;
-  final AppLocalizationsDataUpgradeOptional optional;
-  factory AppLocalizationsDataUpgrade.fromJson(Map<String, Object?> map) =>
-      AppLocalizationsDataUpgrade(
-        button: map['button']! as String,
-        body: map['body']! as String,
-        title: map['title']! as String,
-        network: AppLocalizationsDataUpgradeNetwork.fromJson(
-            map['network']! as Map<String, Object?>),
-        optional: AppLocalizationsDataUpgradeOptional.fromJson(
-            map['optional']! as Map<String, Object?>),
-      );
-
-  AppLocalizationsDataUpgrade copyWith({
-    String? button,
-    String? body,
-    String? title,
-    AppLocalizationsDataUpgradeNetwork? network,
-    AppLocalizationsDataUpgradeOptional? optional,
-  }) =>
-      AppLocalizationsDataUpgrade(
-        button: button ?? this.button,
-        body: body ?? this.body,
-        title: title ?? this.title,
-        network: network ?? this.network,
-        optional: optional ?? this.optional,
-      );
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is AppLocalizationsDataUpgrade &&
-          button == other.button &&
-          body == other.body &&
-          title == other.title &&
-          network == other.network &&
-          optional == other.optional);
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      button.hashCode ^
-      body.hashCode ^
-      title.hashCode ^
-      network.hashCode ^
-      optional.hashCode;
-}
-
-class AppLocalizationsDataUpgradeNetwork {
-  const AppLocalizationsDataUpgradeNetwork({
-    required this.waiting,
-  });
-
-  final String waiting;
-  factory AppLocalizationsDataUpgradeNetwork.fromJson(
-          Map<String, Object?> map) =>
-      AppLocalizationsDataUpgradeNetwork(
-        waiting: map['waiting']! as String,
-      );
-
-  AppLocalizationsDataUpgradeNetwork copyWith({
-    String? waiting,
-  }) =>
-      AppLocalizationsDataUpgradeNetwork(
-        waiting: waiting ?? this.waiting,
-      );
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is AppLocalizationsDataUpgradeNetwork && waiting == other.waiting);
-  @override
-  int get hashCode => runtimeType.hashCode ^ waiting.hashCode;
-}
-
-class AppLocalizationsDataUpgradeOptional {
-  const AppLocalizationsDataUpgradeOptional({
-    required this.body,
-    required this.title,
-  });
-
-  final String body;
-  final String title;
-  factory AppLocalizationsDataUpgradeOptional.fromJson(
-          Map<String, Object?> map) =>
-      AppLocalizationsDataUpgradeOptional(
-        body: map['body']! as String,
-        title: map['title']! as String,
-      );
-
-  AppLocalizationsDataUpgradeOptional copyWith({
-    String? body,
-    String? title,
-  }) =>
-      AppLocalizationsDataUpgradeOptional(
-        body: body ?? this.body,
-        title: title ?? this.title,
-      );
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is AppLocalizationsDataUpgradeOptional &&
-          body == other.body &&
-          title == other.title);
-  @override
-  int get hashCode => runtimeType.hashCode ^ body.hashCode ^ title.hashCode;
 }
 
 class AppLocalizationsDataQuestrack {
@@ -523,24 +405,29 @@ class AppLocalizationsDataQuestrack {
 
 class AppLocalizationsDataQuestrackShare {
   const AppLocalizationsDataQuestrackShare({
+    required this.button,
     required this.title,
     required this.body,
   });
 
+  final String button;
   final String title;
   final String body;
   factory AppLocalizationsDataQuestrackShare.fromJson(
           Map<String, Object?> map) =>
       AppLocalizationsDataQuestrackShare(
+        button: map['button']! as String,
         title: map['title']! as String,
         body: map['body']! as String,
       );
 
   AppLocalizationsDataQuestrackShare copyWith({
+    String? button,
     String? title,
     String? body,
   }) =>
       AppLocalizationsDataQuestrackShare(
+        button: button ?? this.button,
         title: title ?? this.title,
         body: body ?? this.body,
       );
@@ -549,10 +436,12 @@ class AppLocalizationsDataQuestrackShare {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackShare &&
+          button == other.button &&
           title == other.title &&
           body == other.body);
   @override
-  int get hashCode => runtimeType.hashCode ^ title.hashCode ^ body.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ button.hashCode ^ title.hashCode ^ body.hashCode;
 }
 
 class AppLocalizationsDataQuestrackReview {
@@ -1016,6 +905,126 @@ class AppLocalizationsDataQuestrackFeedEmpty {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackFeedEmpty &&
+          body == other.body &&
+          title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ body.hashCode ^ title.hashCode;
+}
+
+class AppLocalizationsDataUpgrade {
+  const AppLocalizationsDataUpgrade({
+    required this.button,
+    required this.body,
+    required this.title,
+    required this.network,
+    required this.optional,
+  });
+
+  final String button;
+  final String body;
+  final String title;
+  final AppLocalizationsDataUpgradeNetwork network;
+  final AppLocalizationsDataUpgradeOptional optional;
+  factory AppLocalizationsDataUpgrade.fromJson(Map<String, Object?> map) =>
+      AppLocalizationsDataUpgrade(
+        button: map['button']! as String,
+        body: map['body']! as String,
+        title: map['title']! as String,
+        network: AppLocalizationsDataUpgradeNetwork.fromJson(
+            map['network']! as Map<String, Object?>),
+        optional: AppLocalizationsDataUpgradeOptional.fromJson(
+            map['optional']! as Map<String, Object?>),
+      );
+
+  AppLocalizationsDataUpgrade copyWith({
+    String? button,
+    String? body,
+    String? title,
+    AppLocalizationsDataUpgradeNetwork? network,
+    AppLocalizationsDataUpgradeOptional? optional,
+  }) =>
+      AppLocalizationsDataUpgrade(
+        button: button ?? this.button,
+        body: body ?? this.body,
+        title: title ?? this.title,
+        network: network ?? this.network,
+        optional: optional ?? this.optional,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataUpgrade &&
+          button == other.button &&
+          body == other.body &&
+          title == other.title &&
+          network == other.network &&
+          optional == other.optional);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      button.hashCode ^
+      body.hashCode ^
+      title.hashCode ^
+      network.hashCode ^
+      optional.hashCode;
+}
+
+class AppLocalizationsDataUpgradeNetwork {
+  const AppLocalizationsDataUpgradeNetwork({
+    required this.waiting,
+  });
+
+  final String waiting;
+  factory AppLocalizationsDataUpgradeNetwork.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataUpgradeNetwork(
+        waiting: map['waiting']! as String,
+      );
+
+  AppLocalizationsDataUpgradeNetwork copyWith({
+    String? waiting,
+  }) =>
+      AppLocalizationsDataUpgradeNetwork(
+        waiting: waiting ?? this.waiting,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataUpgradeNetwork && waiting == other.waiting);
+  @override
+  int get hashCode => runtimeType.hashCode ^ waiting.hashCode;
+}
+
+class AppLocalizationsDataUpgradeOptional {
+  const AppLocalizationsDataUpgradeOptional({
+    required this.body,
+    required this.title,
+  });
+
+  final String body;
+  final String title;
+  factory AppLocalizationsDataUpgradeOptional.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataUpgradeOptional(
+        body: map['body']! as String,
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataUpgradeOptional copyWith({
+    String? body,
+    String? title,
+  }) =>
+      AppLocalizationsDataUpgradeOptional(
+        body: body ?? this.body,
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataUpgradeOptional &&
           body == other.body &&
           title == other.title);
   @override
