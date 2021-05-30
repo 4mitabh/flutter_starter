@@ -60,8 +60,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         title: 'Live Availability',
         empty: const AppLocalizationsDataQuestrackFeedEmpty(
           body:
-              'You will receive alerts here as and when slots open up in your city',
-          title: 'No Updates',
+              'Very soon slots will open in your city and you will start receiving alerts on your phone. You will be able to view the real time availability of the slots on the screen.',
+          title: 'Thank you for downloading the app !',
         ),
       ),
     ),
@@ -187,8 +187,9 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         opencowin: 'CoWin वेबसाइट खोलें',
         title: 'लाइव उपलब्धता',
         empty: const AppLocalizationsDataQuestrackFeedEmpty(
-          body: 'आपके शहर में स्लॉट खुलते ही आपको यहां अलर्ट प्राप्त होंगे',
-          title: '\nकोई नई सुचना नहीं है',
+          body:
+              'बहुत जल्द आपके शहर में स्लॉट खुलेंगे और आपको अपने फोन पर अलर्ट मिलने लगेंगे। आप स्क्रीन पर स्लॉट्स की रीयल टाइम उपलब्धता देख पाएंगे।',
+          title: 'ऐप डाउनलोड करने के लिए धन्यवाद!',
         ),
       ),
     ),
