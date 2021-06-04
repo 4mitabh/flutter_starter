@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:fire_starter/fire_starter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -33,7 +34,7 @@ class ConfigStorage {
   static String? get locale => ConfigStorage._locale ?? prefs.read(PreferencesNames.locale);
 
   static Future saveUseEmulation(bool emulation) => prefs.write(PreferencesNames.emulation, emulation);
-  static bool get useEmulation => prefs.read(PreferencesNames.emulation) ?? false;
+  static bool get useEmulation => FireStarter.settings['firestore']?['emulation'] ?? prefs.read(PreferencesNames.emulation) ?? false;
 
   static Future saveShowIntroSlider(bool showIntroSlider) => prefs.write(PreferencesNames.showIntroSlider, showIntroSlider);
   static bool get showIntroSlider => prefs.read(PreferencesNames.showIntroSlider) ?? true;

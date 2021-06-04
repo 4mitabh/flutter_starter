@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fire_starter/constants/constants.dart';
 import 'package:fire_starter/helpers/helpers.dart';
@@ -8,15 +7,13 @@ import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  showSnackBar('${message.notification?.title}', '${message.notification?.body}');
-  AwesomeNotifications().createNotificationFromJsonData(message.data);
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   _firestore.enableNetwork();
 }
@@ -29,18 +26,8 @@ class NotificationService extends GetxService {
   StreamSubscription? _fcmTokenListener;
   NotificationService() {
     AuthService authService = AuthService.to;
+    _createNewChannel();
     authService.user.listen(userUpdated);
-    AwesomeNotifications().initialize('resource://drawable/notification', [
-      NotificationChannel(
-          channelKey: 'notify',
-          importance: NotificationImportance.Max,
-          channelName: 'notify',
-          soundSource: 'resource://raw/res_notify',
-          channelDescription: 'Notification channel for alerts',
-          defaultColor: Color(0xFF69B4FF),
-          ledColor: Colors.white)
-    ]);
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       if (message.notification != null) showSnackBar(message.notification?.title ?? PackageInfoService.appName, message.notification?.body ?? '');
     });
@@ -48,6 +35,16 @@ class NotificationService extends GetxService {
     // FGBGEvents.stream.listen((event) {
     //   if (event == FGBGType.foreground) dismissNotifications();
     // });
+  }
+
+  void _createNewChannel() async {
+    var _channel = MethodChannel('com.enthrll.app/firestarter');
+    Map<String, String> channelMap = {"id": "notify", "name": "notify", "description": "Notifications", "sound": "res_notify"};
+    try {
+      await _channel.invokeMethod('createNotificationChannel', channelMap);
+    } on PlatformException catch (e) {
+      GetLogger.to.e(e);
+    }
   }
 
   Future<void> _getPermissions() async {

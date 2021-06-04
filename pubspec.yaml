@@ -39,7 +39,6 @@ dependencies:
   flex_color_scheme:
   google_fonts: "^2.0.0"
   auto_size_text:
-  awesome_notifications:
   # flutter_fgbg:
   path_provider:
   blurhash_dart:
