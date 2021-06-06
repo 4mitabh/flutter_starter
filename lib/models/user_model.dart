@@ -10,9 +10,10 @@ class UserModel {
   String? name;
   String? photoUrl;
   List<String> memberOf;
-  List<String> subscriptions;
+  List<String> subscriptionsX;
+  List<Map<String, dynamic>>? alerts;
 
-  UserModel({required this.id, this.subscriptions = const [], this.email, this.name, this.phone, this.photoUrl, this.memberOf = const []});
+  UserModel({required this.id, this.subscriptionsX = const [], this.email, this.name, this.phone, this.photoUrl, this.alerts, this.memberOf = const []});
 
   factory UserModel.fromMap(Map data, String id) {
     return UserModel(
@@ -22,13 +23,20 @@ class UserModel {
       name: data['name'],
       photoUrl: data['photoUrl'],
       memberOf: ((data['memberOf'] ?? []) as List).cast<String>(),
-      subscriptions: ((data['subscriptions'] ?? []) as List).cast<String>(),
+      subscriptionsX: ((data['subscriptions'] ?? []) as List).cast<String>(),
+      alerts: ((data['alerts'] ?? defaultAlertsFromSubscriptions(data)) as List).cast<Map<String, dynamic>>(),
     );
   }
 
-  Map<String, dynamic> toJson() => {"email": email, "phone": phone, "name": name, "photoUrl": photoUrl, "memberOf": memberOf, 'subscriptions': subscriptions};
+  static List<Map<String, dynamic>> defaultAlertsFromSubscriptions(data) {
+    var s = ((data['subscriptions'] ?? []) as List).cast<String>();
+    return s.map<Map<String, dynamic>>((e) => {'district': e}).toList();
+  }
+
+  Map<String, dynamic> toJson() =>
+      {"email": email, "phone": phone, "name": name, "photoUrl": photoUrl, "memberOf": memberOf, 'subscriptions': subscriptionsX, 'alerts': alerts};
   String toString() => id + '\n' + toJson().toString();
   save() {
-    DatabaseService.update(data: toJson()..addAll({'ts': FieldValue.serverTimestamp()}), path: '${FirebasePaths.prefix}${FirebasePaths.users}/$id');
+    return DatabaseService.update(data: toJson()..addAll({'ts': FieldValue.serverTimestamp()}), path: '${FirebasePaths.prefix}${FirebasePaths.users}/$id');
   }
 }
