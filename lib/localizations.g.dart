@@ -14,7 +14,11 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       ),
       alert: const AppLocalizationsDataQuestrackAlert(
         save: 'Save',
+        suggest: const AppLocalizationsDataQuestrackAlertSuggest(
+          pin: 'For urban areas of {{dist}}, you can use {{pinSuggest}}',
+        ),
         error: const AppLocalizationsDataQuestrackAlertError(
+          invalidPin: 'This is not a valid range of pincodes for {{dist}}',
           noCost: 'Select at least one of Free/Paid',
           noDose: 'Select at least one of the doses',
           noVaccine: 'Select at least one of the vaccines',
@@ -29,7 +33,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         ),
         pin: const AppLocalizationsDataQuestrackAlertPin(
           help:
-              'Enter full or partial picode prefix. Leave empty to get alerts from entire district.',
+              'Enter full or partial pincode prefix. Leave empty to get alerts from entire district.',
           title: 'Only Pin Codes Starting With',
         ),
         dose: const AppLocalizationsDataQuestrackAlertDose(
@@ -192,7 +196,12 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       ),
       alert: const AppLocalizationsDataQuestrackAlert(
         save: 'अपडेट करें',
+        suggest: const AppLocalizationsDataQuestrackAlertSuggest(
+          pin:
+              '{{dist}} के शहरी क्षेत्रों के लिए आप {{pinSuggest}} का उपयोग कर सकते हैं',
+        ),
         error: const AppLocalizationsDataQuestrackAlertError(
+          invalidPin: 'यह {{dist}} के लिए एक मान्य पिनकोड श्रेणी नहीं है',
           noCost: 'कम से कम नि: शुल्क / सशुल्क से एक का चयन करें',
           noDose: 'कम से कम एक खुराक का चयन करें',
           noVaccine: 'कम से कम एक टीके का चयन करें',
@@ -207,7 +216,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         ),
         pin: const AppLocalizationsDataQuestrackAlertPin(
           help:
-              'पूर्ण या आंशिक पिकोड। पूरे जिले से अलर्ट प्राप्त करने के लिए खाली छोड़ दें।',
+              'पूर्ण या आंशिक पिनकोड। पूरे जिले से अलर्ट प्राप्त करने के लिए खाली छोड़ दें।',
           title: 'केवल वे पिन कोड, जिनकी आरंभ में हैं',
         ),
         dose: const AppLocalizationsDataQuestrackAlertDose(
@@ -567,6 +576,7 @@ class AppLocalizationsDataQuestrackError {
 class AppLocalizationsDataQuestrackAlert {
   const AppLocalizationsDataQuestrackAlert({
     required this.save,
+    required this.suggest,
     required this.error,
     required this.delete,
     required this.pin,
@@ -576,6 +586,7 @@ class AppLocalizationsDataQuestrackAlert {
   });
 
   final String save;
+  final AppLocalizationsDataQuestrackAlertSuggest suggest;
   final AppLocalizationsDataQuestrackAlertError error;
   final AppLocalizationsDataQuestrackAlertDelete delete;
   final AppLocalizationsDataQuestrackAlertPin pin;
@@ -586,6 +597,8 @@ class AppLocalizationsDataQuestrackAlert {
           Map<String, Object?> map) =>
       AppLocalizationsDataQuestrackAlert(
         save: map['save']! as String,
+        suggest: AppLocalizationsDataQuestrackAlertSuggest.fromJson(
+            map['suggest']! as Map<String, Object?>),
         error: AppLocalizationsDataQuestrackAlertError.fromJson(
             map['error']! as Map<String, Object?>),
         delete: AppLocalizationsDataQuestrackAlertDelete.fromJson(
@@ -602,6 +615,7 @@ class AppLocalizationsDataQuestrackAlert {
 
   AppLocalizationsDataQuestrackAlert copyWith({
     String? save,
+    AppLocalizationsDataQuestrackAlertSuggest? suggest,
     AppLocalizationsDataQuestrackAlertError? error,
     AppLocalizationsDataQuestrackAlertDelete? delete,
     AppLocalizationsDataQuestrackAlertPin? pin,
@@ -611,6 +625,7 @@ class AppLocalizationsDataQuestrackAlert {
   }) =>
       AppLocalizationsDataQuestrackAlert(
         save: save ?? this.save,
+        suggest: suggest ?? this.suggest,
         error: error ?? this.error,
         delete: delete ?? this.delete,
         pin: pin ?? this.pin,
@@ -624,6 +639,7 @@ class AppLocalizationsDataQuestrackAlert {
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackAlert &&
           save == other.save &&
+          suggest == other.suggest &&
           error == other.error &&
           delete == other.delete &&
           pin == other.pin &&
@@ -634,6 +650,7 @@ class AppLocalizationsDataQuestrackAlert {
   int get hashCode =>
       runtimeType.hashCode ^
       save.hashCode ^
+      suggest.hashCode ^
       error.hashCode ^
       delete.hashCode ^
       pin.hashCode ^
@@ -642,30 +659,91 @@ class AppLocalizationsDataQuestrackAlert {
       vaccine.hashCode;
 }
 
+class AppLocalizationsDataQuestrackAlertSuggest {
+  const AppLocalizationsDataQuestrackAlertSuggest({
+    required String pin,
+  }) : _pin = pin;
+
+  final String _pin;
+
+  String pin({
+    required String dist,
+    required String pinSuggest,
+    String? locale,
+  }) {
+    return _pin.insertTemplateValues(
+      {
+        'dist': dist,
+        'pinSuggest': pinSuggest,
+      },
+      locale: locale,
+    );
+  }
+
+  factory AppLocalizationsDataQuestrackAlertSuggest.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackAlertSuggest(
+        pin: map['pin']! as String,
+      );
+
+  AppLocalizationsDataQuestrackAlertSuggest copyWith({
+    String? pin,
+  }) =>
+      AppLocalizationsDataQuestrackAlertSuggest(
+        pin: pin ?? _pin,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackAlertSuggest &&
+          _pin == other._pin);
+  @override
+  int get hashCode => runtimeType.hashCode ^ _pin.hashCode;
+}
+
 class AppLocalizationsDataQuestrackAlertError {
   const AppLocalizationsDataQuestrackAlertError({
+    required String invalidPin,
     required this.noCost,
     required this.noDose,
     required this.noVaccine,
-  });
+  }) : _invalidPin = invalidPin;
 
+  final String _invalidPin;
   final String noCost;
   final String noDose;
   final String noVaccine;
+
+  String invalidPin({
+    required String dist,
+    String? locale,
+  }) {
+    return _invalidPin.insertTemplateValues(
+      {
+        'dist': dist,
+      },
+      locale: locale,
+    );
+  }
+
   factory AppLocalizationsDataQuestrackAlertError.fromJson(
           Map<String, Object?> map) =>
       AppLocalizationsDataQuestrackAlertError(
+        invalidPin: map['invalidPin']! as String,
         noCost: map['noCost']! as String,
         noDose: map['noDose']! as String,
         noVaccine: map['noVaccine']! as String,
       );
 
   AppLocalizationsDataQuestrackAlertError copyWith({
+    String? invalidPin,
     String? noCost,
     String? noDose,
     String? noVaccine,
   }) =>
       AppLocalizationsDataQuestrackAlertError(
+        invalidPin: invalidPin ?? _invalidPin,
         noCost: noCost ?? this.noCost,
         noDose: noDose ?? this.noDose,
         noVaccine: noVaccine ?? this.noVaccine,
@@ -675,12 +753,14 @@ class AppLocalizationsDataQuestrackAlertError {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackAlertError &&
+          _invalidPin == other._invalidPin &&
           noCost == other.noCost &&
           noDose == other.noDose &&
           noVaccine == other.noVaccine);
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      _invalidPin.hashCode ^
       noCost.hashCode ^
       noDose.hashCode ^
       noVaccine.hashCode;
