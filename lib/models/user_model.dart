@@ -33,8 +33,11 @@ class UserModel {
     return s.map<Map<String, dynamic>>((e) => {'district': e}).toList();
   }
 
-  Map<String, dynamic> toJson() =>
-      {"email": email, "phone": phone, "name": name, "photoUrl": photoUrl, "memberOf": memberOf, 'subscriptions': subscriptionsX, 'alerts': alerts};
+  Map<String, dynamic> toJson() {
+    subscriptionsX = alerts?.map((e) => e['district']).toSet().toList().cast<String>() ?? [];
+    return {"email": email, "phone": phone, "name": name, "photoUrl": photoUrl, "memberOf": memberOf, 'subscriptions': subscriptionsX, 'alerts': alerts};
+  }
+
   String toString() => id + '\n' + toJson().toString();
   save() {
     return DatabaseService.update(data: toJson()..addAll({'ts': FieldValue.serverTimestamp()}), path: '${FirebasePaths.prefix}${FirebasePaths.users}/$id');

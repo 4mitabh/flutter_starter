@@ -104,11 +104,11 @@ class AuthService extends GetxService {
   }
 
   //create the firestore user in users collection
-  void _createUserFirestore(UserModel user, User _firebaseUser) {
-    _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${_firebaseUser.uid}').set(user.toJson());
+  _createUserFirestore(UserModel user, User _firebaseUser) {
+    return _db.doc('${FirebasePaths.prefix}${FirebasePaths.users}/${_firebaseUser.uid}').set(user.toJson());
   }
 
-  UserModel? _createNewUserFirestore() {
+  Future<UserModel?> _createNewUserFirestore() async {
     if (firebaseUser.value == null) return null;
     User _firebaseUser = firebaseUser.value!;
     UserModel _newUser = UserModel(
@@ -119,7 +119,7 @@ class AuthService extends GetxService {
         phone: _firebaseUser.phoneNumber,
         memberOf: ConfigStorage.isAlpha ? ['alpha-users'] : ['users']);
     //create the user in firestore
-    _createUserFirestore(_newUser, _firebaseUser);
+    await _createUserFirestore(_newUser, _firebaseUser);
     return _newUser;
   }
 
