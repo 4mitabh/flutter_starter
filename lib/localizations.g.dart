@@ -9,8 +9,16 @@ part of 'localizations.dart';
 final localizedLabels = <Locale, AppLocalizationsData>{
   Locale.fromSubtags(languageCode: 'en'): const AppLocalizationsData(
     questrack: const AppLocalizationsDataQuestrack(
+      error: const AppLocalizationsDataQuestrackError(
+        title: 'Error',
+      ),
       alert: const AppLocalizationsDataQuestrackAlert(
         save: 'Save',
+        error: const AppLocalizationsDataQuestrackAlertError(
+          noCost: 'Select at least one of Free/Paid',
+          noDose: 'Select at least one of the doses',
+          noVaccine: 'Select at least one of the vaccines',
+        ),
         delete: const AppLocalizationsDataQuestrackAlertDelete(
           confirmation:
               const AppLocalizationsDataQuestrackAlertDeleteConfirmation(
@@ -179,8 +187,16 @@ final localizedLabels = <Locale, AppLocalizationsData>{
   ),
   Locale.fromSubtags(languageCode: 'hi'): const AppLocalizationsData(
     questrack: const AppLocalizationsDataQuestrack(
+      error: const AppLocalizationsDataQuestrackError(
+        title: 'त्रुटि',
+      ),
       alert: const AppLocalizationsDataQuestrackAlert(
         save: 'अपडेट करें',
+        error: const AppLocalizationsDataQuestrackAlertError(
+          noCost: 'कम से कम नि: शुल्क / सशुल्क से एक का चयन करें',
+          noDose: 'कम से कम एक खुराक का चयन करें',
+          noVaccine: 'कम से कम एक टीके का चयन करें',
+        ),
         delete: const AppLocalizationsDataQuestrackAlertDelete(
           confirmation:
               const AppLocalizationsDataQuestrackAlertDeleteConfirmation(
@@ -202,7 +218,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         cost: const AppLocalizationsDataQuestrackAlertCost(
           paid: 'सशुल्क',
           free: 'नि: शुल्क',
-          title: 'लागत',
+          title: 'शुल्क',
         ),
         vaccine: const AppLocalizationsDataQuestrackAlertVaccine(
           sputnik: 'स्पूतनिक वी',
@@ -437,6 +453,7 @@ class AppLocalizationsData {
 
 class AppLocalizationsDataQuestrack {
   const AppLocalizationsDataQuestrack({
+    required this.error,
     required this.alert,
     required this.alertsList,
     required this.share,
@@ -446,6 +463,7 @@ class AppLocalizationsDataQuestrack {
     required this.feed,
   });
 
+  final AppLocalizationsDataQuestrackError error;
   final AppLocalizationsDataQuestrackAlert alert;
   final AppLocalizationsDataQuestrackAlertsList alertsList;
   final AppLocalizationsDataQuestrackShare share;
@@ -455,6 +473,8 @@ class AppLocalizationsDataQuestrack {
   final AppLocalizationsDataQuestrackFeed feed;
   factory AppLocalizationsDataQuestrack.fromJson(Map<String, Object?> map) =>
       AppLocalizationsDataQuestrack(
+        error: AppLocalizationsDataQuestrackError.fromJson(
+            map['error']! as Map<String, Object?>),
         alert: AppLocalizationsDataQuestrackAlert.fromJson(
             map['alert']! as Map<String, Object?>),
         alertsList: AppLocalizationsDataQuestrackAlertsList.fromJson(
@@ -472,6 +492,7 @@ class AppLocalizationsDataQuestrack {
       );
 
   AppLocalizationsDataQuestrack copyWith({
+    AppLocalizationsDataQuestrackError? error,
     AppLocalizationsDataQuestrackAlert? alert,
     AppLocalizationsDataQuestrackAlertsList? alertsList,
     AppLocalizationsDataQuestrackShare? share,
@@ -481,6 +502,7 @@ class AppLocalizationsDataQuestrack {
     AppLocalizationsDataQuestrackFeed? feed,
   }) =>
       AppLocalizationsDataQuestrack(
+        error: error ?? this.error,
         alert: alert ?? this.alert,
         alertsList: alertsList ?? this.alertsList,
         share: share ?? this.share,
@@ -494,6 +516,7 @@ class AppLocalizationsDataQuestrack {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrack &&
+          error == other.error &&
           alert == other.alert &&
           alertsList == other.alertsList &&
           share == other.share &&
@@ -504,6 +527,7 @@ class AppLocalizationsDataQuestrack {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      error.hashCode ^
       alert.hashCode ^
       alertsList.hashCode ^
       share.hashCode ^
@@ -513,9 +537,37 @@ class AppLocalizationsDataQuestrack {
       feed.hashCode;
 }
 
+class AppLocalizationsDataQuestrackError {
+  const AppLocalizationsDataQuestrackError({
+    required this.title,
+  });
+
+  final String title;
+  factory AppLocalizationsDataQuestrackError.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackError(
+        title: map['title']! as String,
+      );
+
+  AppLocalizationsDataQuestrackError copyWith({
+    String? title,
+  }) =>
+      AppLocalizationsDataQuestrackError(
+        title: title ?? this.title,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackError && title == other.title);
+  @override
+  int get hashCode => runtimeType.hashCode ^ title.hashCode;
+}
+
 class AppLocalizationsDataQuestrackAlert {
   const AppLocalizationsDataQuestrackAlert({
     required this.save,
+    required this.error,
     required this.delete,
     required this.pin,
     required this.dose,
@@ -524,6 +576,7 @@ class AppLocalizationsDataQuestrackAlert {
   });
 
   final String save;
+  final AppLocalizationsDataQuestrackAlertError error;
   final AppLocalizationsDataQuestrackAlertDelete delete;
   final AppLocalizationsDataQuestrackAlertPin pin;
   final AppLocalizationsDataQuestrackAlertDose dose;
@@ -533,6 +586,8 @@ class AppLocalizationsDataQuestrackAlert {
           Map<String, Object?> map) =>
       AppLocalizationsDataQuestrackAlert(
         save: map['save']! as String,
+        error: AppLocalizationsDataQuestrackAlertError.fromJson(
+            map['error']! as Map<String, Object?>),
         delete: AppLocalizationsDataQuestrackAlertDelete.fromJson(
             map['delete']! as Map<String, Object?>),
         pin: AppLocalizationsDataQuestrackAlertPin.fromJson(
@@ -547,6 +602,7 @@ class AppLocalizationsDataQuestrackAlert {
 
   AppLocalizationsDataQuestrackAlert copyWith({
     String? save,
+    AppLocalizationsDataQuestrackAlertError? error,
     AppLocalizationsDataQuestrackAlertDelete? delete,
     AppLocalizationsDataQuestrackAlertPin? pin,
     AppLocalizationsDataQuestrackAlertDose? dose,
@@ -555,6 +611,7 @@ class AppLocalizationsDataQuestrackAlert {
   }) =>
       AppLocalizationsDataQuestrackAlert(
         save: save ?? this.save,
+        error: error ?? this.error,
         delete: delete ?? this.delete,
         pin: pin ?? this.pin,
         dose: dose ?? this.dose,
@@ -567,6 +624,7 @@ class AppLocalizationsDataQuestrackAlert {
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackAlert &&
           save == other.save &&
+          error == other.error &&
           delete == other.delete &&
           pin == other.pin &&
           dose == other.dose &&
@@ -576,11 +634,56 @@ class AppLocalizationsDataQuestrackAlert {
   int get hashCode =>
       runtimeType.hashCode ^
       save.hashCode ^
+      error.hashCode ^
       delete.hashCode ^
       pin.hashCode ^
       dose.hashCode ^
       cost.hashCode ^
       vaccine.hashCode;
+}
+
+class AppLocalizationsDataQuestrackAlertError {
+  const AppLocalizationsDataQuestrackAlertError({
+    required this.noCost,
+    required this.noDose,
+    required this.noVaccine,
+  });
+
+  final String noCost;
+  final String noDose;
+  final String noVaccine;
+  factory AppLocalizationsDataQuestrackAlertError.fromJson(
+          Map<String, Object?> map) =>
+      AppLocalizationsDataQuestrackAlertError(
+        noCost: map['noCost']! as String,
+        noDose: map['noDose']! as String,
+        noVaccine: map['noVaccine']! as String,
+      );
+
+  AppLocalizationsDataQuestrackAlertError copyWith({
+    String? noCost,
+    String? noDose,
+    String? noVaccine,
+  }) =>
+      AppLocalizationsDataQuestrackAlertError(
+        noCost: noCost ?? this.noCost,
+        noDose: noDose ?? this.noDose,
+        noVaccine: noVaccine ?? this.noVaccine,
+      );
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AppLocalizationsDataQuestrackAlertError &&
+          noCost == other.noCost &&
+          noDose == other.noDose &&
+          noVaccine == other.noVaccine);
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      noCost.hashCode ^
+      noDose.hashCode ^
+      noVaccine.hashCode;
 }
 
 class AppLocalizationsDataQuestrackAlertDelete {
