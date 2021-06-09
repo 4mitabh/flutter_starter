@@ -239,7 +239,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
       alertsList: const AppLocalizationsDataQuestrackAlertsList(
         add: 'नया अलर्ट जोड़ें 💉 ',
         delete: 'रद्द करें',
-        edit: 'संपादित करें',
+        edit: 'बदले',
         title: 'आपके अलर्ट',
       ),
       share: const AppLocalizationsDataQuestrackShare(
@@ -260,8 +260,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         ),
       ),
       menu: const AppLocalizationsDataQuestrackMenu(
-        about: 'ऐप के बारे में',
-        editCities: 'शहर चुनें',
+        about: 'ऐप के बारे में जानें',
+        editCities: 'अपने शहर चुनें',
         review: 'रेटिंग दें',
         switchLocale: 'अंग्रेजी में बदलें',
         share: 'शेयर करें',
