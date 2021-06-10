@@ -18,7 +18,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
           pin: 'For urban areas of {{dist}}, you can use {{pinSuggest}}',
         ),
         error: const AppLocalizationsDataQuestrackAlertError(
-          invalidPin: 'This is not a valid range of pincodes for {{dist}}',
+          invalidPin:
+              'All centers in {{dist}} start with {{pins}}. There are none starting with {{pin}}',
           noCost: 'Select at least one of Free/Paid',
           noDose: 'Select at least one of the doses',
           noVaccine: 'Select at least one of the vaccines',
@@ -201,7 +202,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
               '{{dist}} के शहरी क्षेत्रों के लिए आप {{pinSuggest}} का उपयोग कर सकते हैं',
         ),
         error: const AppLocalizationsDataQuestrackAlertError(
-          invalidPin: 'यह {{dist}} के लिए एक मान्य पिनकोड श्रेणी नहीं है',
+          invalidPin:
+              '{{dist}} में पिनकोड {{pin}} से शुरू होने वाले कोई केंद्र नहीं है, सभी केंद्र {{pins}} से शुरू होते हैं',
           noCost: 'कम से कम नि: शुल्क / सशुल्क से एक का चयन करें',
           noDose: 'कम से कम एक खुराक का चयन करें',
           noVaccine: 'कम से कम एक टीके का चयन करें',
@@ -217,7 +219,7 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         pin: const AppLocalizationsDataQuestrackAlertPin(
           help:
               'पूर्ण या आंशिक पिनकोड। पूरे जिले से अलर्ट प्राप्त करने के लिए खाली छोड़ दें।',
-          title: 'केवल वे पिन कोड, जिनकी आरंभ में हैं',
+          title: 'केवल वही केंद्र जिनका पिन इनसे शुरू होता है',
         ),
         dose: const AppLocalizationsDataQuestrackAlertDose(
           dose2: 'दूसरी खुराक',
@@ -717,11 +719,15 @@ class AppLocalizationsDataQuestrackAlertError {
 
   String invalidPin({
     required String dist,
+    required String pins,
+    required String pin,
     String? locale,
   }) {
     return _invalidPin.insertTemplateValues(
       {
         'dist': dist,
+        'pins': pins,
+        'pin': pin,
       },
       locale: locale,
     );
