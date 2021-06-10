@@ -55,7 +55,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         ),
       ),
       alertsList: const AppLocalizationsDataQuestrackAlertsList(
-        add: 'Add a new alert  💉 ',
+        toFeed: 'View Live Status  💉  ',
+        add: 'Add a new alert  🏥',
         delete: 'Delete',
         edit: 'Edit',
         title: 'Your Alerts',
@@ -239,7 +240,8 @@ final localizedLabels = <Locale, AppLocalizationsData>{
         ),
       ),
       alertsList: const AppLocalizationsDataQuestrackAlertsList(
-        add: 'नया अलर्ट जोड़ें 💉 ',
+        toFeed: 'लाइव स्थिति देखें 💉',
+        add: 'नया अलर्ट जोड़ें 🏥',
         delete: 'रद्द करें',
         edit: 'बदले',
         title: 'आपके अलर्ट',
@@ -1012,12 +1014,14 @@ class AppLocalizationsDataQuestrackAlertVaccine {
 
 class AppLocalizationsDataQuestrackAlertsList {
   const AppLocalizationsDataQuestrackAlertsList({
+    required this.toFeed,
     required this.add,
     required this.delete,
     required this.edit,
     required this.title,
   });
 
+  final String toFeed;
   final String add;
   final String delete;
   final String edit;
@@ -1025,6 +1029,7 @@ class AppLocalizationsDataQuestrackAlertsList {
   factory AppLocalizationsDataQuestrackAlertsList.fromJson(
           Map<String, Object?> map) =>
       AppLocalizationsDataQuestrackAlertsList(
+        toFeed: map['toFeed']! as String,
         add: map['add']! as String,
         delete: map['delete']! as String,
         edit: map['edit']! as String,
@@ -1032,12 +1037,14 @@ class AppLocalizationsDataQuestrackAlertsList {
       );
 
   AppLocalizationsDataQuestrackAlertsList copyWith({
+    String? toFeed,
     String? add,
     String? delete,
     String? edit,
     String? title,
   }) =>
       AppLocalizationsDataQuestrackAlertsList(
+        toFeed: toFeed ?? this.toFeed,
         add: add ?? this.add,
         delete: delete ?? this.delete,
         edit: edit ?? this.edit,
@@ -1048,6 +1055,7 @@ class AppLocalizationsDataQuestrackAlertsList {
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AppLocalizationsDataQuestrackAlertsList &&
+          toFeed == other.toFeed &&
           add == other.add &&
           delete == other.delete &&
           edit == other.edit &&
@@ -1055,6 +1063,7 @@ class AppLocalizationsDataQuestrackAlertsList {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      toFeed.hashCode ^
       add.hashCode ^
       delete.hashCode ^
       edit.hashCode ^
