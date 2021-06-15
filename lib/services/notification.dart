@@ -55,6 +55,7 @@ class NotificationService extends GetxService {
   }
 
   FutureOr<void> updateToken(String? token) async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     if (token == null || _uid == null) return null;
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     DocumentSnapshot<Map<String, dynamic>> userSS = await _firestore.doc('${FirebasePaths.prefix}${FirebasePaths.users}/$_uid').get();
@@ -64,8 +65,14 @@ class NotificationService extends GetxService {
       tokens = [token];
     else if (!tokens.contains(token))
       tokens = [...tokens, token];
-    else
+    else {
+      userSS.reference.set({
+        'lastLogin': FieldValue.serverTimestamp(),
+        'ts': FieldValue.serverTimestamp(),
+        'ver': '${GetPlatform.isIOS ? 'i' : 'a'}.${packageInfo.version}.${packageInfo.buildNumber}'
+      });
       return;
+    }
     final box = GetStorage();
     String? savedToken = box.read(_NOTIFICATION_TOKEN);
     if (savedToken != null && savedToken != token) {
@@ -73,9 +80,9 @@ class NotificationService extends GetxService {
       tokens = tokens..removeWhere((t) => t == savedToken);
     }
     box.write(_NOTIFICATION_TOKEN, token);
-    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
     GetLogger.to.i(userSS.reference.path);
-    userSS.reference.update({
+    userSS.reference.set({
       _NOTIFICATION_TOKEN: tokens,
       'lastLogin': FieldValue.serverTimestamp(),
       'ts': FieldValue.serverTimestamp(),
