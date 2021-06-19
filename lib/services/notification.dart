@@ -87,7 +87,7 @@ class NotificationService extends GetxService {
       'lastLogin': FieldValue.serverTimestamp(),
       'ts': FieldValue.serverTimestamp(),
       'ver': '${GetPlatform.isIOS ? 'i' : 'a'}.${packageInfo.version}.${packageInfo.buildNumber}'
-    });
+    }, SetOptions(merge: true));
   }
 
   Future<void> removeToken() async {

@@ -40,15 +40,13 @@ class IntroSliderUI extends StatelessWidget {
         body: (slides.length != 0)
             ? BlobBackground(
                 child: IntroSlider(
-                colorDoneBtn: Colors.white,
+                doneButtonStyle: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.black)),
                 showSkipBtn: false,
-                styleDoneBtn: TextStyle(color: Colors.black),
                 showNextBtn: true,
                 slides: slides,
                 onDonePress: this.onDonePress,
               ))
             : Container());
-    // Scaffold(body: BlobBackground(child: Text('')));
   }
 
   void onDonePress() {
