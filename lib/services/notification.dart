@@ -7,6 +7,7 @@ import 'package:fire_starter/services/package_info.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -41,7 +42,7 @@ class NotificationService extends GetxService {
     var _channel = MethodChannel('com.enthrll.app/firestarter');
     Map<String, String> channelMap = {"id": "notify", "name": "notify", "description": "Notifications", "sound": "res_notify"};
     try {
-      await _channel.invokeMethod('createNotificationChannel', channelMap);
+      if (!kIsWeb) await _channel.invokeMethod('createNotificationChannel', channelMap);
     } on PlatformException catch (e) {
       GetLogger.to.e(e);
     }

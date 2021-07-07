@@ -36,13 +36,15 @@ class MetadataModel {
   factory MetadataModel._fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     var data = snapshot.data();
     if (data == null) return MetadataModel(build: 1, version: '0.0.0', majorVersion: 0, minorVersion: 0);
+    var version = data["${GetPlatform.isIOS ? 'version-i' : (GetPlatform.isAndroid ? 'version-a' : 'version')}"] ?? data['version'];
+    var build = data["${GetPlatform.isIOS ? 'build-i' : (GetPlatform.isAndroid ? 'build-a' : 'build')}"] ?? data['build'];
     return MetadataModel(
-        build: data['build'],
-        version: data['version'],
+        build: build,
+        version: version,
         introSlider: ((data['introSlider'] ?? []) as List).cast(),
         introSlider_hi: ((data['introSlider_hi'] ?? []) as List).cast(),
-        majorVersion: int.parse(data['version'].split('.')[0]),
-        minorVersion: int.parse(data['version'].split('.')[1]));
+        majorVersion: int.parse(version.split('.')[0]),
+        minorVersion: int.parse(version.split('.')[1]));
   }
 
   String toString() {

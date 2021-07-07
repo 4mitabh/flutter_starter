@@ -10,7 +10,7 @@ import '../models/models.dart';
 class DatabaseService extends GetxService {
   static FirebaseFirestore _firestore = FirebaseFirestore.instance;
   DatabaseService() : super() {
-    if (ConfigStorage.useEmulation)
+    if (ConfigStorage.useEmulation && !kIsWeb)
       FirebaseFirestore.instance.settings = const Settings(
         host: '192.168.1.138:8080',
         sslEnabled: false,
@@ -28,11 +28,11 @@ class DatabaseService extends GetxService {
 
   static Future<Stream<List<FirebaseDoc>>> collectionWatch(String name,
       {required dynamic canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, required int limit}) async {
-    GetLogger.to.i('Collection Group ${name} read by $canRead');
+    GetLogger.to.i('Collection Watch ${name} read by $canRead');
     Query<Map<String, dynamic>> q = _firestore.collection(name);
     if (canRead.runtimeType == String)
-      q = q.where('canRead', arrayContains: canRead);
-    else if (canRead.runtimeType == List) q = q.where('canRead', arrayContainsAny: canRead);
+      q = q.where('canRead.$canRead', isEqualTo: true);
+    else if (canRead.runtimeType == List) for (var r in (canRead as List<String>)) q.where('canRead.$r', isEqualTo: true);
 
     if (query != null) q = query(q);
     return await DatabaseService.queryWatch(q, limit: limit);
@@ -41,32 +41,34 @@ class DatabaseService extends GetxService {
   static Future<List<FirebaseDoc>> collectionGroup(String name,
       {required dynamic canRead,
       Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query,
-      String? orderby,
+      String orderby = 'ts',
       bool useCache = true,
       int limit = 100}) async {
-    GetLogger.to.i('Collection Group ${name} read by $canRead');
+    GetLogger.to.i('Collection Group - ${name} read by $canRead');
     Query<Map<String, dynamic>> q = _firestore.collectionGroup(name);
     if (canRead.runtimeType == String)
-      q = q.where('canRead', arrayContains: canRead);
-    else if (canRead.runtimeType == List) q = q.where('canRead', arrayContainsAny: canRead);
+      q = q.where('canRead.$canRead', isEqualTo: true);
+    else if (canRead.runtimeType == List) for (var r in (canRead as List<String>)) q.where('canRead.$r', isEqualTo: true);
     if (query != null) q = query(q);
-    q = (orderby == null) ? q.limit(limit) : q.orderBy(orderby, descending: false).limit(limit);
+    q = q.orderBy(orderby, descending: true).limit(limit);
     return DatabaseService.query(q, useCache: useCache);
   }
 
   static Future<Stream<List<FirebaseDoc>>> collectionGroupWatch(String name,
       {required dynamic canRead, Query<Map<String, dynamic>> Function(Query<Map<String, dynamic>>)? query, required int limit}) async {
-    GetLogger.to.i('Collection Group ${name} read by $canRead');
+    GetLogger.to.i('Collection Group Watch $name read by $canRead');
     Query<Map<String, dynamic>> q = _firestore.collectionGroup(name);
     if (canRead.runtimeType == String)
-      q = q.where('canRead', arrayContains: canRead);
-    else if (canRead.runtimeType == List) q = q.where('canRead', arrayContainsAny: canRead);
+      q = q.where('canRead.$canRead', isEqualTo: true);
+    else if (canRead.runtimeType == List) for (var r in (canRead as List<String>)) q.where('canRead.$r', isEqualTo: true);
 
     if (query != null) q = query(q);
     return await DatabaseService.queryWatch(q, limit: limit);
   }
 
   static Future<Stream<List<FirebaseDoc>>> queryWatch(Query<Map<String, dynamic>> query, {int limit = 100}) async {
+    GetLogger.to.i('Query params ${query.parameters}');
+
     var stream = query
         .orderBy('ts', descending: true)
         .limit(limit)
