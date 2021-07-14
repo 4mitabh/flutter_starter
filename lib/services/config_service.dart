@@ -27,11 +27,17 @@ class ConfigStorage {
 
   static bool? _diagnostics;
   static Future saveDiagnostics(bool diagnostics) => prefs.write(PreferencesNames.diagnostics, diagnostics);
-  static bool get diagnostics => ConfigStorage._diagnostics ?? prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
+  static bool get diagnostics {
+    if (ConfigStorage._diagnostics == null) ConfigStorage._diagnostics = prefs.read(PreferencesNames.diagnostics) ?? kDebugMode;
+    return ConfigStorage._diagnostics!;
+  }
 
   static String? _locale;
   static Future saveLocale(String? locale) => prefs.write(PreferencesNames.locale, locale);
-  static String? get locale => ConfigStorage._locale ?? prefs.read(PreferencesNames.locale);
+  static String? get locale {
+    if (ConfigStorage._locale == null) ConfigStorage._locale = prefs.read(PreferencesNames.locale) ?? FireStarter.settings['locale']?['default'];
+    return ConfigStorage._locale;
+  }
 
   static Future saveUseEmulation(bool emulation) => prefs.write(PreferencesNames.emulation, emulation);
   static bool get useEmulation => FireStarter.settings['firestore']?['emulation'] ?? prefs.read(PreferencesNames.emulation) ?? false;

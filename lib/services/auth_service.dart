@@ -117,7 +117,7 @@ class AuthService extends GetxService {
         name: _firebaseUser.displayName,
         photoUrl: _firebaseUser.photoURL,
         phone: _firebaseUser.phoneNumber,
-        memberOf: ConfigStorage.isAlpha ? ['alpha-users'] : ['users']);
+        memberOf: ConfigStorage.isAlpha ? ['alpha_users'] : ['users']);
     //create the user in firestore
     await _createUserFirestore(_newUser, _firebaseUser);
     return _newUser;
