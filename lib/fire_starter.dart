@@ -49,7 +49,6 @@ class FireStarter {
           ),
     ));
     await Firebase.initializeApp();
-    // FirebaseFirestore.instance.settings = const Settings(host: '192.168.1.138:8080', sslEnabled: false, persistenceEnabled: false);
     await GetStorage.init();
     await PackageInfoService.init();
     Get.put<LanguageController>(LanguageController());
