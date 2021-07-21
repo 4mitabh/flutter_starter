@@ -22,8 +22,15 @@ class ConfigStorage {
   static GetStorage prefs = GetStorage();
 
   static bool? _alpha;
-  static Future saveAlpha(bool alpha) => prefs.write(PreferencesNames.isAlpha, alpha);
-  static bool get isAlpha => ConfigStorage._alpha ?? prefs.read(PreferencesNames.isAlpha) ?? kDebugMode;
+  static Future saveAlpha(bool alpha) {
+    ConfigStorage._alpha = alpha;
+    return prefs.write(PreferencesNames.isAlpha, alpha);
+  }
+
+  static bool get isAlpha {
+    if (ConfigStorage._alpha == null) ConfigStorage._alpha = prefs.read(PreferencesNames.isAlpha) ?? FireStarter.settings['firestore']?['alpha'] ?? kDebugMode;
+    return ConfigStorage._alpha!;
+  }
 
   static bool? _diagnostics;
   static Future saveDiagnostics(bool diagnostics) {

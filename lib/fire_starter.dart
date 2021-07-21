@@ -57,14 +57,18 @@ class FireStarter {
     Get.put<DatabaseService>(DatabaseService());
     Get.put<NotificationService>(NotificationService());
     UpgradeCheckService.init();
-
     ThemeController themeController = ThemeController.to;
     if (false && kDebugMode && themeIndex == -1)
       Timer.periodic(const Duration(seconds: 15), (Timer timer) {
         themeIndex = (themeIndex + 7) % FlexScheme.values.length;
         themeController.setTheme(FlexScheme.values[themeIndex].toString().split('.')[1]);
-        if (themeIndex == 0) themeController.setThemeMode(themeController.isDarkModeOn ? 'light' : 'dark');
+        if (themeIndex % 4 == 0) themeController.setThemeMode(themeController.isDarkModeOn ? 'light' : 'dark');
       });
+
+    if (!kDebugMode && themeIndex == -1) {
+      themeIndex = DateTime.now().millisecondsSinceEpoch % FlexScheme.values.length;
+      themeController.setTheme(FlexScheme.values[themeIndex].toString().split('.')[1]);
+    }
     // LanguageController languageController = LanguageController.to;
     // Timer.periodic(const Duration(seconds: 13), (Timer timer) {
     //   return languageController.updateLanguage(languageController.currentLanguage == 'en' ? 'hi' : 'en');

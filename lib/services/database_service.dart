@@ -126,15 +126,16 @@ class DatabaseService extends GetxService {
       GetLogger.to.i('Updating ${path} to ${data.toString()}');
       _firestore.doc(path).set(data, SetOptions(merge: true));
     } catch (e) {
-      print(e);
+      GetLogger.to.e(e);
       rethrow;
     }
   }
 
   static void create(String path, Map<String, dynamic> data, {String? id, SetOptions? setOptions}) {
+    GetLogger.to.d('Writing $data to ${FirebasePaths.prefix + path} ');
     data['by'] = AuthService.to.firebaseUser.value!.uid;
     data['ts'] = FieldValue.serverTimestamp();
-    print('Writing $data to ${FirebasePaths.prefix + path} ');
+    GetLogger.to.d('Writing $data to ${FirebasePaths.prefix + path} ');
     if (id == null)
       _firestore.collection(FirebasePaths.prefix + path).doc().set(data, setOptions);
     else

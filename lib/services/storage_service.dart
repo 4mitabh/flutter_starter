@@ -79,9 +79,9 @@ class StorageService extends GetxService {
   static Future<String?> packAndUploadVideo({required String path, required Map<String, String> metadata}) async {
     final file = await ImagePicker().getVideo(source: ImageSource.gallery);
     if (file != null) {
-      Map<String, dynamic> message = metadata;
+      Map<String, dynamic> message = Map<String, dynamic>.from(metadata);
       message['title'] = 'Uploading Video';
-      var id = 'upld-${Uuid().v1().replaceAll('-', '')}.jpg';
+      var id = 'upld-${Uuid().v1().replaceAll('-', '')}.mpg';
       DatabaseService.create(path, message, id: id, setOptions: SetOptions(merge: true));
       upload(file: File(file.path), path: '$path/$id', metadata: metadata, contentType: 'video/mpeg');
       return '$path/$id';

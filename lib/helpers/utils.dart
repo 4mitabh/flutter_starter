@@ -1,13 +1,8 @@
 import 'dart:io';
-import 'package:fire_starter/fire_starter.dart';
-import 'package:fire_starter/helpers/helpers.dart';
-import 'package:fire_starter/ui/components/components.dart';
-import 'package:fire_starter/ui/components/widgets/glass/glass_card.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:in_app_review/in_app_review.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/services.dart' show rootBundle;
 

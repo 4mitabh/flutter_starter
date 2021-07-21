@@ -30,7 +30,7 @@ class LineButton extends StatelessWidget {
 
         // color: Theme.of(context).backgroundColor.withAlpha(AppThemes.containerAlpha ~/ 4),
         style: ElevatedButton.styleFrom(
-          side: BorderSide(width: lineWidth, color: color ?? Theme.of(context).buttonColor.withAlpha(AppTheme.containerAlpha ~/ 2)),
+          side: BorderSide(width: lineWidth, color: color ?? Theme.of(context).primaryColor.withAlpha(AppTheme.containerAlpha ~/ 2)),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(this.radius),
           ),

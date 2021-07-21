@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/slide_object.dart';
 
 class IntroSliderUI extends StatelessWidget {
-  makeSlides(context) {
-    if (PackageInfoService.metadata!.introSlider != null && PackageInfoService.metadata!.introSlider!.length == 0) {
+  List<Slide> makeSlides(context) {
+    if (PackageInfoService.metadata!.introSlider == null || PackageInfoService.metadata!.introSlider!.length == 0) {
       Future.delayed(Duration(milliseconds: 10000)).then((value) => onDonePress());
       return [];
     }
