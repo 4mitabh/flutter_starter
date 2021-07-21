@@ -131,6 +131,11 @@ class DatabaseService extends GetxService {
     }
   }
 
+  static void delete(String path) {
+    GetLogger.to.d('Deleting $path');
+    _firestore.doc(FirebasePaths.prefix + path).delete();
+  }
+
   static void create(String path, Map<String, dynamic> data, {String? id, SetOptions? setOptions}) {
     GetLogger.to.d('Writing $data to ${FirebasePaths.prefix + path} ');
     data['by'] = AuthService.to.firebaseUser.value!.uid;
