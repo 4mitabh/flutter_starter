@@ -140,6 +140,7 @@ class DatabaseService extends GetxService {
     GetLogger.to.d('Writing $data to ${FirebasePaths.prefix + path} ');
     data['by'] = AuthService.to.firebaseUser.value!.uid;
     data['ts'] = FieldValue.serverTimestamp();
+    data['tc'] = FieldValue.serverTimestamp();
     GetLogger.to.d('Writing $data to ${FirebasePaths.prefix + path} ');
     if (id == null)
       _firestore.collection(FirebasePaths.prefix + path).doc().set(data, setOptions);
