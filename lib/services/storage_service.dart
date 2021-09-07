@@ -65,13 +65,18 @@ class StorageService extends GetxService {
   static Future<String?> packAndUploadPhoto({required String path, required Map<String, String> metadata}) async {
     final file = await ImagePicker().getImage(source: ImageSource.gallery);
     if (file != null) {
-      var id = 'upld-${Uuid().v1().replaceAll('-', '')}.jpg';
+      String ext = '.jpeg';
+      try {
+        ext = file.path.split('.').last;
+      } catch (e) {}
+      GetLogger.to.e(ext);
+      var id = 'upld-${Uuid().v1().replaceAll('-', '')}.$ext';
       Map<String, dynamic> message = Map<String, dynamic>.from(metadata);
       message['title'] = 'Uploading Photo';
       message['image'] = '';
       message['tn'] = StorageService.blurHashEncode(File(file.path));
       DatabaseService.create(path, message, id: id, setOptions: SetOptions(merge: true));
-      upload(file: File(file.path), path: '$path/$id', metadata: metadata, contentType: 'image/jpeg');
+      upload(file: File(file.path), path: '$path/$id', metadata: metadata, contentType: 'image/$ext');
       return '$path/$id';
     }
   }

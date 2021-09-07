@@ -40,6 +40,7 @@ class FireStarter {
     WidgetsFlutterBinding.ensureInitialized();
     Get.put<Logger>(Logger(
       printer: PrettyPrinter(
+          noBoxingByDefault: true,
           methodCount: 0, // number of method calls to be displayed
           errorMethodCount: 8, // number of method calls if stacktrace is provided
           lineLength: 120, // width of the output
