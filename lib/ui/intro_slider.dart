@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fire_starter/helpers/helpers.dart';
 import 'package:fire_starter/services/config_service.dart';
 import 'package:fire_starter/services/package_info.dart';
 import 'package:fire_starter/ui/components/widgets/glass/blob.dart';
@@ -10,11 +11,15 @@ import 'package:intro_slider/slide_object.dart';
 
 class IntroSliderUI extends StatelessWidget {
   List<Slide> makeSlides(context) {
-    if (PackageInfoService.metadata!.introSlider == null || PackageInfoService.metadata!.introSlider!.length == 0) {
-      Future.delayed(Duration(milliseconds: 10000)).then((value) => onDonePress());
+    if (PackageInfoService.metadata == null) {
+      GetLogger.to.w('No Metadata');
       return [];
     }
-    print(PackageInfoService.metadata!.introSlider_hi.toString());
+    if (PackageInfoService.metadata!.introSlider == null || PackageInfoService.metadata!.introSlider!.length == 0) {
+      Future.delayed(Duration(milliseconds: 1000)).then((value) => onDonePress());
+      return [];
+    }
+    GetLogger.to.i(PackageInfoService.metadata!.introSlider_hi.toString());
     return (ConfigStorage.locale == 'hi')
         ? PackageInfoService.metadata!.introSlider_hi!.map((e) => makeSlide(context, e)).toList()
         : PackageInfoService.metadata!.introSlider!.map((e) => makeSlide(context, e)).toList();
